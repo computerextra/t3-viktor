@@ -1,0 +1,62 @@
+{
+  "name": "intrexx_clone",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "check": "next lint && tsc --noEmit",
+    "db:generate": "npx prisma generate --schema ./prisma-viktor-database/schema.prisma && npx prisma generate --schema ./prisma-sage-database/schema.prisma",
+    "db:migrate": "prisma migrate deploy --schema ./prisma-viktor-database/schema.prisma && prisma migrate deploy --schema ./prisma-sage-database/schema.prisma ",
+    "db:push": "prisma db push --schema ./prisma-viktor-database/schema.prisma && prisma db push --schema ./prisma-sage-database/schema.prisma",
+    "db:pull": "prisma db pull --schema ./prisma-viktor-database/schema.prisma && prisma db pull --schema ./prisma-sage-database/schema.prisma",
+    "db:studio": "prisma studio",
+    "dev": "next dev --turbo",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,mdx}\" --cache",
+    "format:write": "prettier --write \"**/*.{ts,tsx,js,jsx,mdx}\" --cache",
+    "postinstall": "prisma generate --schema ./prisma-viktor-database/schema.prisma && prisma generate --schema ./prisma-sage-database/schema.prisma",
+    "lint": "next lint",
+    "lint:fix": "next lint --fix",
+    "preview": "next build && next start",
+    "start": "next start",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@auth/prisma-adapter": "^2.11.1",
+    "@prisma/client": "^7.3.0",
+    "@t3-oss/env-nextjs": "^0.13.10",
+    "@tanstack/react-query": "^5.90.20",
+    "@trpc/client": "^11.9.0",
+    "@trpc/react-query": "^11.9.0",
+    "@trpc/server": "^11.9.0",
+    "next": "16.1.6",
+    "next-auth": "5.0.0-beta.25",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "server-only": "^0.0.1",
+    "superjson": "^2.2.6",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.3.3",
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20.19.33",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^10.0.0",
+    "eslint-config-next": "16.1.6",
+    "prettier": "^3.8.1",
+    "prettier-plugin-tailwindcss": "^0.7.2",
+    "prisma": "^7.3.0",
+    "tailwindcss": "^4",
+    "typescript": "^5",
+    "typescript-eslint": "^8.54.0"
+  },
+  "ignoreScripts": [
+    "sharp",
+    "unrs-resolver"
+  ],
+  "trustedDependencies": [
+    "sharp",
+    "unrs-resolver"
+  ]
+}
