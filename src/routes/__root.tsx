@@ -7,6 +7,7 @@ import {
   Outlet,
   Scripts,
   createRootRouteWithContext,
+  useRouterState,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { createServerFn } from "@tanstack/react-start";
@@ -19,8 +20,13 @@ import type { QueryClient } from "@tanstack/react-query";
 import { seo } from "@/lib/seo";
 import { DefaultCatchBoundary } from "@/components/DefaultCatchBoundary";
 import { NotFound } from "@/components/NotFound";
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-import React from "react";
+import {
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/components/ui/sidebar";
 import {
   Sidebar,
   SidebarContent,
@@ -30,8 +36,6 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { SiteHeader } from "@/components/side-header";
-import { NavMain } from "@/components/nav-main";
 import { NavUser } from "@/components/nav-user";
 import { useTitle } from "@/hooks/use-title";
 
@@ -98,17 +102,15 @@ function RootDocument({ children }: { children: ReactNode }) {
         <HeadContent />
       </head>
       <body>
-        <SidebarProvider
-          style={
-            {
-              "--sidebar-width": "calc(var(--spacing) * 72",
-              "--header-height": "calc(var(--spacing) * 12",
-            } as React.CSSProperties
-          }
-        >
+        <SidebarProvider>
           <Main />
           <SidebarInset>
-            <SiteHeader />
+            <header className="flex h-16 shrink-0 items-center gap-2 border-b">
+              <div className="flex items-center gap-2 px-3">
+                <SidebarTrigger />
+              </div>
+            </header>
+
             <div className="flex flex-1 flex-col">
               <div className="@container/main flex flex-1 flex-col gap-2">
                 <main>{children}</main>
@@ -146,6 +148,7 @@ const data = {
 
 function Main() {
   const routeContext = Route.useRouteContext();
+  const location = useRouterState({ select: (s) => s.location });
 
   return (
     <Sidebar collapsible="offcanvas" variant="inset">
@@ -164,47 +167,27 @@ function Main() {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
+        <SidebarGroup>
+          <SidebarGroupContent className="flex flex-col gap-2">
+            <SidebarMenu>
+              {data.navMain.map((items) => (
+                <SidebarMenuItem key={items.title}>
+                  <SidebarMenuButton
+                    asChild
+                    isActive={location.pathname == items.url}
+                  >
+                    <Link to={items.url}>{items.title}</Link>
+                    {/* <span>{items.title}</span> */}
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={routeContext.session?.user} />
       </SidebarFooter>
     </Sidebar>
-
-    // <nav className="p-4 flex gap-4 items-center bg-gray-100">
-    //   <Link
-    //     to="/"
-    //     activeProps={{ className: "font-bold" }}
-    //     activeOptions={{ exact: true }}
-    //   >
-    //     Home
-    //   </Link>
-    //   <Link to="/protected" activeProps={{ className: "font-bold" }}>
-    //     Protected
-    //   </Link>
-    //   <div className="ml-auto flex items-center gap-4">
-    //     {routeContext.session ? (
-    //       <>
-    //         <span className="text-gray-600">
-    //           {routeContext.session?.user?.name ||
-    //             routeContext.session?.user?.email}
-    //         </span>
-    //         <a
-    //           href="/api/auth/signout"
-    //           className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
-    //         >
-    //           Sign Out
-    //         </a>
-    //       </>
-    //     ) : (
-    //       <Link
-    //         to="/login"
-    //         className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-    //       >
-    //         Sign In
-    //       </Link>
-    //     )}
-    //   </div>
-    // </nav>
   );
 }
