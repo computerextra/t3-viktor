@@ -65,7 +65,7 @@ function Home() {
               </h2>
               <div className="grid grid-cols-2 gap-4">
                 {data.heute.map((x) => (
-                  <Alert id={x.id}>
+                  <Alert key={x.id + x.name}>
                     <AlertTitle>{x.name}</AlertTitle>
                     <AlertDescription>Hat heute Geburtstag!</AlertDescription>
                   </Alert>
@@ -80,7 +80,7 @@ function Home() {
               </h2>
               <div className="grid grid-cols-2 gap-4">
                 {data.zukunft.map((x) => (
-                  <Alert id={x.id}>
+                  <Alert key={x.id + x.name}>
                     <AlertTitle>{x.name}</AlertTitle>
                     <AlertDescription>
                       Hat in {x.diff} Tagen Geburtstag! -{" "}
@@ -102,7 +102,7 @@ function Home() {
               </h2>
               <div className="grid grid-cols-2 gap-4">
                 {data.vergangen.map((x) => (
-                  <Alert id={x.id}>
+                  <Alert key={x.id + x.name}>
                     <AlertTitle>{x.name}</AlertTitle>
                     <AlertDescription>
                       Hatte vor {x.diff * -1} Tagen Geburtstag! -{" "}
