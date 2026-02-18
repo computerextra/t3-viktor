@@ -5,7 +5,12 @@
   "main": "index.js",
   "scripts": {
     "dev": "vite dev",
-    "build": "vite build"
+    "build": "vite build",
+    "postinstall": "npx prisma generate --schema ./prisma-viktor-database/schema.prisma && npx prisma generate --schema ./prisma-sage-database/schema.prisma",
+    "generate": "npx prisma generate --schema ./prisma-viktor-database/schema.prisma && npx prisma generate --schema ./prisma-sage-database/schema.prisma",
+    "migrate": "npx prisma migrate dev --schema ./prisma-viktor-database/schema.prisma && npx prisma migrate dev --schema ./prisma-sage-database/schema.prisma",
+    "deploy": "npx prisma migrate deploy --schema ./prisma-viktor-database/schema.prisma && npx prisma migrate deploy --schema ./prisma-sage-database/schema.prisma",
+    "studio": "npx prisma studio --schema ./prisma-viktor-database/schema.prisma --port 5555 & npx prisma studio --schema ./prisma-sage-database/schema.prisma --port 5556"
   },
   "repository": {
     "type": "git",
@@ -23,6 +28,7 @@
     "@auth/core": "^0.34.3",
     "@base-ui/react": "^1.2.0",
     "@prisma/adapter-mariadb": "^7.4.0",
+    "@prisma/adapter-mssql": "^7.4.0",
     "@prisma/client": "^7.4.0",
     "@t3-oss/env-core": "^0.13.10",
     "@tanstack/eslint-plugin-query": "^5.91.4",
@@ -57,6 +63,7 @@
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.1.18",
+    "@types/mssql": "^9.1.9",
     "@types/node": "^25.2.3",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
