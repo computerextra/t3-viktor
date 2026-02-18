@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import {
   SidebarGroup,
   SidebarGroupContent,
@@ -17,8 +18,9 @@ export function NavMain({
         <SidebarMenu>
           {items.map((items) => (
             <SidebarMenuItem key={items.title}>
-              <SidebarMenuButton>
-                <span>{items.title}</span>
+              <SidebarMenuButton asChild>
+                <Link to={items.url}>{items.title}</Link>
+                {/* <span>{items.title}</span> */}
               </SidebarMenuButton>
             </SidebarMenuItem>
           ))}

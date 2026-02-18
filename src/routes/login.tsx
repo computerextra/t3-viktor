@@ -1,5 +1,6 @@
 import { useState, useEffect, Suspense } from "react";
 import { createFileRoute, redirect } from "@tanstack/react-router";
+import { useTitle } from "@/hooks/use-title";
 
 export const Route = createFileRoute("/login")({
   beforeLoad: ({ context }) => {
@@ -12,6 +13,7 @@ export const Route = createFileRoute("/login")({
 });
 
 function Login() {
+  useTitle("Anmelden");
   const [csrfToken, setCsrfToken] = useState<string>("");
 
   useEffect(() => {

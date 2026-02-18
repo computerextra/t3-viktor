@@ -33,6 +33,9 @@ import {
 import { SiteHeader } from "@/components/side-header";
 import { NavMain } from "@/components/nav-main";
 import { NavUser } from "@/components/nav-user";
+import { useTitle } from "@/hooks/use-title";
+
+const TITLE = "Viktor";
 
 interface RouterContext {
   session: AuthSession | null;
@@ -62,7 +65,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
         content: "width=device-width, initial-scale=1",
       },
       ...seo({
-        title: "Viktor",
+        title: TITLE,
         description: "",
       }),
     ],
@@ -88,6 +91,7 @@ function RootComponent() {
 }
 
 function RootDocument({ children }: { children: ReactNode }) {
+  useTitle(undefined);
   return (
     <html>
       <head>
@@ -124,19 +128,19 @@ function RootDocument({ children }: { children: ReactNode }) {
 const data = {
   navMain: [
     { title: "Start", url: "/" },
-    { title: "Einkauf", url: "/" },
-    { title: "Mitarbeiter", url: "/" },
-    { title: "Lieferanten", url: "/" },
-    { title: "Formulare", url: "/" },
-    { title: "CE Archiv", url: "/" },
-    { title: "Kunden", url: "/" },
-    { title: "Warenlieferung", url: "/" },
-    { title: "CMS", url: "/" },
-    { title: "SN", url: "/" },
-    { title: "Info", url: "/" },
-    { title: "Label", url: "/" },
-    { title: "Aussteller", url: "/" },
-    { title: "Versand", url: "/" },
+    { title: "Einkauf", url: "/Einkauf" },
+    { title: "Mitarbeiter", url: "/Mitarbeiter" },
+    { title: "Lieferanten", url: "/Lieferanten" },
+    { title: "Formulare", url: "/Formulare" },
+    { title: "CE Archiv", url: "/Archiv" },
+    { title: "Kunden", url: "/Kunden" },
+    { title: "Warenlieferung", url: "/Warenlieferung" },
+    { title: "CMS", url: "/CMS" },
+    { title: "SN", url: "/SN" },
+    { title: "Info", url: "/Info" },
+    { title: "Label", url: "/Label" },
+    { title: "Aussteller", url: "/Aussteller" },
+    { title: "Versand", url: "/Versand" },
   ],
 };
 
