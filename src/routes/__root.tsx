@@ -19,6 +19,20 @@ import type { QueryClient } from "@tanstack/react-query";
 import { seo } from "@/lib/seo";
 import { DefaultCatchBoundary } from "@/components/DefaultCatchBoundary";
 import { NotFound } from "@/components/NotFound";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import React from "react";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+} from "@/components/ui/sidebar";
+import { SiteHeader } from "@/components/side-header";
+import { NavMain } from "@/components/nav-main";
+import { NavUser } from "@/components/nav-user";
 
 interface RouterContext {
   session: AuthSession | null;
@@ -48,7 +62,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
         content: "width=device-width, initial-scale=1",
       },
       ...seo({
-        title: "TanStack Start Auth Example",
+        title: "Viktor",
         description: "",
       }),
     ],
@@ -80,54 +94,113 @@ function RootDocument({ children }: { children: ReactNode }) {
         <HeadContent />
       </head>
       <body>
-        <NavBar />
-        <main className="p-4">{children}</main>
+        <SidebarProvider
+          style={
+            {
+              "--sidebar-width": "calc(var(--spacing) * 72",
+              "--header-height": "calc(var(--spacing) * 12",
+            } as React.CSSProperties
+          }
+        >
+          <Main />
+          <SidebarInset>
+            <SiteHeader />
+            <div className="flex flex-1 flex-col">
+              <div className="@container/main flex flex-1 flex-col gap-2">
+                <main>{children}</main>
+              </div>
+            </div>
+          </SidebarInset>
+        </SidebarProvider>
+        {/* <NavBar /> */}
         <TanStackRouterDevtools position="bottom-right" />
-        <ReactQueryDevtools buttonPosition="bottom-left" />
+        <ReactQueryDevtools buttonPosition="top-right" />
         <Scripts />
       </body>
     </html>
   );
 }
 
-function NavBar() {
+const data = {
+  navMain: [
+    { title: "Start", url: "/" },
+    { title: "Einkauf", url: "/" },
+    { title: "Mitarbeiter", url: "/" },
+    { title: "Lieferanten", url: "/" },
+    { title: "Formulare", url: "/" },
+    { title: "CE Archiv", url: "/" },
+    { title: "Kunden", url: "/" },
+    { title: "Warenlieferung", url: "/" },
+    { title: "CMS", url: "/" },
+    { title: "SN", url: "/" },
+    { title: "Info", url: "/" },
+    { title: "Label", url: "/" },
+    { title: "Aussteller", url: "/" },
+    { title: "Versand", url: "/" },
+  ],
+};
+
+function Main() {
   const routeContext = Route.useRouteContext();
 
   return (
-    <nav className="p-4 flex gap-4 items-center bg-gray-100">
-      <Link
-        to="/"
-        activeProps={{ className: "font-bold" }}
-        activeOptions={{ exact: true }}
-      >
-        Home
-      </Link>
-      <Link to="/protected" activeProps={{ className: "font-bold" }}>
-        Protected
-      </Link>
-      <div className="ml-auto flex items-center gap-4">
-        {routeContext.session ? (
-          <>
-            <span className="text-gray-600">
-              {routeContext.session?.user?.name ||
-                routeContext.session?.user?.email}
-            </span>
-            <a
-              href="/api/auth/signout"
-              className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+    <Sidebar collapsible="offcanvas" variant="inset">
+      <SidebarHeader>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton
+              asChild
+              className="data-[slot=sidebar-menu-button]:p-1.5!"
             >
-              Sign Out
-            </a>
-          </>
-        ) : (
-          <Link
-            to="/login"
-            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-          >
-            Sign In
-          </Link>
-        )}
-      </div>
-    </nav>
+              <Link to="/">
+                <span className="text-base font-semibold">Viktor</span>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarHeader>
+      <SidebarContent>
+        <NavMain items={data.navMain} />
+      </SidebarContent>
+      <SidebarFooter>
+        <NavUser user={routeContext.session?.user} />
+      </SidebarFooter>
+    </Sidebar>
+
+    // <nav className="p-4 flex gap-4 items-center bg-gray-100">
+    //   <Link
+    //     to="/"
+    //     activeProps={{ className: "font-bold" }}
+    //     activeOptions={{ exact: true }}
+    //   >
+    //     Home
+    //   </Link>
+    //   <Link to="/protected" activeProps={{ className: "font-bold" }}>
+    //     Protected
+    //   </Link>
+    //   <div className="ml-auto flex items-center gap-4">
+    //     {routeContext.session ? (
+    //       <>
+    //         <span className="text-gray-600">
+    //           {routeContext.session?.user?.name ||
+    //             routeContext.session?.user?.email}
+    //         </span>
+    //         <a
+    //           href="/api/auth/signout"
+    //           className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+    //         >
+    //           Sign Out
+    //         </a>
+    //       </>
+    //     ) : (
+    //       <Link
+    //         to="/login"
+    //         className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+    //       >
+    //         Sign In
+    //       </Link>
+    //     )}
+    //   </div>
+    // </nav>
   );
 }

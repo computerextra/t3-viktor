@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ProtectedRouteImport } from './routes/protected'
+import { Route as Not_allowedRouteImport } from './routes/not_allowed'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
@@ -17,6 +18,11 @@ import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 const ProtectedRoute = ProtectedRouteImport.update({
   id: '/protected',
   path: '/protected',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Not_allowedRoute = Not_allowedRouteImport.update({
+  id: '/not_allowed',
+  path: '/not_allowed',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -38,12 +44,14 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
+  '/not_allowed': typeof Not_allowedRoute
   '/protected': typeof ProtectedRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
+  '/not_allowed': typeof Not_allowedRoute
   '/protected': typeof ProtectedRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
@@ -51,20 +59,28 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
+  '/not_allowed': typeof Not_allowedRoute
   '/protected': typeof ProtectedRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/protected' | '/api/auth/$'
+  fullPaths: '/' | '/login' | '/not_allowed' | '/protected' | '/api/auth/$'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/protected' | '/api/auth/$'
-  id: '__root__' | '/' | '/login' | '/protected' | '/api/auth/$'
+  to: '/' | '/login' | '/not_allowed' | '/protected' | '/api/auth/$'
+  id:
+    | '__root__'
+    | '/'
+    | '/login'
+    | '/not_allowed'
+    | '/protected'
+    | '/api/auth/$'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LoginRoute: typeof LoginRoute
+  Not_allowedRoute: typeof Not_allowedRoute
   ProtectedRoute: typeof ProtectedRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
 }
@@ -76,6 +92,13 @@ declare module '@tanstack/react-router' {
       path: '/protected'
       fullPath: '/protected'
       preLoaderRoute: typeof ProtectedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/not_allowed': {
+      id: '/not_allowed'
+      path: '/not_allowed'
+      fullPath: '/not_allowed'
+      preLoaderRoute: typeof Not_allowedRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -105,6 +128,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LoginRoute: LoginRoute,
+  Not_allowedRoute: Not_allowedRoute,
   ProtectedRoute: ProtectedRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
 }

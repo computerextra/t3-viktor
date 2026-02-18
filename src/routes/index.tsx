@@ -50,6 +50,7 @@ function Home() {
         {session ? (
           <div className="space-y-2">
             <p className="text-green-600 font-medium">Authenticated</p>
+
             {user?.image && (
               <img
                 src={user.image}
