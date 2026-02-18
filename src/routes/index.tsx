@@ -1,3 +1,4 @@
+import { useTitle } from "@/hooks/use-title";
 import { GeburtstagsQueryOptions, getGeburtstage } from "@/server/mitarbeiter";
 import { createFileRoute } from "@tanstack/react-router";
 
@@ -10,6 +11,7 @@ export const Route = createFileRoute("/")({
 });
 
 function Home() {
+  useTitle(undefined);
   const { session } = Route.useRouteContext();
   const user = session?.user;
 

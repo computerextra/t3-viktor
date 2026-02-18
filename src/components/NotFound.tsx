@@ -1,7 +1,9 @@
 import { Link } from "@tanstack/react-router";
 import { Button } from "./ui/button";
+import { useTitle } from "@/hooks/use-title";
 
 export function NotFound({ children }: { children?: any }) {
+  useTitle("404");
   return (
     <div className="container mx-auto">
       <div className="space-y-2 p-2">
