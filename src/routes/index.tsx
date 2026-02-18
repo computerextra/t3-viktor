@@ -18,16 +18,19 @@ function Home() {
   const data = Route.useLoaderData();
   const [hour, setHour] = useState(0);
   const [minute, setMinute] = useState(0);
+  const [second, setSecond] = useState(0);
   const timer = useRef<any | null>(null);
 
   useEffect(() => {
     const t = new Date();
     setHour(t.getHours());
     setMinute(t.getMinutes());
+    setSecond(t.getSeconds());
 
     timer.current = setInterval(() => {
       setHour(new Date().getHours());
       setMinute(new Date().getMinutes());
+      setSecond(new Date().getSeconds());
     }, 1000);
 
     return () => {
@@ -47,8 +50,8 @@ function Home() {
           month: "2-digit",
           year: "numeric",
         })}{" "}
-        - {hour > 9 ? hour : "0" + hour}:{minute > 0 ? minute : "0" + minute}{" "}
-        Uhr
+        - {hour > 9 ? hour : "0" + hour}:{minute > 9 ? minute : "0" + minute}:
+        {second > 9 ? second : "0" + second} Uhr
       </p>
       <Card className="mt-8">
         <CardHeader>
