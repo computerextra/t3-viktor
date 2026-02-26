@@ -38,6 +38,7 @@ import {
 } from "@/components/ui/sidebar";
 import { NavUser } from "@/components/nav-user";
 import { useTitle } from "@/hooks/use-title";
+import { allowedAdmins } from "@/admin";
 
 const TITLE = "Viktor";
 
@@ -105,7 +106,7 @@ function RootDocument({ children }: { children: ReactNode }) {
         <SidebarProvider>
           <Main />
           <SidebarInset>
-            <header className="flex h-16 shrink-0 items-center gap-2 border-b">
+            <header className="flex h-16 shrink-0 items-center gap-2 border-b print:hidden">
               <div className="flex items-center gap-2 px-3">
                 <SidebarTrigger />
               </div>
@@ -129,29 +130,30 @@ function RootDocument({ children }: { children: ReactNode }) {
 
 const data = {
   navMain: [
-    { title: "Start", url: "/" },
-    { title: "Einkauf", url: "/Einkauf" },
-    { title: "Mitarbeiter", url: "/Mitarbeiter" },
-    { title: "Lieferanten", url: "/Lieferanten" },
-    { title: "Formulare", url: "/Formulare" },
-    { title: "CE Archiv", url: "/Archiv" },
-    { title: "Kunden", url: "/Kunden" },
-    { title: "Warenlieferung", url: "/Warenlieferung" },
-    { title: "CMS", url: "/CMS" },
-    { title: "SN", url: "/SN" },
-    { title: "Info", url: "/Info" },
-    { title: "Label", url: "/Label" },
-    { title: "Aussteller", url: "/Aussteller" },
-    { title: "Versand", url: "/Versand" },
+    { title: "Start", url: "/", public: true },
+    { title: "Einkauf", url: "/Einkauf", public: true },
+    { title: "Mitarbeiter", url: "/Mitarbeiter", public: true },
+    { title: "Lieferanten", url: "/Lieferanten", public: true },
+    { title: "Formulare", url: "/Formulare", public: true },
+    { title: "CE Archiv", url: "/Archiv", public: true },
+    { title: "Kunden", url: "/Kunden, public: true" },
+    { title: "Warenlieferung", url: "/Warenlieferung", public: true },
+    { title: "CMS", url: "/CMS", public: false },
+    { title: "SN", url: "/SN", public: true },
+    { title: "Info", url: "/Info", public: true },
+    { title: "Label", url: "/Label", public: true },
+    { title: "Aussteller", url: "/Aussteller", public: true },
+    { title: "Versand", url: "/Versand", public: true },
   ],
 };
 
 function Main() {
   const routeContext = Route.useRouteContext();
   const location = useRouterState({ select: (s) => s.location });
+  const user = routeContext.session?.user;
 
   return (
-    <Sidebar collapsible="offcanvas" variant="inset">
+    <Sidebar collapsible="offcanvas" variant="inset" className="print:hidden">
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
@@ -170,17 +172,32 @@ function Main() {
         <SidebarGroup>
           <SidebarGroupContent className="flex flex-col gap-2">
             <SidebarMenu>
-              {data.navMain.map((items) => (
-                <SidebarMenuItem key={items.title}>
-                  <SidebarMenuButton
-                    asChild
-                    isActive={location.pathname == items.url}
-                  >
-                    <Link to={items.url}>{items.title}</Link>
-                    {/* <span>{items.title}</span> */}
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+              {data.navMain.map((items) => {
+                if (items.public)
+                  return (
+                    <SidebarMenuItem key={items.title}>
+                      <SidebarMenuButton
+                        asChild
+                        isActive={location.pathname == items.url}
+                      >
+                        <Link to={items.url}>{items.title}</Link>
+                        {/* <span>{items.title}</span> */}
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  );
+                else if (user?.email && allowedAdmins.includes(user.email))
+                  return (
+                    <SidebarMenuItem key={items.title}>
+                      <SidebarMenuButton
+                        asChild
+                        isActive={location.pathname == items.url}
+                      >
+                        <Link to={items.url}>{items.title}</Link>
+                        {/* <span>{items.title}</span> */}
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  );
+              })}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>

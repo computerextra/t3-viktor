@@ -13,6 +13,7 @@ import { Route as ProtectedRouteImport } from './routes/protected'
 import { Route as Not_allowedRouteImport } from './routes/not_allowed'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as EinkaufIndexRouteImport } from './routes/Einkauf/index'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 
 const ProtectedRoute = ProtectedRouteImport.update({
@@ -35,6 +36,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EinkaufIndexRoute = EinkaufIndexRouteImport.update({
+  id: '/Einkauf/',
+  path: '/Einkauf/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   id: '/api/auth/$',
   path: '/api/auth/$',
@@ -46,6 +52,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/not_allowed': typeof Not_allowedRoute
   '/protected': typeof ProtectedRoute
+  '/Einkauf/': typeof EinkaufIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRoutesByTo {
@@ -53,6 +60,7 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/not_allowed': typeof Not_allowedRoute
   '/protected': typeof ProtectedRoute
+  '/Einkauf': typeof EinkaufIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRoutesById {
@@ -61,19 +69,33 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/not_allowed': typeof Not_allowedRoute
   '/protected': typeof ProtectedRoute
+  '/Einkauf/': typeof EinkaufIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/not_allowed' | '/protected' | '/api/auth/$'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/not_allowed'
+    | '/protected'
+    | '/Einkauf/'
+    | '/api/auth/$'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/not_allowed' | '/protected' | '/api/auth/$'
+  to:
+    | '/'
+    | '/login'
+    | '/not_allowed'
+    | '/protected'
+    | '/Einkauf'
+    | '/api/auth/$'
   id:
     | '__root__'
     | '/'
     | '/login'
     | '/not_allowed'
     | '/protected'
+    | '/Einkauf/'
     | '/api/auth/$'
   fileRoutesById: FileRoutesById
 }
@@ -82,6 +104,7 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   Not_allowedRoute: typeof Not_allowedRoute
   ProtectedRoute: typeof ProtectedRoute
+  EinkaufIndexRoute: typeof EinkaufIndexRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
 }
 
@@ -115,6 +138,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/Einkauf/': {
+      id: '/Einkauf/'
+      path: '/Einkauf'
+      fullPath: '/Einkauf/'
+      preLoaderRoute: typeof EinkaufIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/auth/$': {
       id: '/api/auth/$'
       path: '/api/auth/$'
@@ -130,6 +160,7 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   Not_allowedRoute: Not_allowedRoute,
   ProtectedRoute: ProtectedRoute,
+  EinkaufIndexRoute: EinkaufIndexRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
 }
 export const routeTree = rootRouteImport

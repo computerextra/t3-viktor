@@ -2,11 +2,57 @@ import { db } from "@/db";
 import { queryOptions } from "@tanstack/react-query";
 import { createServerFn } from "@tanstack/react-start";
 
+export const EinkaufsListeQueryOptions = () =>
+  queryOptions({
+    queryKey: ["Einkaufsliste"],
+    queryFn: () => getEinkaufsliste(),
+  });
+
 export const GeburtstagsQueryOptions = () =>
   queryOptions({
     queryKey: ["Geburtstag"],
     queryFn: () => getGeburtstage(),
   });
+
+export const getEinkaufsliste = createServerFn({ method: "GET" }).handler(
+  async () => {
+    const liste = await db.einkauf.findMany({
+      where: {
+        OR: [
+          {
+            AND: [
+              { Abgeschickt: { lte: new Date() } },
+              {
+                Abgeschickt: {
+                  gt: new Date(
+                    new Date().getFullYear(),
+                    new Date().getMonth(),
+                    new Date().getDate() - 1,
+                    0,
+                    0,
+                    0,
+                    0,
+                  ),
+                },
+              },
+            ],
+          },
+          {
+            AND: [{ Abonniert: true }, { Abgeschickt: { lte: new Date() } }],
+          },
+        ],
+      },
+      orderBy: {
+        Abgeschickt: "desc",
+      },
+      include: {
+        Mitarbeiter: true,
+      },
+    });
+
+    return { liste };
+  },
+);
 
 export const getGeburtstage = createServerFn({ method: "GET" }).handler(
   async () => {

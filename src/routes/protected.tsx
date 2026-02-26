@@ -1,6 +1,5 @@
+import { allowedAdmins } from "@/admin";
 import { createFileRoute, redirect } from "@tanstack/react-router";
-
-const allowedAdmins = ["register@j4yz0n3.de"];
 
 export const Route = createFileRoute("/protected")({
   beforeLoad: ({ context }) => {
