@@ -20,6 +20,8 @@ import type { QueryClient } from "@tanstack/react-query";
 import { seo } from "@/lib/seo";
 import { DefaultCatchBoundary } from "@/components/DefaultCatchBoundary";
 import { NotFound } from "@/components/NotFound";
+import { TanStackDevtools } from "@tanstack/react-devtools";
+import { formDevtoolsPlugin } from "@tanstack/react-form-devtools";
 import {
   SidebarGroup,
   SidebarGroupContent,
@@ -120,8 +122,11 @@ function RootDocument({ children }: { children: ReactNode }) {
           </SidebarInset>
         </SidebarProvider>
         {/* <NavBar /> */}
-        <TanStackRouterDevtools position="bottom-right" />
+
+        <TanStackDevtools plugins={[formDevtoolsPlugin()]} />
+        <TanStackRouterDevtools position="top-left" />
         <ReactQueryDevtools buttonPosition="top-right" />
+
         <Scripts />
       </body>
     </html>

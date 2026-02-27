@@ -8,14 +8,14 @@ datasource db {
 }
 
 model Abteilung {
-  id          String        @id
+  id          String        @id @default(cuid())
   name        String
   idx         Int?
   Mitarbeiter Mitarbeiter[]
 }
 
 model Angebot {
-  id         String   @id
+  id         String   @id @default(cuid())
   title      String
   subtitle   String?
   date_start DateTime
@@ -26,7 +26,7 @@ model Angebot {
 }
 
 model Ansprechpartner {
-  id          String    @id
+  id          String    @id @default(cuid())
   name        String
   telefon     String?
   mobil       String?
@@ -47,7 +47,7 @@ model Aussteller {
 }
 
 model Einkauf {
-  id          String       @id
+  id          String       @id @default(cuid())
   Paypal      Boolean      @default(false)
   Abonniert   Boolean      @default(false)
   Geld        String?
@@ -61,7 +61,7 @@ model Einkauf {
 }
 
 model Jobs {
-  id           String  @id
+  id           String  @id @default(cuid())
   name         String
   online       Boolean @default(false)
   Aufgaben     String? @db.Text
@@ -71,7 +71,7 @@ model Jobs {
 }
 
 model Lieferant {
-  id              String            @id
+  id              String            @id @default(cuid())
   Firma           String
   Kundennummer    String?
   Webseite        String?
@@ -79,7 +79,7 @@ model Lieferant {
 }
 
 model Mitarbeiter {
-  id               String     @id
+  id               String     @id @default(cuid())
   name             String     @unique
   short            String?
   image            Boolean    @default(false)
@@ -106,7 +106,7 @@ model Mitarbeiter {
 }
 
 model Partner {
-  id    String @id
+  id    String @id @default(cuid())
   name  String
   link  String
   image String
@@ -119,7 +119,7 @@ model Pdfs {
 }
 
 model Referenzen {
-  id       String  @id
+  id       String  @id @default(cuid())
   Name     String
   Webseite String
   Bild     String
