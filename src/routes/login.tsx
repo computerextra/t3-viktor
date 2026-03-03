@@ -1,4 +1,4 @@
-import { useState, useEffect, Suspense } from "react";
+import { useState, useEffect } from "react";
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import { useTitle } from "@/hooks/use-title";
 import { GithubIcon } from "lucide-react";

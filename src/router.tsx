@@ -9,6 +9,7 @@ export function getRouter() {
   const queryClient = new QueryClient();
   const router = createRouter({
     routeTree,
+    // @ts-expect-error: Session kann hier noch nicht vorhanden sein, ist jedoch auch nicht dringend erforderlich
     context: { queryClient },
     defaultPreload: "intent",
     defaultErrorComponent: DefaultCatchBoundary,
