@@ -4,3 +4,5 @@ node_modules
 
 /generated
 /.tanstack
+/.output
+/dist
