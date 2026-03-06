@@ -1,21 +1,23 @@
 "use client";
 
+import { api } from "@/trpc/react";
+import { useForm } from "@tanstack/react-form";
+import { useRouter } from "next/navigation";
+
 import { Switch } from "@/components/ui/switch";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { api } from "@/trpc/react";
-import { useForm } from "@tanstack/react-form";
 import {
   Field,
   FieldError,
   FieldGroup,
   FieldLabel,
 } from "@/components/ui/field";
-import { ACCEPTED_IMAGE_TYPES, BildServer, EinkaufPropsClient } from "@/types";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
 import { Spinner } from "@/components/ui/spinner";
 import LoadingSkeleton from "@/components/loading-skeleton";
+
+import { ACCEPTED_IMAGE_TYPES, BildServer, EinkaufPropsClient } from "@/types";
 
 const fileToBase64 = (file: File): Promise<string> => {
   return new Promise((resolve, reject) => {

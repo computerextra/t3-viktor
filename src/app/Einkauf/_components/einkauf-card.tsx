@@ -1,5 +1,9 @@
 "use client";
 
+import { api } from "@/trpc/react";
+import Link from "next/link";
+import React from "react";
+
 import LoadingSkeleton from "@/components/loading-skeleton";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -9,9 +13,6 @@ import {
   ItemTitle,
 } from "@/components/ui/item";
 import { Separator } from "@/components/ui/separator";
-import { api } from "@/trpc/react";
-import Link from "next/link";
-import React from "react";
 
 export default function EinkaufCard() {
   const res = api.einkauf.einkaufsliste.useQuery();

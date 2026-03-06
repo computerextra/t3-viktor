@@ -1,6 +1,6 @@
 "use client";
 
-import { TITLE } from "@/components/Navigation";
+import { TITLE } from "@/app/_components/Navigation";
 import React from "react";
 
 export default function useTitle(title: string | undefined) {

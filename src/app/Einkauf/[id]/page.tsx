@@ -1,5 +1,6 @@
-import { api, HydrateClient } from "@/trpc/server";
-import EinkaufForm from "../_components/einkauf-form";
+import { HydrateClient } from "@/trpc/server";
+
+import EinkaufForm from "@/app/Einkauf/_components/einkauf-form";
 
 export const dynamic = "force-dynamic";
 
