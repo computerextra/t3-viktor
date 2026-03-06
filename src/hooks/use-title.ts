@@ -1,7 +1,8 @@
 "use client";
 
-import { TITLE } from "@/app/_components/Navigation";
 import React from "react";
+
+import { TITLE } from "@/app/_components/Navigation";
 
 export default function useTitle(title: string | undefined) {
   React.useEffect(() => {
