@@ -32,7 +32,9 @@ export default function MitarbeiterDialog() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button size="lg">Eingabe</Button>
+        <Button className="cursor-pointer" size="lg">
+          Eingabe
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-sm">
         <DialogHeader>
