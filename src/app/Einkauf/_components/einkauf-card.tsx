@@ -1,5 +1,6 @@
 "use client";
 
+import LoadingSkeleton from "@/components/loading-skeleton";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Item,
@@ -13,12 +14,15 @@ import Link from "next/link";
 import React from "react";
 
 export default function EinkaufCard() {
-  const [data] = api.einkauf.einkaufsliste.useSuspenseQuery();
+  const res = api.einkauf.einkaufsliste.useQuery();
 
   return (
     <Card className="my-8">
       <CardContent>
-        {data?.map((x, idx) => (
+        {res.isLoading && (
+          <LoadingSkeleton desc="Einkaufsliste wird geladen..." />
+        )}
+        {res.data?.map((x, idx) => (
           <React.Fragment key={x.id}>
             <Item variant={"default"}>
               <ItemContent>
@@ -48,7 +52,7 @@ export default function EinkaufCard() {
                 </div>
               </ItemContent>
             </Item>
-            {idx != data.length - 1 && (
+            {idx != res.data.length - 1 && (
               <Separator className="print:border-b print:text-black" />
             )}
           </React.Fragment>

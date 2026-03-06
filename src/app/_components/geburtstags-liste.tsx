@@ -1,11 +1,17 @@
 "use client";
 
+import LoadingSkeleton from "@/components/loading-skeleton";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { api } from "@/trpc/react";
 
 export default function GeburtstagsListe() {
-  const [geburtstage] = api.mitarbeiter.geburtstage.useSuspenseQuery();
+  const res = api.mitarbeiter.geburtstage.useQuery();
+  const geburtstage = res.data;
+
+  if (res.isLoading)
+    return <LoadingSkeleton desc="Geburtstagsliste wird geladen..." />;
+
   return (
     <Card className="mt-8">
       <CardHeader>

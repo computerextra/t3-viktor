@@ -7,18 +7,6 @@ import EinkaufCard from "./_components/einkauf-card";
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
-  try {
-    await api.einkauf.einkaufsliste.prefetch();
-  } catch (error) {
-    console.error("Failed to prefetch einkaufsliste:", error);
-  }
-
-  try {
-    await api.mitarbeiter.getAll.prefetch();
-  } catch (error) {
-    console.error("Failed to prefetch mitarbeiter:", error);
-  }
-
   return (
     <HydrateClient>
       <div className="container mx-auto">

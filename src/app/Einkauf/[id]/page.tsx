@@ -10,12 +10,6 @@ export default async function Page({
 }) {
   const { id } = await params;
 
-  try {
-    await api.einkauf.getEinkauf.prefetch({ id });
-  } catch (error) {
-    console.error("Failed to prefetch getEinkauf:", error);
-  }
-
   return (
     <HydrateClient>
       <div className="container mx-auto">

@@ -15,6 +15,7 @@ import { ACCEPTED_IMAGE_TYPES, BildServer, EinkaufPropsClient } from "@/types";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { Spinner } from "@/components/ui/spinner";
+import LoadingSkeleton from "@/components/loading-skeleton";
 
 const fileToBase64 = (file: File): Promise<string> => {
   return new Promise((resolve, reject) => {
@@ -31,7 +32,8 @@ const fileToBase64 = (file: File): Promise<string> => {
 };
 
 export default function EinkaufForm({ id }: { id: string }) {
-  const [data] = api.einkauf.getEinkauf.useSuspenseQuery({ id });
+  const res = api.einkauf.getEinkauf.useQuery({ id });
+  const data = res.data;
   const router = useRouter();
 
   const utils = api.useUtils();
@@ -93,6 +95,9 @@ export default function EinkaufForm({ id }: { id: string }) {
       });
     },
   });
+
+  if (res.isLoading)
+    return <LoadingSkeleton desc="Dein Einkauf wird geladen..." />;
 
   return (
     <form

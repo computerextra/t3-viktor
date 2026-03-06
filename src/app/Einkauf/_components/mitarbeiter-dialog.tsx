@@ -24,7 +24,9 @@ import Link from "next/link";
 import { useState } from "react";
 
 export default function MitarbeiterDialog() {
-  const [data] = api.mitarbeiter.getAll.useSuspenseQuery();
+  const res = api.mitarbeiter.getAll.useQuery();
+  const data = res.data;
+
   const [selected, setSelected] = useState<string | null>(null);
 
   return (
@@ -39,20 +41,25 @@ export default function MitarbeiterDialog() {
             Deinen Namen auswählen und weiter klicken
           </DialogDescription>
         </DialogHeader>
-        <Select onValueChange={(e) => setSelected(e)}>
-          <SelectTrigger>
-            <SelectValue placeholder="Bitte wählen..." />
-          </SelectTrigger>
-          <SelectContent position={"item-aligned"}>
-            <SelectGroup>
-              {data?.map((mitarbeiter) => (
-                <SelectItem key={mitarbeiter.id} value={mitarbeiter.id}>
-                  {mitarbeiter.name}
-                </SelectItem>
-              ))}
-            </SelectGroup>
-          </SelectContent>
-        </Select>
+        {res.isLoading ? (
+          <p>Lade Mitarbeiter...</p>
+        ) : (
+          <Select onValueChange={(e) => setSelected(e)}>
+            <SelectTrigger>
+              <SelectValue placeholder="Bitte wählen..." />
+            </SelectTrigger>
+            <SelectContent position={"item-aligned"}>
+              <SelectGroup>
+                {data?.map((mitarbeiter) => (
+                  <SelectItem key={mitarbeiter.id} value={mitarbeiter.id}>
+                    {mitarbeiter.name}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        )}
+
         <DialogFooter>
           <DialogClose asChild>
             <Button variant={"outline"}>Abbrechen</Button>
