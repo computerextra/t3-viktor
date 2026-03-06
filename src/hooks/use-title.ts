@@ -1,11 +1,14 @@
-import * as React from "react";
+"use client";
 
-export function useTitle(title: string | undefined) {
+import { TITLE } from "@/components/Navigation";
+import React from "react";
+
+export default function useTitle(title: string | undefined) {
   React.useEffect(() => {
     if (title) {
-      document.title = title + " · Viktor";
+      document.title = title + " · " + TITLE;
     } else {
-      document.title = "Viktor";
+      document.title = TITLE;
     }
   }, [title]);
 }

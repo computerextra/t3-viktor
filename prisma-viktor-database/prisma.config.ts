@@ -9,6 +9,6 @@ export default defineConfig({
     path: "prisma-viktor-database/migrations",
   },
   datasource: {
-    url: `mysql://${env("DATABASE_USER")}:${env("DATABASE_PASSWORD")}@${env("DATABASE_HOST")}:3306/${env("DATABASE_NAME")}`,
+    url: env("DATABASE_URL"),
   },
 });
