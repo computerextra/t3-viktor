@@ -1498,6 +1498,7 @@ model XCALPERSONAL9136BDDB {
   @@index([REF_FFE0EA60], map: "IX_XCALPEE5FCF11_2")
 }
 
+// CE Zentral -> Serientermine
 model XCALRULE {
   STRID              String               @id(map: "PK__XCALRULE__FEBD996435835894") @db.NVarChar(255)
   LUSERID            Int?
@@ -1781,6 +1782,7 @@ model XDATAGROUP1CF7CB5F {
   @@index([FKLID], map: "IX_XDATAGC6562AD_1")
 }
 
+// CE Zentral -> z_NB Eintrag Auftragsübernahme
 model XDATAGROUP1F43BA04 {
   LID                           Int       @id(map: "PK__XDATAGRO__C65557217D7CE02C")
   LUSERID                       Int?
@@ -1790,6 +1792,7 @@ model XDATAGROUP1F43BA04 {
   STR_AUFTRAGSBERNAHME_10BB6A37 String?   @db.NVarChar(255)
 }
 
+// CE Zentral -> z_WA Eintrag Auftragsübernahme
 model XDATAGROUP22DBA472 {
   LID                           Int       @id(map: "PK__XDATAGRO__C6555721353ED2E9")
   LUSERID                       Int?
@@ -1808,6 +1811,7 @@ model XDATAGROUP24211B0F {
   STR_NAME_D84DDF2E String?   @db.NVarChar(255)
 }
 
+// CE Zentral -> z_WA Geräteart
 model XDATAGROUP27E7FADE {
   LID                   Int       @id(map: "PK__XDATAGRO__C6555721CAC5308E")
   LUSERID               Int?
@@ -1942,6 +1946,7 @@ model XDATAGROUP3285A278 {
   XCALRULE3              XCALRULE3? @relation(fields: [REF_A6306C76], references: [STRID], onDelete: NoAction, onUpdate: NoAction, map: "REF_XCALRULE31")
 }
 
+// CE Zentral -> Geräte
 model XDATAGROUP353B6511 {
   LID                        Int       @id(map: "PK__XDATAGRO__C6555721180BE7F1")
   LUSERID                    Int?
@@ -1970,6 +1975,7 @@ model XDATAGROUP39443494 {
   L_INTREXXNR_05B7846C     Int?
 }
 
+// CE Zentral -> z_NB-WA Eintrag Arbeitsplatz
 model XDATAGROUP3B7355A3 {
   LID                       Int       @id(map: "PK__XDATAGRO__C65557212AC277E3")
   LUSERID                   Int?
@@ -1980,6 +1986,7 @@ model XDATAGROUP3B7355A3 {
   L_REIHENFOLGE_4356DECE    Int?
 }
 
+// CE Zentral -> z_DL_Faktor und Art
 model XDATAGROUP4120E873 {
   LID                     Int       @id(map: "PK__XDATAGRO__C6555721E5229018")
   LUSERID                 Int?
@@ -1990,6 +1997,7 @@ model XDATAGROUP4120E873 {
   STR_DLART_ED8D7531      String?   @db.NVarChar(255)
 }
 
+// CE Zentral -> Termine
 model XDATAGROUP42FFC361 {
   LID                            Int                  @id(map: "PK__XDATAGRO__C655572134E7C833")
   LUSERID                        Int?
@@ -2121,6 +2129,7 @@ model XDATAGROUP4E8A17CF {
   STR_LAND_3B381A62            String?   @db.NVarChar(255)
 }
 
+// CE Zentral -> z_NB-WA-RMA-VOT Eintrag Kundenkontakt
 model XDATAGROUP4ED76A19 {
   LID                           Int       @id(map: "PK__XDATAGRO__C6555721C5D88D00")
   LUSERID                       Int?
@@ -2265,6 +2274,7 @@ model XDATAGROUP569DC43D {
   STR_TELEFONNUMMER String?   @db.NVarChar(255)
 }
 
+// CE Zentral -> Werkstattaufträge
 model XDATAGROUP577CCE23 {
   LID                            Int                  @id(map: "PK__XDATAGRO__C6555721A89041B1")
   LUSERID                        Int?
@@ -2336,6 +2346,7 @@ model XDATAGROUP5FAC0D60 {
   @@index([FKLID], map: "IX_XDATAG6FDF828_1")
 }
 
+// CE Zentral -> z_VOT Eintrag Auftragsübernahme
 model XDATAGROUP6173215E {
   LID                           Int       @id(map: "PK__XDATAGRO__C655572179968FC1")
   LUSERID                       Int?
@@ -2483,6 +2494,7 @@ model XDATAGROUP7A9BB6B61 {
   @@index([FKLID], map: "IX_XDATAG8302D00_1")
 }
 
+// CE Zentral -> RMA
 model XDATAGROUP7D3A6EB1 {
   LID                            Int       @id(map: "PK__XDATAGRO__C6555721F95C9449")
   LUSERID                        Int?
@@ -2733,6 +2745,7 @@ model XDATAGROUP9AA148E11 {
   @@index([FKLID], map: "IX_XDATAG42C7637_1")
 }
 
+// CE Zentral -> z_VOT Eintrag Auftragsabschluß
 model XDATAGROUP9AA74CA0 {
   LID                          Int       @id(map: "PK__XDATAGRO__C6555721A1407530")
   LUSERID                      Int?
@@ -2742,6 +2755,7 @@ model XDATAGROUP9AA74CA0 {
   STR_AUFTRAGSABSCHLU_BADF3B9D String?   @db.NVarChar(255)
 }
 
+// CE Zentral -> z_RMA Eintrag Auftragsübernahme
 model XDATAGROUPA0208FFB {
   LID                           Int       @id(map: "PK__XDATAGRO__C65557211DDA475D")
   LUSERID                       Int?
@@ -2762,6 +2776,7 @@ model XDATAGROUPA1568868 {
   L_WERT_7011C629          Int?
 }
 
+// CE Zentral -> z_WA Auftragsart
 model XDATAGROUPA3B0CF28 {
   LID                      Int       @id(map: "PK__XDATAGRO__C65557215649F17D")
   LUSERID                  Int?
@@ -2789,6 +2804,7 @@ model XDATAGROUPA3E9A0AD {
   DT_EINGANGSDATUM_4B480D64      DateTime?
 }
 
+// CE Zentral -> Neubauten
 model XDATAGROUPA9E98313 {
   LID                            Int                  @id(map: "PK__XDATAGRO__C6555721589DB842")
   LUSERID                        Int?
@@ -3217,6 +3233,7 @@ model XDATAGROUPC12C1B981 {
   FLT_FAKTOR_C392C1CE Float?
 }
 
+// CE Zentral -> z_WA-NB-VOT Eintrag DL
 model XDATAGROUPC3F03E6E {
   LID                       Int       @id(map: "PK__XDATAGRO__C6555721FE4A5C3B")
   LUSERID                   Int?
@@ -4450,6 +4467,7 @@ model XTABLE6E21F8E9 {
   STR_ART                   String?   @db.NVarChar(255)
 }
 
+// CE Zentral -> Kunden
 model XTABLE898B92CE {
   LID                            Int                  @id(map: "PK__XTABLE89__C655572102BFC582")
   DTEDIT                         DateTime?
