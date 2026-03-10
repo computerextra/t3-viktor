@@ -10,7 +10,7 @@ import { initTRPC } from "@trpc/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
 
-import { viktor, sage, intrexx } from "@/server/db";
+import { viktor, sage, intrexx, pcvisit } from "@/server/db";
 
 /**
  * 1. CONTEXT
@@ -29,6 +29,7 @@ export const createTRPCContext = async (opts: { headers: Headers }) => {
     viktor,
     sage,
     intrexx,
+    pcvisit,
     ...opts,
   };
 };

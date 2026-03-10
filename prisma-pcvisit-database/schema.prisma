@@ -1,0 +1,45 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/pcvisit"
+}
+
+datasource db {
+  provider = "sqlserver"
+}
+
+model Protokolle {
+  ID                    Int       @id(map: "PK_Protokolle") @default(autoincrement())
+  Dauer                 String?   @db.NVarChar(255)
+  Supporter             String?   @db.NVarChar(255)
+  Startzeit             DateTime? @db.SmallDateTime
+  Kunde                 String?   @db.NVarChar(255)
+  Kundennummer          String?   @db.NVarChar(255)
+  Problem               String?   @db.Text
+  Rechnername           String?   @db.NVarChar(255)
+  SupportID             String?   @db.NVarChar(255)
+  MACAdresse            String?   @db.NVarChar(255)
+  Benutzername          String?   @db.NVarChar(255)
+  Ergebnis              String?   @db.Text
+  Supportart            String?   @db.NVarChar(255)
+  Status                String?   @default("N'offen'", map: "DF_Protokolle_Status") @db.NVarChar(50)
+  Supportverlauf        String?   @db.Text
+  Zeit                  DateTime? @db.Time
+  Startzeit_            String?   @db.NVarChar(255)
+  ZeitdifferenzUTC      Decimal?  @db.Decimal(18, 0)
+  Name2                 String?   @db.NVarChar(255)
+  DauerDL               Decimal?  @db.Decimal(18, 0)
+  h                     Decimal?  @db.Decimal(18, 0)
+  m                     Decimal?  @db.Decimal(18, 0)
+  FKLID                 Int?
+  Statistikdatenerfasst String?   @db.NChar(255)
+}
+
+model sysdiagrams {
+  name         String @db.NVarChar(128)
+  principal_id Int
+  diagram_id   Int    @id(map: "PK__sysdiagr__C2B05B61E54E7038") @default(autoincrement())
+  version      Int?
+  definition   Bytes?
+
+  @@unique([principal_id, name], map: "UK_principal_name")
+}

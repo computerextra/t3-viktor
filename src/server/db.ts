@@ -2,6 +2,7 @@ import { env } from "@/env";
 import { PrismaClient as Viktorclient } from "../../generated/viktor/client";
 import { PrismaClient as Sageclient } from "../../generated/sage/client";
 import { PrismaClient as Intrexxclient } from "../../generated/intrexx/client";
+import { PrismaClient as PcVisitClient } from "../../generated/pcvisit/client";
 import { PrismaMariaDb } from "@prisma/adapter-mariadb";
 import { PrismaMssql } from "@prisma/adapter-mssql";
 
@@ -54,6 +55,22 @@ const intrexxAdapter = new PrismaMssql({
   },
 });
 
+const pcvisitAdapter = new PrismaMssql({
+  user: env.INTREXX_DATABASE_USER,
+  password: env.INTREXX_DATABASE_PASSWORD,
+  database: env.PCVISIT_DATABASE_NAME,
+  server: env.INTREXX_DATABASE_HOST,
+  pool: {
+    max: 10,
+    min: 0,
+    idleTimeoutMillis: 30000,
+  },
+  options: {
+    encrypt: false,
+    trustServerCertificate: true,
+  },
+});
+
 const createViktorClient = () =>
   new Viktorclient({
     adapter,
@@ -75,16 +92,26 @@ const createIntrexxClient = () =>
       env.NODE_ENV === "development" ? ["query", "error", "warn"] : ["error"],
   });
 
+const createPCVisitClient = () =>
+  new PcVisitClient({
+    adapter: pcvisitAdapter,
+    log:
+      env.NODE_ENV === "development" ? ["query", "error", "warn"] : ["error"],
+  });
+
 const globalForPrisma = globalThis as unknown as {
   viktor: ReturnType<typeof createViktorClient> | undefined;
   sage: ReturnType<typeof createSageClient> | undefined;
   intrexx: ReturnType<typeof createIntrexxClient> | undefined;
+  pcvisit: ReturnType<typeof createPCVisitClient> | undefined;
 };
 
 export const viktor = globalForPrisma.viktor ?? createViktorClient();
 export const sage = globalForPrisma.sage ?? createSageClient();
 export const intrexx = globalForPrisma.intrexx ?? createIntrexxClient();
+export const pcvisit = globalForPrisma.pcvisit ?? createPCVisitClient();
 
 if (env.NODE_ENV !== "production") globalForPrisma.viktor = viktor;
 if (env.NODE_ENV !== "production") globalForPrisma.sage = sage;
 if (env.NODE_ENV !== "production") globalForPrisma.intrexx = intrexx;
+if (env.NODE_ENV !== "production") globalForPrisma.pcvisit = pcvisit;

@@ -2370,6 +2370,7 @@ model XDATAGROUP6BEF53B5 {
   STR_TIMESTAMP_B46E31A4   String?   @db.NVarChar(255)
 }
 
+// CE Doku -> Dienstleistungen
 model XDATAGROUP6CBD4214 {
   LID                       Int       @id(map: "PK__XDATAGRO__C6555721A9F1F419")
   FKLID                     Int?
@@ -3481,6 +3482,7 @@ model XDATAGROUPE28928E210 {
   STR_SUCHBEGRIFF_DEED1742   String?   @db.NVarChar(255)
 }
 
+// CE Brother-Leasing -> Aufträge
 model XDATAGROUPE28928E22 {
   LID                            Int                  @id(map: "PK__XDATAGRO__C6555721F1B637BD")
   LUSERID                        Int?

@@ -54,7 +54,7 @@ const MAIN_NAV = [
     title: "Intrexx",
     url: "/Intrexx",
     items: [
-      { title: "Intrexx 1", url: "/Intrexx/1" },
+      { title: "Kundensuche", url: "/Intrexx" },
       { title: "Intrexx 2", url: "/Intrexx/2" },
     ],
   },
