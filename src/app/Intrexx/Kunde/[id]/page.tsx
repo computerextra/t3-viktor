@@ -8,8 +8,6 @@ export default async function Page({
 }) {
   const { id } = await params;
 
-  await api.intrexx_kunden.get.prefetch({ id: parseInt(id) });
-
   return (
     <HydrateClient>
       <KundenAnsicht id={parseInt(id)} />

@@ -15,6 +15,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import LoadingSkeleton from "@/components/loading-skeleton";
 
 type RouterOutput = inferRouterOutputs<AppRouter>;
 type IntrexxKunde = RouterOutput["intrexx_kunden"]["get"];
@@ -135,7 +136,7 @@ const columnWA: ColumnDef<IntrexxKunde["WA"][0]>[] = [
     cell: ({ row }) => {
       const x = row.original;
       return (
-        <div className="w-12">
+        <div className="w-18">
           <p className="text-pretty break-all">{x.STR_STATUS_8388673F}</p>
         </div>
       );
@@ -340,6 +341,53 @@ const columnsNB: ColumnDef<IntrexxKunde["NB"][0]>[] = [
   { accessorKey: "STR_EMAILADRESSE_566990BB" },
 ];
 
+const columnsPcVisit: ColumnDef<IntrexxKunde["PCVisit"][0]>[] = [
+  { accessorKey: "Supporter", header: "Mitarbeiter" },
+  { accessorKey: "Rechnername", header: "Rechnername" },
+  { accessorKey: "Benutzername", header: "Benutzername" },
+  {
+    accessorKey: "Problem",
+    header: "Aufgabe",
+    cell: ({ row }) => {
+      const x = row.original;
+      return (
+        <div className="w-40">
+          <p className="text-pretty break-all">{x.Problem}</p>
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "Startzeit",
+    header: "Startzeit",
+    cell: ({ row }) => {
+      const x = row.original;
+
+      return x.Startzeit?.toLocaleString("de-de", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+    },
+  },
+  { accessorKey: "Dauer", header: "Dauer" },
+  {
+    accessorKey: "Ergebnis",
+    header: "Ergebnis",
+    cell: ({ row }) => {
+      const x = row.original;
+      return (
+        <div className="w-40">
+          <p className="text-pretty break-all">{x.Ergebnis}</p>
+        </div>
+      );
+    },
+  },
+  { accessorKey: "Status", header: "Status" },
+];
+
 function Green() {
   return <span className="size-4 rounded-2xl bg-green-500" />;
 }
@@ -353,27 +401,29 @@ function Red() {
 }
 
 export default function KundenAnsicht({ id }: { id: number }) {
-  const [kunde] = api.intrexx_kunden.get.useSuspenseQuery({ id });
+  const res = api.intrexx_kunden.get.useQuery({ id });
+
+  if (res.isLoading) return <LoadingSkeleton desc="Einträg lädt." />;
 
   return (
-    <Card className="mx-auto mt-5 max-w-7xl">
+    <Card className="mx-auto mt-5 max-w-[80%]">
       <CardHeader>
         <CardTitle>
           <div className="grid grid-cols-6 gap-8">
             <div>
               <span className="text-sm font-thin">
-                {kunde.Kunde?.STR_KUNDENNUMMER_D45D177B}
+                {res.data?.Kunde?.STR_KUNDENNUMMER_D45D177B}
               </span>
               <br />
-              {kunde.Kunde?.STR_NAME_5FE19153} <br />
-              {kunde.Kunde?.STR_NAME2_CECE8E30}
+              {res.data?.Kunde?.STR_NAME_5FE19153} <br />
+              {res.data?.Kunde?.STR_NAME2_CECE8E30}
             </div>
             <div>AV KRAM</div>
             <div>DOKU</div>
-            {kunde.Kunde?.STR_PCVISITURL ? (
+            {res.data?.Kunde?.STR_PCVISITURL ? (
               <Button asChild>
                 <a
-                  href={kunde.Kunde?.STR_PCVISITURL}
+                  href={res.data?.Kunde?.STR_PCVISITURL}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -390,25 +440,25 @@ export default function KundenAnsicht({ id }: { id: number }) {
               <h2>Datenübermittlung</h2>
               <div className="grid grid-cols-2 gap-2 text-sm font-thin">
                 <span className="m-0 p-0 leading-none">Apple</span>
-                {kunde.Kunde?.STR_APPLE == "ja" ? (
+                {res.data?.Kunde?.STR_APPLE == "ja" ? (
                   <Green />
-                ) : kunde.Kunde?.STR_APPLE == "nein" ? (
+                ) : res.data?.Kunde?.STR_APPLE == "nein" ? (
                   <Red />
                 ) : (
                   <Yellow />
                 )}
                 <span className="m-0 p-0 leading-none">Microsoft</span>
-                {kunde.Kunde?.STR_MICROSOFTDUE == "ja" ? (
+                {res.data?.Kunde?.STR_MICROSOFTDUE == "ja" ? (
                   <Green />
-                ) : kunde.Kunde?.STR_MICROSOFTDUE == "nein" ? (
+                ) : res.data?.Kunde?.STR_MICROSOFTDUE == "nein" ? (
                   <Red />
                 ) : (
                   <Yellow />
                 )}
                 <span className="m-0 p-0 leading-none">Google</span>
-                {kunde.Kunde?.STR_ALPHABETDUE == "ja" ? (
+                {res.data?.Kunde?.STR_ALPHABETDUE == "ja" ? (
                   <Green />
-                ) : kunde.Kunde?.STR_ALPHABETDUE == "nein" ? (
+                ) : res.data?.Kunde?.STR_ALPHABETDUE == "nein" ? (
                   <Red />
                 ) : (
                   <Yellow />
@@ -417,35 +467,38 @@ export default function KundenAnsicht({ id }: { id: number }) {
             </div>
             <div>
               <h2>Sepa</h2>
-              {kunde.Kunde?.B_SEPAMANDATERSTELLT ? "Ja" : "Nein"}
+              {res.data?.Kunde?.B_SEPAMANDATERSTELLT ? "Ja" : "Nein"}
             </div>
           </div>
         </CardTitle>
         <CardDescription>
           <div className="grid grid-cols-4 gap-8">
             <div>
-              {kunde.Kunde?.STR_STRASSE_1FE60006} <br />
-              {kunde.Kunde?.STR_PLZ_FCF64909} {kunde.Kunde?.STR_ORT_541484BC}
+              {res.data?.Kunde?.STR_STRASSE_1FE60006} <br />
+              {res.data?.Kunde?.STR_PLZ_FCF64909}{" "}
+              {res.data?.Kunde?.STR_ORT_541484BC}
             </div>
             <div className="grid grid-cols-2">
               <span className="font-bold">Telefon:</span>
-              {kunde.Kunde?.STR_TELEFONNUMMER1_FE4BFAA0 ? (
+              {res.data?.Kunde?.STR_TELEFONNUMMER1_FE4BFAA0 ? (
                 <a
                   className="cursor-pointer"
-                  href={"tel:" + kunde.Kunde.STR_TELEFONNUMMER1_FE4BFAA0}
+                  href={"tel:" + res.data?.Kunde.STR_TELEFONNUMMER1_FE4BFAA0}
                 >
-                  {kunde.Kunde.STR_TELEFONNUMMER1_FE4BFAA0}
+                  {res.data?.Kunde.STR_TELEFONNUMMER1_FE4BFAA0}
                 </a>
               ) : (
                 <span>-</span>
               )}
               <span className="font-bold">Alternativ:</span>{" "}
-              {kunde.Kunde?.STR_ALTERNATIVETELEFO_19DEE048 ? (
+              {res.data?.Kunde?.STR_ALTERNATIVETELEFO_19DEE048 ? (
                 <a
                   className="cursor-pointer"
-                  href={"tel:" + kunde.Kunde?.STR_ALTERNATIVETELEFO_19DEE048}
+                  href={
+                    "tel:" + res.data?.Kunde?.STR_ALTERNATIVETELEFO_19DEE048
+                  }
                 >
-                  {kunde.Kunde?.STR_ALTERNATIVETELEFO_19DEE048}
+                  {res.data?.Kunde?.STR_ALTERNATIVETELEFO_19DEE048}
                 </a>
               ) : (
                 <span>-</span>
@@ -454,12 +507,12 @@ export default function KundenAnsicht({ id }: { id: number }) {
             <div>
               <span className="font-bold">E-Mail:</span>
               <br />
-              {kunde.Kunde?.STR_EMAILADRESSE_6AF00EDF ? (
+              {res.data?.Kunde?.STR_EMAILADRESSE_6AF00EDF ? (
                 <a
-                  href={"mailto:" + kunde.Kunde?.STR_EMAILADRESSE_6AF00EDF}
+                  href={"mailto:" + res.data?.Kunde?.STR_EMAILADRESSE_6AF00EDF}
                   className="cursor-pointer"
                 >
-                  {kunde.Kunde?.STR_EMAILADRESSE_6AF00EDF}
+                  {res.data?.Kunde?.STR_EMAILADRESSE_6AF00EDF}
                 </a>
               ) : (
                 <span>-</span>
@@ -468,7 +521,7 @@ export default function KundenAnsicht({ id }: { id: number }) {
             <div>
               <span className="font-bold">Notizen</span>
               <pre className="font-serif">
-                {kunde.Kunde?.TXT_NOTIZ_3ECC3AA2}
+                {res.data?.Kunde?.TXT_NOTIZ_3ECC3AA2}
               </pre>
             </div>
           </div>
@@ -478,36 +531,42 @@ export default function KundenAnsicht({ id }: { id: number }) {
         <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
           Werkstattaufträge
         </h2>
-        <DataTable columns={columnWA} data={kunde.WA ?? []} />
+        <DataTable columns={columnWA} data={res.data?.WA ?? []} />
         <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
           Termine
         </h2>
-        <DataTable columns={columnsTermine} data={kunde.Termine ?? []} />
+        <DataTable columns={columnsTermine} data={res.data?.Termine ?? []} />
         <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
           PC Visit
         </h2>
+        <DataTable columns={columnsPcVisit} data={res.data?.PCVisit ?? []} />
         <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
           Dienstleitungen
         </h2>
+        {/* TODO: Tabelle */}
         <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
           RMA
         </h2>
-        <DataTable columns={columnsRMA} data={kunde.RMA ?? []} />
+        {/* TODO: Formatierung */}
+        <DataTable columns={columnsRMA} data={res.data?.RMA ?? []} />
         <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
           Geräte
         </h2>
-        <DataTable columns={columnGeräte} data={kunde.Geräte ?? []} />
+        {/* TODO: Formatierung */}
+        <DataTable columns={columnGeräte} data={res.data?.Geräte ?? []} />
         <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
           Leasing
         </h2>
+        {/* TODO: Tabelle */}
         <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
           Neubauten
         </h2>
-        <DataTable columns={columnsNB} data={kunde.NB ?? []} />
+        {/* TODO: Formatierung */}
+        <DataTable columns={columnsNB} data={res.data?.NB ?? []} />
       </CardContent>
 
       <h2>Dateien</h2>
-      {kunde.Kunde?.XDATAGROUPFFC21EED.map((x) => (
+      {res.data?.Kunde?.XDATAGROUPFFC21EED.map((x) => (
         <DataTable
           key={x.LID}
           columns={columnsIrgendwas}

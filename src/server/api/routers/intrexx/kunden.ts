@@ -1,4 +1,4 @@
-import z, { includes } from "zod";
+import z from "zod";
 import { createTRPCRouter, publicProcedure } from "../../trpc";
 
 export const intrexxKundenRouter = createTRPCRouter({
@@ -79,6 +79,17 @@ export const intrexxKundenRouter = createTRPCRouter({
 
       const PCVisit = await ctx.pcvisit.protokolle.findMany({
         where: { Kundennummer: Kunde?.STR_KUNDENNUMMER_D45D177B },
+        select: {
+          ID: true,
+          Supporter: true,
+          Rechnername: true,
+          Benutzername: true,
+          Problem: true,
+          Startzeit: true,
+          Dauer: true,
+          Ergebnis: true,
+          Status: true,
+        },
         orderBy: { Startzeit: "desc" },
       });
 

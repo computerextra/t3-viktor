@@ -32,6 +32,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import { useHotkey, formatForDisplay } from "@tanstack/react-hotkeys";
+import { Kbd } from "@/components/ui/kbd";
 
 export const TITLE = "Viktor";
 
@@ -68,8 +71,12 @@ export default function MainSidebar({
   const pathname = usePathname();
   const { setTheme } = useTheme();
 
+  const [open, setOpen] = useState(true);
+
+  useHotkey("Mod+B", () => setOpen((prev) => !prev));
+
   return (
-    <SidebarProvider>
+    <SidebarProvider open={open}>
       <Sidebar collapsible="offcanvas" variant="inset" className="print:hidden">
         <SidebarHeader>
           <SidebarMenu>
@@ -140,7 +147,12 @@ export default function MainSidebar({
       <SidebarInset>
         <header className="flex h-16 shrink-0 items-center gap-2 border-b print:hidden">
           <div className="flex items-center gap-2 px-3">
-            <SidebarTrigger />
+            <SidebarTrigger
+              size={"default"}
+              className="w-fit"
+              onClick={() => setOpen((prev) => !prev)}
+              shortCut={<Kbd>{formatForDisplay("Mod+B")}</Kbd>}
+            />
           </div>
           <div className="ml-auto" />
           <DropdownMenu>
