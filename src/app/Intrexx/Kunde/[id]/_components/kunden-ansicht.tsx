@@ -1,12 +1,8 @@
 "use client";
 
 import { api } from "@/trpc/react";
-import { ColumnDef } from "@tanstack/react-table";
-import { XFILEDATAGROUP6 } from "../../../../../../generated/intrexx/client";
 import { DataTable } from "@/components/data-table";
 import { Separator } from "@/components/ui/separator";
-import { inferRouterOutputs } from "@trpc/server";
-import { AppRouter } from "@/server/api/root";
 import {
   Card,
   CardContent,
@@ -16,377 +12,19 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import LoadingSkeleton from "@/components/loading-skeleton";
-
-type RouterOutput = inferRouterOutputs<AppRouter>;
-type IntrexxKunde = RouterOutput["intrexx_kunden"]["get"];
-
-const columnsIrgendwas: ColumnDef<XFILEDATAGROUP6>[] = [
-  { accessorKey: "LID" },
-  { accessorKey: "STRFILENAME" },
-  { accessorKey: "STRURL" },
-  { accessorKey: "STRCONTENTTYPE" },
-  { accessorKey: "LUSERID" },
-  { accessorKey: "DTINSERT" },
-  { accessorKey: "LUSERIDINSERT" },
-  { accessorKey: "FKLID" },
-  { accessorKey: "DTEDIT" },
-  { accessorKey: "DTLASTMODIFY" },
-  { accessorKey: "STRMETA" },
-  { accessorKey: "LORDER" },
-];
-
-const columnGeräte: ColumnDef<IntrexxKunde["Geräte"][0]>[] = [
-  { accessorKey: "LID" },
-  { accessorKey: "LUSERID" },
-  { accessorKey: "LUSERIDINSERT" },
-  { accessorKey: "DTEDIT" },
-  { accessorKey: "DTINSERT" },
-  { accessorKey: "STR_BESCHREIBUNG_25EF44CB" },
-  { accessorKey: "L_GERTENR_B4E6AEA5" },
-  { accessorKey: "L_INTREXXNR_615CC850" },
-  { accessorKey: "STR_KONFIGURATION_E2BE31D5" },
-  { accessorKey: "STR_HERSTELLER_D957E082" },
-  { accessorKey: "DT_KAUFDATUM_701B435B" },
-  { accessorKey: "B_AUSGEMUSTERT_622C2EFE" },
-  { accessorKey: "STR_GARANTIE_E566FEB1" },
-  { accessorKey: "B_VORORT_BF77D997" },
-  { accessorKey: "TXT_BEMERKUNG" },
-];
-
-const columnWA: ColumnDef<IntrexxKunde["WA"][0]>[] = [
-  {
-    accessorKey: "DTINSERT",
-    header: "Datum",
-    cell: ({ row }) => {
-      const x = row.original;
-
-      return x.DTINSERT?.toLocaleString("de-de", {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-      });
-    },
-  },
-  { accessorKey: "L_XWANR_B9E0244D", header: "WA Nr." },
-  {
-    accessorKey: "STR_AUFTRAGSART_208E7536",
-    header: "Auftragsart",
-    cell: ({ row }) => {
-      const x = row.original;
-      return (
-        <div className="w-31">
-          <p className="text-pretty break-all">{x.STR_AUFTRAGSART_208E7536}</p>
-        </div>
-      );
-    },
-  },
-  {
-    accessorKey: "STR_AUFTRAGSNUMMERSAGE",
-    header: "SAGE Nr.",
-  },
-  { accessorKey: "L_GERT_18257601", header: "Geräte Nr." },
-  {
-    accessorKey: "STR_GERTEBESCHREIBUNG_08244125",
-    header: "Gerätebeschreibung",
-    cell: ({ row }) => {
-      const x = row.original;
-      return (
-        <div className="w-31">
-          <p className="text-pretty break-all">
-            {x.STR_GERTEBESCHREIBUNG_08244125}
-          </p>
-        </div>
-      );
-    },
-  },
-  {
-    accessorKey: "TXT_BESCHREIBUNGDESGE_D646B19B",
-    header: "Beschreibung",
-    cell: ({ row }) => {
-      const x = row.original;
-      return (
-        <div className="w-31">
-          <p className="text-pretty break-all">
-            {x.TXT_BESCHREIBUNGDESGE_D646B19B}
-          </p>
-        </div>
-      );
-    },
-  },
-  {
-    accessorKey: "TXT_PROBLEMBZWAUFGABE_01724AEF",
-    header: "Problem",
-    cell: ({ row }) => {
-      const x = row.original;
-      return (
-        <div className="w-31">
-          <p className="text-pretty break-all">
-            {x.TXT_PROBLEMBZWAUFGABE_01724AEF}
-          </p>
-        </div>
-      );
-    },
-  },
-  { accessorKey: "B_RMAAKTIV_F3426D1D", header: "RMA" },
-  {
-    accessorKey: "STR_STATUS_8388673F",
-    header: "Status",
-    cell: ({ row }) => {
-      const x = row.original;
-      return (
-        <div className="w-18">
-          <p className="text-pretty break-all">{x.STR_STATUS_8388673F}</p>
-        </div>
-      );
-    },
-  },
-  {
-    accessorKey: "DT_KUNDEBRINGTREINAM",
-    header: "Kunde bringt",
-    cell: ({ row }) => {
-      const x = row.original;
-
-      return x.DT_KUNDEBRINGTREINAM?.toLocaleString("de-de", {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric",
-      });
-    },
-  },
-  {
-    accessorKey: "DT_FIXTERMIN",
-    header: "Fixtermin",
-    cell: ({ row }) => {
-      const x = row.original;
-
-      return x.DT_FIXTERMIN?.toLocaleString("de-de", {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric",
-      });
-    },
-  },
-];
-
-const columnsRMA: ColumnDef<IntrexxKunde["RMA"][0]>[] = [
-  { accessorKey: "LID" },
-  { accessorKey: "LUSERID" },
-  { accessorKey: "DTEDIT" },
-  { accessorKey: "LUSERIDINSERT" },
-  { accessorKey: "DTINSERT" },
-  { accessorKey: "STR_KUNDEAUSINTREXX_E12B9044" },
-  { accessorKey: "L_INTREXXNR_213345CC" },
-  { accessorKey: "L_KUNDENID_326934EF" },
-  { accessorKey: "STR_NAME2_E02D8374" },
-  { accessorKey: "STR_STRASSE_1B6EE904" },
-  { accessorKey: "STR_PLZ_064718F3" },
-  { accessorKey: "STR_ORT_02C44E67" },
-  { accessorKey: "STR_TELEFON_AF1F5B0D" },
-  { accessorKey: "STR_ALTERNATIVETELEFO_FA071E86" },
-  { accessorKey: "LSTR_KUNDENNUMMER_DD750857ID" },
-  { accessorKey: "L_RMANR_17A9990C" },
-  { accessorKey: "STR_MITARBEITER_4C2953F0" },
-  { accessorKey: "L_WANR_6602D8B1" },
-  { accessorKey: "DT_WAERSTELLTAM_8B71E6A1" },
-  { accessorKey: "STR_STATUS_0F6403CC" },
-  { accessorKey: "STR_ARTIKELBEZEICHNUN_86D16860" },
-  { accessorKey: "TXT_FEHLERBESCHREIBUN_CCB69242" },
-  { accessorKey: "STR_ARTIKELNRKHK_8FDE2E06" },
-  { accessorKey: "TXT_BEMERKUNG_87D3A3EC" },
-  { accessorKey: "STR_SN_8239795B" },
-  { accessorKey: "STR_PAKETNUMMER_528AB818" },
-  { accessorKey: "STR_RMANR_8D18AD38" },
-  { accessorKey: "STR_RENRLIEFERANT_6B91EDD5" },
-  { accessorKey: "DT_REDATUMLIEFERANT_9E02F701" },
-  { accessorKey: "DT_RMADATUM_FC430B1A" },
-  { accessorKey: "STR_LIEFERANT_3C2052B4" },
-  { accessorKey: "STR_RCKSENDUNGAN_D171B5CB" },
-  { accessorKey: "STR_RMANAME2_87386488" },
-  { accessorKey: "STR_RMASTRASSE_5AACD139" },
-  { accessorKey: "STR_RMAPLZ_3E0626BA" },
-  { accessorKey: "STR_RMAORT_75F9B170" },
-  { accessorKey: "DT_ENDE_BF34671C" },
-  { accessorKey: "L_WAID_DC7C2906" },
-  { accessorKey: "STR_RMAERGEBNIS_26D40C10" },
-  { accessorKey: "DT_RMADATUMZURCK_0508E3DE" },
-  { accessorKey: "TXT_RMAERGEBNISBEMERK_606F8A8A" },
-  { accessorKey: "STR_RMAANZAHL_C04337D1" },
-  { accessorKey: "STR_AUSGEBUCHT_CC96D27F" },
-  { accessorKey: "STR_PAKETDIENST" },
-];
-
-const columnsTermine: ColumnDef<IntrexxKunde["Termine"][0]>[] = [
-  {
-    accessorKey: "DTINSERT",
-    header: "Datum",
-    cell: ({ row }) => {
-      const x = row.original;
-
-      return x.DTINSERT?.toLocaleString("de-de", {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-      });
-    },
-  },
-  { accessorKey: "STR_MITARBEITER_B9BA444C", header: "Mitarbeiter" },
-  { accessorKey: "STR_MITARBEITER_D54548CB", header: "Techniker" },
-  {
-    accessorKey: "DT_VON_EAA8287E",
-    header: "Von",
-    cell: ({ row }) => {
-      const x = row.original;
-
-      return x.DT_VON_EAA8287E?.toLocaleString("de-de", {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-      });
-    },
-  },
-  {
-    accessorKey: "DT_BIS_4493FE19",
-    header: "Bis",
-    cell: ({ row }) => {
-      const x = row.original;
-
-      return x.DT_BIS_4493FE19?.toLocaleString("de-de", {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-      });
-    },
-  },
-  { accessorKey: "STR_ANZAHLANUNDABFAHRT", header: "An/Abfahrt" },
-  {
-    accessorKey: "TXT_AUTRAGSBESCHREIBU_01EBFA02",
-    header: "Beschreibung",
-    cell: ({ row }) => {
-      const x = row.original;
-      return (
-        <div className="w-31">
-          <p className="text-pretty break-all">
-            {x.TXT_AUTRAGSBESCHREIBU_01EBFA02}
-          </p>
-        </div>
-      );
-    },
-  },
-  { accessorKey: "L_GESAMTDL_A804AE51", header: "Gesamt DL" },
-  {
-    accessorKey: "STR_STATUS_14F9CA65",
-    header: "Status",
-    cell: ({ row }) => {
-      const x = row.original;
-      const color = x.STR_STATUS_14F9CA65;
-
-      switch (color) {
-        case "#FFFF00":
-          return <div className="h-6 w-full rounded-sm bg-yellow-500" />;
-        case "#0099FF":
-          return <div className="h-6 w-full rounded-sm bg-blue-500" />;
-        case "#FF0000":
-          return <div className="h-6 w-full rounded-sm bg-red-500" />;
-        case "#6633FF":
-          return <div className="h-6 w-full rounded-sm bg-purple-500" />;
-        case "#00FF00":
-          return <div className="h-6 w-full rounded-sm bg-green-500" />;
-        case "#666666":
-          return <div className="h-6 w-full rounded-sm bg-gray-500" />;
-        default:
-          return <div className="h-6 w-full">{color}</div>;
-      }
-    },
-  },
-];
-
-const columnsNB: ColumnDef<IntrexxKunde["NB"][0]>[] = [
-  { accessorKey: "LID" },
-  { accessorKey: "LUSERID" },
-  { accessorKey: "LUSERIDINSERT" },
-  { accessorKey: "DTEDIT" },
-  { accessorKey: "DTINSERT" },
-  { accessorKey: "STR_KUNDE_6B1979C7" },
-  { accessorKey: "STR_KOMMISSIONIERER_72028765" },
-  { accessorKey: "STR_AUFTRAGSNUMMERKHK_E440E7D0" },
-  { accessorKey: "STR_STATUS_549CBC40" },
-  { accessorKey: "B_EILAUFTRAG_7D1E7E98" },
-  { accessorKey: "DT_FIXTERMIN_4019DB73" },
-  { accessorKey: "L_INTREXXNR_AE6C9D81" },
-  { accessorKey: "L_KOMMISSIONSNR_A25FFFAD" },
-  { accessorKey: "STR_NAME_A5C91504" },
-  { accessorKey: "STR_PLZ_BC0CE8FB" },
-  { accessorKey: "STR_ORT_C3A612F5" },
-  { accessorKey: "STR_TELEFON_F2129703" },
-  { accessorKey: "STR_ALTERNATIVETELEFO_E0E42CDF" },
-  { accessorKey: "STR_KUNDENUMMER_545CBACCLID" },
-  { accessorKey: "STR_NAME2_8BD5DB2A" },
-  { accessorKey: "DT_AUFTRAGSDATUMKHK_CA977541" },
-  { accessorKey: "L_KUNDENID_24BF80BD" },
-  { accessorKey: "B_EINZELTEILAUFTRAG_A39ECC92" },
-  { accessorKey: "TXT_FEHLTEILE_A0F28CFE" },
-  { accessorKey: "STR_BESCHREIBUNG_5F254E86" },
-  { accessorKey: "STR_KONFIGURATION_2C3567B0" },
-  { accessorKey: "L_GERTENR_37F271AA" },
-  { accessorKey: "STR_BEZUGSQUELLE_EAAE498D" },
-  { accessorKey: "STR_VERKUFER_679A6C41" },
-  { accessorKey: "STR_EMAILADRESSE_566990BB" },
-];
-
-const columnsPcVisit: ColumnDef<IntrexxKunde["PCVisit"][0]>[] = [
-  { accessorKey: "Supporter", header: "Mitarbeiter" },
-  { accessorKey: "Rechnername", header: "Rechnername" },
-  { accessorKey: "Benutzername", header: "Benutzername" },
-  {
-    accessorKey: "Problem",
-    header: "Aufgabe",
-    cell: ({ row }) => {
-      const x = row.original;
-      return (
-        <div className="w-40">
-          <p className="text-pretty break-all">{x.Problem}</p>
-        </div>
-      );
-    },
-  },
-  {
-    accessorKey: "Startzeit",
-    header: "Startzeit",
-    cell: ({ row }) => {
-      const x = row.original;
-
-      return x.Startzeit?.toLocaleString("de-de", {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-      });
-    },
-  },
-  { accessorKey: "Dauer", header: "Dauer" },
-  {
-    accessorKey: "Ergebnis",
-    header: "Ergebnis",
-    cell: ({ row }) => {
-      const x = row.original;
-      return (
-        <div className="w-40">
-          <p className="text-pretty break-all">{x.Ergebnis}</p>
-        </div>
-      );
-    },
-  },
-  { accessorKey: "Status", header: "Status" },
-];
+import {
+  columnGeräte,
+  columnsDienstleistungen,
+  columnsIrgendwas,
+  columnsLeasing,
+  columnsNB,
+  columnsPcVisit,
+  columnsRMA,
+  columnsTermine,
+  columnWA,
+} from "./columns";
+import Link from "next/link";
+import { CheckCircleIcon, CrossIcon } from "lucide-react";
 
 function Green() {
   return <span className="size-4 rounded-2xl bg-green-500" />;
@@ -418,8 +56,35 @@ export default function KundenAnsicht({ id }: { id: number }) {
               {res.data?.Kunde?.STR_NAME_5FE19153} <br />
               {res.data?.Kunde?.STR_NAME2_CECE8E30}
             </div>
-            <div>AV KRAM</div>
-            <div>DOKU</div>
+            <div>
+              <Card>
+                <CardHeader>
+                  <CardTitle>AV</CardTitle>
+                  <CardDescription>
+                    {res.data?.Kunde?.DT_ANTIVIRENPROGRAMMI_197D92CB?.toLocaleDateString(
+                      "de-de",
+                    )}{" "}
+                    <br />
+                    {res.data?.Kunde?.STR_AVBEARBEITUNGSSTA_E30A9B89}
+                  </CardDescription>
+                </CardHeader>
+              </Card>
+            </div>
+            <div>
+              {res.data?.Kunde?.B_KUNDEISTINCEDOKUANG_F42FE149 ? (
+                <Button asChild>
+                  <Link
+                    href={
+                      "/Intrexx/Doku/" + res.data.Kunde.L_INTREXXNR_5F3E58AF
+                    }
+                  >
+                    DOKU
+                  </Link>
+                </Button>
+              ) : (
+                <Button disabled>Nicht in Doku</Button>
+              )}
+            </div>
             {res.data?.Kunde?.STR_PCVISITURL ? (
               <Button asChild>
                 <a
@@ -437,7 +102,9 @@ export default function KundenAnsicht({ id }: { id: number }) {
             )}
 
             <div>
-              <h2>Datenübermittlung</h2>
+              <h2 className="scroll-m-20 border-b pb-1 text-lg font-semibold tracking-tight first:mt-0">
+                Datenübermittlung
+              </h2>
               <div className="grid grid-cols-2 gap-2 text-sm font-thin">
                 <span className="m-0 p-0 leading-none">Apple</span>
                 {res.data?.Kunde?.STR_APPLE == "ja" ? (
@@ -466,8 +133,14 @@ export default function KundenAnsicht({ id }: { id: number }) {
               </div>
             </div>
             <div>
-              <h2>Sepa</h2>
-              {res.data?.Kunde?.B_SEPAMANDATERSTELLT ? "Ja" : "Nein"}
+              <h2 className="scroll-m-20 border-b pb-1 text-lg font-semibold tracking-tight first:mt-0">
+                Sepa
+              </h2>
+              {res.data?.Kunde?.B_SEPAMANDATERSTELLT ? (
+                <CheckCircleIcon className="size-8 text-green-500" />
+              ) : (
+                <CrossIcon className="size-8 rotate-45 text-red-500" />
+              )}
             </div>
           </div>
         </CardTitle>
@@ -532,36 +205,43 @@ export default function KundenAnsicht({ id }: { id: number }) {
           Werkstattaufträge
         </h2>
         <DataTable columns={columnWA} data={res.data?.WA ?? []} />
+
         <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
           Termine
         </h2>
         <DataTable columns={columnsTermine} data={res.data?.Termine ?? []} />
+
         <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
           PC Visit
         </h2>
         <DataTable columns={columnsPcVisit} data={res.data?.PCVisit ?? []} />
+
         <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
           Dienstleitungen
         </h2>
-        {/* TODO: Tabelle */}
+        <DataTable
+          columns={columnsDienstleistungen}
+          data={res.data?.Dienstleistungen ?? []}
+        />
+
         <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
           RMA
         </h2>
-        {/* TODO: Formatierung */}
         <DataTable columns={columnsRMA} data={res.data?.RMA ?? []} />
+
         <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
           Geräte
         </h2>
-        {/* TODO: Formatierung */}
         <DataTable columns={columnGeräte} data={res.data?.Geräte ?? []} />
+
         <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
           Leasing
         </h2>
-        {/* TODO: Tabelle */}
+        <DataTable columns={columnsLeasing} data={res.data?.Leasing ?? []} />
+
         <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
           Neubauten
         </h2>
-        {/* TODO: Formatierung */}
         <DataTable columns={columnsNB} data={res.data?.NB ?? []} />
       </CardContent>
 

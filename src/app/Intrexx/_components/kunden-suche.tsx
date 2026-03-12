@@ -28,6 +28,7 @@ type Ergebnis = {
   STR_NAME_5FE19153: string | null;
   STR_NAME2_CECE8E30: string | null;
   STR_STRASSE_1FE60006: string | null;
+  L_INTREXXNR_5F3E58AF: number | null;
 };
 
 const columns: ColumnDef<Ergebnis>[] = [
@@ -37,7 +38,7 @@ const columns: ColumnDef<Ergebnis>[] = [
     cell: ({ row }) => {
       const x = row.original;
       return (
-        <Link href={"/Intrexx/Kunde/" + x.LID}>
+        <Link href={"/Intrexx/Kunde/" + x.L_INTREXXNR_5F3E58AF}>
           {x.STR_KUNDENNUMMER_D45D177B}
         </Link>
       );
@@ -49,7 +50,9 @@ const columns: ColumnDef<Ergebnis>[] = [
     cell: ({ row }) => {
       const x = row.original;
       return (
-        <Link href={"/Intrexx/Kunde/" + x.LID}>{x.STR_NAME_5FE19153}</Link>
+        <Link href={"/Intrexx/Kunde/" + x.L_INTREXXNR_5F3E58AF}>
+          {x.STR_NAME_5FE19153}
+        </Link>
       );
     },
   },

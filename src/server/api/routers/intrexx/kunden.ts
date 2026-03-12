@@ -24,6 +24,7 @@ export const intrexxKundenRouter = createTRPCRouter({
           STR_NAME_5FE19153: true,
           STR_NAME2_CECE8E30: true,
           STR_STRASSE_1FE60006: true,
+          L_INTREXXNR_5F3E58AF: true,
         },
         orderBy: {
           STR_KUNDENNUMMER_D45D177B: "asc",
@@ -34,9 +35,9 @@ export const intrexxKundenRouter = createTRPCRouter({
   get: publicProcedure
     .input(z.object({ id: z.number().int() }))
     .query(async ({ ctx, input }) => {
-      const Kunde = await ctx.intrexx.xTABLE898B92CE.findUnique({
+      const Kunde = await ctx.intrexx.xTABLE898B92CE.findFirst({
         where: {
-          LID: input.id,
+          L_INTREXXNR_5F3E58AF: input.id,
         },
         include: {
           XDATAGROUPFFC21EED: {
