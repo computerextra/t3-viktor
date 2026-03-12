@@ -1,8 +1,7 @@
 "use client";
 
 import { api } from "@/trpc/react";
-import { DataTable } from "@/components/data-table";
-import { Separator } from "@/components/ui/separator";
+import { PaginatedDataTable as DataTable } from "@/components/data-table";
 import {
   Card,
   CardContent,
@@ -15,7 +14,6 @@ import LoadingSkeleton from "@/components/loading-skeleton";
 import {
   columnGeräte,
   columnsDienstleistungen,
-  columnsIrgendwas,
   columnsLeasing,
   columnsNB,
   columnsPcVisit,
@@ -245,7 +243,7 @@ export default function KundenAnsicht({ id }: { id: number }) {
         <DataTable columns={columnsNB} data={res.data?.NB ?? []} />
       </CardContent>
 
-      <h2>Dateien</h2>
+      {/* <h2>Dateien</h2>
       {res.data?.Kunde?.XDATAGROUPFFC21EED.map((x) => (
         <DataTable
           key={x.LID}
@@ -253,7 +251,7 @@ export default function KundenAnsicht({ id }: { id: number }) {
           data={x.XFILEDATAGROUP6 ?? []}
         />
       ))}
-      <Separator className="my-5" />
+      <Separator className="my-5" /> */}
     </Card>
   );
 }

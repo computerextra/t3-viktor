@@ -9,6 +9,8 @@ import {
 } from "@/components/ui/tooltip";
 import { CheckCircleIcon, CrossIcon } from "lucide-react";
 import Link from "next/link";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import GeräteDialog from "./geräte-dialog";
 
 type RouterOutput = inferRouterOutputs<AppRouter>;
 type IntrexxKunde = RouterOutput["intrexx_kunden"]["get"];
@@ -44,7 +46,20 @@ export const columnGeräte: ColumnDef<IntrexxKunde["Geräte"][0]>[] = [
       });
     },
   },
-  { accessorKey: "L_GERTENR_B4E6AEA5", header: "GN" },
+  {
+    accessorKey: "L_GERTENR_B4E6AEA5",
+    header: "GN",
+    cell: ({ row }) => {
+      const x = row.original;
+      if (x.L_GERTENR_B4E6AEA5)
+        return (
+          <Dialog>
+            <DialogTrigger>{x.L_GERTENR_B4E6AEA5}</DialogTrigger>
+            <GeräteDialog Gerätenummer={x.L_GERTENR_B4E6AEA5} />
+          </Dialog>
+        );
+    },
+  },
   {
     accessorKey: "STR_BESCHREIBUNG_25EF44CB",
     header: "Beschreibung",
@@ -177,7 +192,20 @@ export const columnWA: ColumnDef<IntrexxKunde["WA"][0]>[] = [
     accessorKey: "STR_AUFTRAGSNUMMERSAGE",
     header: "SAGE Nr.",
   },
-  { accessorKey: "L_GERT_18257601", header: "Geräte Nr." },
+  {
+    accessorKey: "L_GERT_18257601",
+    header: "Geräte Nr.",
+    cell: ({ row }) => {
+      const x = row.original;
+      if (x.L_GERT_18257601)
+        return (
+          <Dialog>
+            <DialogTrigger>{x.L_GERT_18257601}</DialogTrigger>
+            <GeräteDialog Gerätenummer={x.L_GERT_18257601} />
+          </Dialog>
+        );
+    },
+  },
   {
     accessorKey: "STR_GERTEBESCHREIBUNG_08244125",
     header: "Gerätebeschreibung",

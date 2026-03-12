@@ -1,5 +1,5 @@
 import { HydrateClient } from "@/trpc/server";
-import WaAnsicht from "./_components/wa-ansicht";
+import NbAnsicht from "./_components/nb-ansicht";
 
 export default async function Page({
   params,
@@ -10,7 +10,7 @@ export default async function Page({
 
   return (
     <HydrateClient>
-      <WaAnsicht id={parseInt(id)} />
+      <NbAnsicht id={id} />
     </HydrateClient>
   );
 }
