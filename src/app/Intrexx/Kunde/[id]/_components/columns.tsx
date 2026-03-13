@@ -1,3 +1,5 @@
+"use client";
+
 import type { AppRouter } from "@/server/api/root";
 import type { ColumnDef } from "@tanstack/react-table";
 import type { inferRouterOutputs } from "@trpc/server";

@@ -18,7 +18,7 @@ export default function EinkaufCard() {
   const res = api.einkauf.einkaufsliste.useQuery();
 
   return (
-    <Card className="my-8">
+    <Card className="my-8 print:border-0! print:text-black print:shadow-none">
       <CardContent>
         {res.isLoading && (
           <LoadingSkeleton desc="Einkaufsliste wird geladen..." />

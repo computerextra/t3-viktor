@@ -1,3 +1,5 @@
+"use client";
+
 import { DataTable } from "@/components/data-table";
 import LoadingSkeleton from "@/components/loading-skeleton";
 import {

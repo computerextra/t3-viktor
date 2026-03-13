@@ -14,7 +14,7 @@ export default async function Home() {
         <h1 className="mt-12 scroll-m-20 text-center text-4xl font-extrabold tracking-tight text-balance print:hidden">
           Einkaufsliste
         </h1>
-        <h1 className="mt-12 hidden scroll-m-20 text-center text-4xl font-extrabold tracking-tight text-balance print:block">
+        <h1 className="mt-12 hidden scroll-m-20 text-center text-4xl font-extrabold tracking-tight text-balance print:block print:text-black">
           An Post / Kaffee / Milch denken!
         </h1>
 

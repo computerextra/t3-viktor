@@ -1,21 +1,13 @@
 "use client";
 
 import { api } from "@/trpc/react";
-import { useForm } from "@tanstack/react-form";
 import { useRouter } from "next/navigation";
-
-import { Switch } from "@/components/ui/switch";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import {
-  Field,
-  FieldError,
-  FieldGroup,
-  FieldLabel,
-} from "@/components/ui/field";
+import { Field, FieldError, FieldGroup } from "@/components/ui/field";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import LoadingSkeleton from "@/components/loading-skeleton";
+import { useAppForm } from "@/components/Form";
 
 import { ACCEPTED_IMAGE_TYPES, BildServer, EinkaufPropsClient } from "@/types";
 
@@ -46,7 +38,7 @@ export default function EinkaufForm({ id }: { id: string }) {
     },
   });
 
-  const form = useForm({
+  const form = useAppForm({
     validators: {
       onSubmit: EinkaufPropsClient,
     },
@@ -112,118 +104,49 @@ export default function EinkaufForm({ id }: { id: string }) {
     >
       <FieldGroup>
         <div className="grid grid-cols-2 gap-8">
-          <form.Field
+          <form.AppField
             name="geld"
-            children={(field) => {
-              const isInvalid =
-                field.state.meta.isTouched && !field.state.meta.isValid;
-              return (
-                <Field data-invalid={isInvalid}>
-                  <FieldLabel htmlFor={field.name}>Geld</FieldLabel>
-                  <Input
-                    disabled={upsertEinkauf.isPending}
-                    id={field.name}
-                    name={field.name}
-                    value={field.state.value}
-                    onBlur={field.handleBlur}
-                    onChange={(e) => field.handleChange(e.target.value)}
-                    aria-invalid={isInvalid}
-                  />
-                  {isInvalid && <FieldError errors={field.state.meta.errors} />}
-                </Field>
-              );
-            }}
+            children={(field) => (
+              <field.FormInput label="Geld" loading={upsertEinkauf.isPending} />
+            )}
           />
-          <form.Field
+          <form.AppField
             name="pfand"
-            children={(field) => {
-              const isInvalid =
-                field.state.meta.isTouched && !field.state.meta.isValid;
-              return (
-                <Field data-invalid={isInvalid}>
-                  <FieldLabel htmlFor={field.name}>Pfand</FieldLabel>
-                  <Input
-                    disabled={upsertEinkauf.isPending}
-                    id={field.name}
-                    name={field.name}
-                    value={field.state.value}
-                    onBlur={field.handleBlur}
-                    onChange={(e) => field.handleChange(e.target.value)}
-                    aria-invalid={isInvalid}
-                  />
-                  {isInvalid && <FieldError errors={field.state.meta.errors} />}
-                </Field>
-              );
-            }}
+            children={(field) => (
+              <field.FormInput
+                label="Pfand"
+                loading={upsertEinkauf.isPending}
+              />
+            )}
           />
         </div>
         <div className="grid grid-cols-2 gap-8">
-          <form.Field
+          <form.AppField
             name="paypal"
-            children={(field) => {
-              const isInvalid =
-                field.state.meta.isTouched && !field.state.meta.isValid;
-              return (
-                <Field data-invalid={isInvalid} orientation="horizontal">
-                  <FieldLabel htmlFor={field.name}>Paypal</FieldLabel>
-                  <Switch
-                    disabled={upsertEinkauf.isPending}
-                    id={field.name}
-                    name={field.name}
-                    checked={field.state.value}
-                    onCheckedChange={field.handleChange}
-                    aria-invalid={isInvalid}
-                  />
-                  {isInvalid && <FieldError errors={field.state.meta.errors} />}
-                </Field>
-              );
-            }}
+            children={(field) => (
+              <field.FormSwitch
+                label="Paypal"
+                loading={upsertEinkauf.isPending}
+              />
+            )}
           />
-          <form.Field
+          <form.AppField
             name="abo"
-            children={(field) => {
-              const isInvalid =
-                field.state.meta.isTouched && !field.state.meta.isValid;
-              return (
-                <Field data-invalid={isInvalid} orientation="horizontal">
-                  <FieldLabel htmlFor={field.name}>Abo</FieldLabel>
-                  <Switch
-                    disabled={upsertEinkauf.isPending}
-                    id={field.name}
-                    name={field.name}
-                    checked={field.state.value}
-                    onCheckedChange={field.handleChange}
-                    aria-invalid={isInvalid}
-                  />
-                  {isInvalid && <FieldError errors={field.state.meta.errors} />}
-                </Field>
-              );
-            }}
+            children={(field) => (
+              <field.FormSwitch label="Abo" loading={upsertEinkauf.isPending} />
+            )}
           />
         </div>
-        <form.Field
+        <form.AppField
           name="dinge"
-          children={(field) => {
-            const isInvalid =
-              field.state.meta.isTouched && !field.state.meta.isValid;
-            return (
-              <Field data-invalid={isInvalid}>
-                <FieldLabel htmlFor={field.name}>Dinge</FieldLabel>
-                <Textarea
-                  disabled={upsertEinkauf.isPending}
-                  id={field.name}
-                  name={field.name}
-                  value={field.state.value}
-                  onBlur={field.handleBlur}
-                  onChange={(e) => field.handleChange(e.target.value)}
-                  aria-invalid={isInvalid}
-                  className="min-h-30"
-                />
-                {isInvalid && <FieldError errors={field.state.meta.errors} />}
-              </Field>
-            );
-          }}
+          children={(field) => (
+            <field.FormTextarea
+              label="Dinge"
+              loading={upsertEinkauf.isPending}
+            />
+          )}
         />
+
         <div className="grid grid-cols-3 gap-8">
           <form.Field
             name="bild1"

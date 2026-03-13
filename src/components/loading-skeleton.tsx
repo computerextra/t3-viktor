@@ -17,7 +17,7 @@ export default function LoadingSkeleton({ desc }: { desc: string }) {
   return (
     <Empty className="w-full">
       <EmptyHeader>
-        <EmptyMedia variant={"icon"}>
+        <EmptyMedia variant={"icon"} className="size-20 bg-transparent">
           <Spinner className="size-20" />
         </EmptyMedia>
         <EmptyTitle>{desc}</EmptyTitle>

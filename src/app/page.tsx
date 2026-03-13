@@ -1,7 +1,6 @@
-import { HydrateClient } from "@/trpc/server";
-
 import Clock from "@/app/_components/clock";
 import GeburtstagsListe from "@/app/_components/geburtstags-liste";
+import { HydrateClient } from "@/trpc/server";
 
 export const dynamic = "force-dynamic";
 

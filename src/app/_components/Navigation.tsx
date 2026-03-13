@@ -47,18 +47,29 @@ const MAIN_NAV = [
   { title: "CE Archiv", url: "/Archiv" },
   { title: "Kunden", url: "/Kunden, " },
   { title: "Warenlieferung", url: "/Warenlieferung" },
-  { title: "CMS", url: "/CMS" },
+  {
+    title: "CMS",
+    url: "/CMS",
+    items: [
+      { title: "Abteilungen", url: "/CMS/Abteilung" },
+      { title: "Angebote", url: "/CMS/Angebot" },
+      { title: "Jobs", url: "/CMS/Job" },
+      { title: "Mitarbeiter", url: "/CMS/Mitarbeiter" },
+      { title: "Partner", url: "/CMS/Partner" },
+      { title: "Referenzen", url: "/CMS/Referenz" },
+    ],
+  },
   { title: "SN", url: "/SN" },
   { title: "Info", url: "/Info" },
   { title: "Label", url: "/Label" },
   { title: "Aussteller", url: "/Aussteller" },
   { title: "Versand", url: "/Versand" },
   {
-    title: "Intrexx",
+    title: "Intrexx (Nur Lesen)",
     url: "/Intrexx",
     items: [
       { title: "Kundensuche", url: "/Intrexx" },
-      { title: "Intrexx 2", url: "/Intrexx/2" },
+      // { title: "Intrexx 2", url: "/Intrexx/2" },
     ],
   },
 ];

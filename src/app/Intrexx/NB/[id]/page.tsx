@@ -1,6 +1,6 @@
 import { HydrateClient } from "@/trpc/server";
 import NbAnsicht from "./_components/nb-ansicht";
-
+export const dynamic = "force-dynamic";
 export default async function Page({
   params,
 }: {

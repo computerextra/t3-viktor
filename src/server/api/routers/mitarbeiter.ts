@@ -2,6 +2,28 @@ import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure } from "../trpc";
 
+const MitarbeiterProps = z.object({
+  id: z.string().optional(),
+  name: z.string(),
+  short: z.string().nullable(),
+  image: z.boolean().default(false),
+  sex: z.enum(["w", "m"]).nullable(),
+  focus: z.string().nullable(),
+  mail: z.email().nullable(),
+  abteilungId: z.string().nullable(),
+  Azubi: z.boolean().default(false),
+  Geburtstag: z.date().nullable(),
+  Gruppenwahl: z.string().nullable(),
+  HomeOffice: z.string().nullable(),
+  Mobil_Business: z.string().nullable(),
+  Mobil_Privat: z.string().nullable(),
+  Telefon_Business: z.string().nullable(),
+  Telefon_Intern_1: z.string().nullable(),
+  Telefon_Intern_2: z.string().nullable(),
+  Telefon_Privat: z.string().nullable(),
+  Bild: z.string().nullable(),
+});
+
 export const mitarbeiterRouter = createTRPCRouter({
   getAll: publicProcedure.query(async ({ ctx }) => {
     const mitarbeiter = await ctx.viktor.mitarbeiter.findMany({
@@ -9,6 +31,40 @@ export const mitarbeiterRouter = createTRPCRouter({
     });
     return mitarbeiter ?? null;
   }),
+  upsert: publicProcedure
+    .input(MitarbeiterProps)
+    .mutation(async ({ ctx, input }) => {
+      let image: string | null = null;
+      // TODO: Upload für Mitarbeiter Bilder bauen!
+      // if(input.Bild) image = await uploadImageToFTP(input.Bild)
+
+      if (input.id)
+        await ctx.viktor.mitarbeiter.update({
+          where: { id: input.id },
+          data: { ...input, Bild: image },
+        });
+      else
+        await ctx.viktor.mitarbeiter.create({
+          data: { ...input, Bild: image },
+        });
+    }),
+  getWithAbteilung: publicProcedure
+    .input(z.object({ id: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const ma = await ctx.viktor.mitarbeiter.findUnique({
+        where: { id: input.id },
+        include: { Abteilung: true },
+      });
+      return ma ?? null;
+    }),
+  get: publicProcedure
+    .input(z.object({ id: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const ma = await ctx.viktor.mitarbeiter.findUnique({
+        where: { id: input.id },
+      });
+      return ma ?? null;
+    }),
   geburtstage: publicProcedure.query(async ({ ctx }) => {
     const mitarbeiter = await ctx.viktor.mitarbeiter.findMany({
       where: {

@@ -1,6 +1,8 @@
 import { HydrateClient } from "@/trpc/server";
 import KundenSuche from "./_components/kunden-suche";
 
+export const dynamic = "force-dynamic";
+
 export default async function page() {
   return (
     <HydrateClient>

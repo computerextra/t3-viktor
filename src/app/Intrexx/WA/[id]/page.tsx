@@ -1,6 +1,8 @@
 import { HydrateClient } from "@/trpc/server";
 import WaAnsicht from "./_components/wa-ansicht";
 
+export const dynamic = "force-dynamic";
+
 export default async function Page({
   params,
 }: {
