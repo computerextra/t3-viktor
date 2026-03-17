@@ -8,7 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "db:generate": "prisma generate",
+    "db:generate": "prisma generate --schema prisma-intrexx-database/schema.prisma && prisma generate --schema prisma-pcvisit-database/schema.prisma && prisma generate --schema prisma-sage-database/schema.prisma && prisma generate --schema prisma-viktor-database/schema.prisma",
     "db:migrate": "prisma migrate deploy",
     "db:push": "prisma db push",
     "db:studio": "prisma studio",
