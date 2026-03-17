@@ -10,11 +10,21 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Kbd } from "@/components/ui/kbd";
 import { api } from "@/trpc/react";
+import { formatForDisplay, useHotkey } from "@tanstack/react-hotkeys";
 import { GlobeIcon, SchoolIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function MitarbeiterAnsicht() {
   const res = api.mitarbeiter.getAll.useQuery();
+
+  const navigate = useRouter();
+
+  useHotkey("Shift+N", () => navigate.push("/Mitarbeiter/new"), {
+    conflictBehavior: "replace",
+    preventDefault: true,
+  });
 
   if (res.isLoading)
     return <LoadingSkeleton desc="Mitarbeiter werden geladen" />;
@@ -24,6 +34,9 @@ export default function MitarbeiterAnsicht() {
       <CardHeader>
         <CardTitle>Mitarbeiter Übersicht</CardTitle>
         <CardDescription>
+          <span className="flex items-center">
+            <Kbd>{formatForDisplay("Shift+N")}</Kbd>: Neu
+          </span>
           <span className="flex items-center">
             <SchoolIcon className="size-4" />: Azubi
           </span>

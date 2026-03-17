@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { createTRPCRouter, publicProcedure } from "../trpc";
+import { createTRPCRouter, publicProcedure } from "../../trpc";
 import { EinkaufPropsServer } from "@/types";
 import { uploadImageToFTP } from "@/server/ftp-upload";
 

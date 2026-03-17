@@ -1,11 +1,11 @@
 import { createCallerFactory, createTRPCRouter } from "@/server/api/trpc";
-import { mitarbeiterRouter } from "./routers/mitarbeiter";
-import { einkaufRouter } from "./routers/einkauf";
+import { mitarbeiterRouter } from "./routers/viktor/mitarbeiter";
+import { einkaufRouter } from "./routers/viktor/einkauf";
 import { intrexxKundenRouter } from "./routers/intrexx/kunden";
 import { intrexxWaRouter } from "./routers/intrexx/werkstattauftrag";
 import { intrexxGeräteRouter } from "./routers/intrexx/geräte";
 import { intrexxNbRouter } from "./routers/intrexx/neubau";
-import { abteilungsRouter } from "./routers/abteilung";
+import { abteilungsRouter } from "./routers/viktor/abteilung";
 
 /**
  * This is the primary router for your server.
@@ -25,6 +25,8 @@ export const appRouter = createTRPCRouter({
   intrexx_wa: intrexxWaRouter,
   intrexx_nb: intrexxNbRouter,
   intrexx_geräte: intrexxGeräteRouter,
+
+  // PC Visit Calls
 });
 
 // export type definition of API

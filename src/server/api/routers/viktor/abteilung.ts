@@ -1,4 +1,4 @@
-import { createTRPCRouter, publicProcedure } from "../trpc";
+import { createTRPCRouter, publicProcedure } from "../../trpc";
 
 export const abteilungsRouter = createTRPCRouter({
   getAll: publicProcedure.query(async ({ ctx }) => {

@@ -8,6 +8,7 @@ import { TRPCReactProvider } from "@/trpc/react";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import MainSidebar from "@/app/_components/Navigation";
 import { ThemeProvider } from "./_components/theme-provider";
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
   title: "Viktor",
@@ -35,6 +36,7 @@ export default function RootLayout({
           >
             <TooltipProvider>
               <MainSidebar>{children}</MainSidebar>
+              <Toaster />
             </TooltipProvider>
           </ThemeProvider>
         </TRPCReactProvider>

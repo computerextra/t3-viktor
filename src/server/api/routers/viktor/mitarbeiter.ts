@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { createTRPCRouter, publicProcedure } from "../trpc";
+import { createTRPCRouter, publicProcedure } from "../../trpc";
 
 const MitarbeiterProps = z.object({
   id: z.string().optional(),
@@ -47,6 +47,13 @@ export const mitarbeiterRouter = createTRPCRouter({
         await ctx.viktor.mitarbeiter.create({
           data: { ...input, Bild: image },
         });
+    }),
+  delete: publicProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      await ctx.viktor.mitarbeiter.delete({
+        where: { id: input.id },
+      });
     }),
   getWithAbteilung: publicProcedure
     .input(z.object({ id: z.string() }))
