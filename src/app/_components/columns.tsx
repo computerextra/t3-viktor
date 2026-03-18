@@ -1,16 +1,26 @@
 "use client";
 
 import { PaginatedDataTable } from "@/components/data-table";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import type { AppRouter } from "@/server/api/root";
 import type { ColumnDef } from "@tanstack/react-table";
 import type { inferRouterOutputs } from "@trpc/server";
-import { GlobeIcon, SchoolIcon } from "lucide-react";
+import { CheckCircle, CrossIcon, GlobeIcon, SchoolIcon } from "lucide-react";
 import Link from "next/link";
 
 type RouterOutput = inferRouterOutputs<AppRouter>;
 type Mitarbeiter = RouterOutput["mitarbeiter"]["getAll"];
 type Lieferant = RouterOutput["lieferant"]["getAllWithAp"];
 type Ansprechpartner = RouterOutput["ansprechpartner"]["getAll"];
+type Abteilung = RouterOutput["abteilung"]["get"];
+type Angebot = RouterOutput["angebot"]["get"];
+type Job = RouterOutput["job"]["get"];
+type Partner = RouterOutput["partner"]["get"];
+type Referenz = RouterOutput["referenz"]["get"];
 
 const ansprechpartnerColumns: ColumnDef<Ansprechpartner[0]>[] = [
   {
@@ -106,6 +116,320 @@ export const lieferantenColumns: ColumnDef<Lieferant[0]>[] = [
           columns={ansprechpartnerColumns}
         />
       );
+    },
+  },
+];
+
+export const abteilungenColumns: ColumnDef<Abteilung>[] = [
+  {
+    accessorKey: "name",
+    header: "Name",
+    cell: ({ row }) => {
+      const x = row.original;
+      return <Link href={"/CMS/Abteilung/" + x?.id}>{x?.name}</Link>;
+    },
+  },
+  { accessorKey: "idx", header: "Index" },
+];
+
+export const AngeboteColumns: ColumnDef<Angebot>[] = [
+  {
+    accessorKey: "title",
+    header: "Titel",
+    cell: ({ row }) => {
+      const x = row.original;
+      return <Link href={"/CMS/Angebot/" + x?.id}>{x?.title}</Link>;
+    },
+  },
+  { accessorKey: "subtitle", header: "Sub Titel" },
+  {
+    accessorKey: "date_start",
+    header: "Laufzeit",
+    cell: ({ row }) => {
+      const x = row.original;
+      return (
+        <p>
+          {x?.date_start.toLocaleDateString("de-de", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+          })}
+          -
+          {x?.date_stop.toLocaleDateString("de-de", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+          })}
+        </p>
+      );
+    },
+  },
+  {
+    accessorKey: "link",
+    header: "Link",
+    cell: ({ row }) => {
+      const x = row.original;
+      if (x?.link)
+        return (
+          <div className="max-h-10 w-60">
+            <p className="overflow-hidden text-ellipsis">
+              <Tooltip>
+                <TooltipTrigger>
+                  <a href={x?.link} target="_blank" rel="noopener noreferrer">
+                    {x?.link}
+                  </a>
+                </TooltipTrigger>
+                <TooltipContent side="top" align="start" className="max-w-md">
+                  {x?.link}
+                </TooltipContent>
+              </Tooltip>
+            </p>
+          </div>
+        );
+      else return "-";
+    },
+  },
+  {
+    accessorKey: "image",
+    header: "Bild",
+    cell: ({ row }) => {
+      const x = row.original;
+      if (x?.image)
+        return (
+          <Tooltip>
+            <TooltipTrigger>{x?.image}</TooltipTrigger>
+            <TooltipContent side="left" align="start" className="max-w-md">
+              <img
+                src={
+                  "https://bilder.computer-extra.de/data/Angebote/" + x.image
+                }
+                alt={x.image}
+                className="h-auto max-w-md"
+              />
+            </TooltipContent>
+          </Tooltip>
+        );
+      else return "-";
+    },
+  },
+  {
+    accessorKey: "anzeigen",
+    header: "Online",
+    cell: ({ row }) => {
+      const x = row.original;
+      if (x?.anzeigen) return <CheckCircle className="size-4 text-green-500" />;
+      else return <CrossIcon className="size-4 rotate-45 text-red-500" />;
+    },
+  },
+];
+
+export const JobColumns: ColumnDef<Job>[] = [
+  {
+    accessorKey: "name",
+    header: "Name",
+    cell: ({ row }) => {
+      const x = row.original;
+      return <Link href={"/CMS/Job/" + x?.id}>{x?.name}</Link>;
+    },
+  },
+  {
+    accessorKey: "isAusbilung",
+    header: "Ausbildung",
+    cell: ({ row }) => {
+      const x = row.original;
+      if (x?.isAusbilung)
+        return <CheckCircle className="size-4 text-green-500" />;
+      else return <CrossIcon className="size-4 rotate-45 text-red-500" />;
+    },
+  },
+  {
+    accessorKey: "Aufgaben",
+    cell: ({ row }) => {
+      const x = row.original;
+      if (x?.Aufgaben)
+        return (
+          <div className="max-h-10 w-60">
+            <p className="overflow-hidden text-ellipsis">
+              <Tooltip>
+                <TooltipTrigger>{x?.Aufgaben}</TooltipTrigger>
+                <TooltipContent side="top" align="start" className="max-w-md">
+                  <ul className="my-6 ml-6 list-disc [&>li]:mt-2">
+                    {x?.Aufgaben.split("|").map((y, idx) => (
+                      <li key={idx}>{y}</li>
+                    ))}
+                  </ul>
+                </TooltipContent>
+              </Tooltip>
+            </p>
+          </div>
+        );
+      else return "-";
+    },
+  },
+  {
+    accessorKey: "Beschreibung",
+    cell: ({ row }) => {
+      const x = row.original;
+      if (x?.Beschreibung)
+        return (
+          <div className="max-h-10 w-60">
+            <p className="overflow-hidden text-ellipsis">
+              <Tooltip>
+                <TooltipTrigger>{x?.Beschreibung}</TooltipTrigger>
+                <TooltipContent side="top" align="start" className="max-w-md">
+                  {x?.Beschreibung}
+                </TooltipContent>
+              </Tooltip>
+            </p>
+          </div>
+        );
+      else return "-";
+    },
+  },
+  {
+    accessorKey: "Profil",
+    cell: ({ row }) => {
+      const x = row.original;
+      if (x?.Profil)
+        return (
+          <div className="max-h-10 w-60">
+            <p className="overflow-hidden text-ellipsis">
+              <Tooltip>
+                <TooltipTrigger>{x?.Profil}</TooltipTrigger>
+                <TooltipContent side="top" align="start" className="max-w-md">
+                  <ul className="my-6 ml-6 list-disc [&>li]:mt-2">
+                    {x?.Profil.split("|").map((y, idx) => (
+                      <li key={idx}>{y}</li>
+                    ))}
+                  </ul>
+                </TooltipContent>
+              </Tooltip>
+            </p>
+          </div>
+        );
+      else return "-";
+    },
+  },
+  {
+    accessorKey: "online",
+    header: "Auf Webseite",
+    cell: ({ row }) => {
+      const x = row.original;
+      if (x?.online) return <CheckCircle className="size-4 text-green-500" />;
+      else return <CrossIcon className="size-4 rotate-45 text-red-500" />;
+    },
+  },
+];
+
+export const PartnerColumns: ColumnDef<Partner>[] = [
+  {
+    accessorKey: "name",
+    header: "Name",
+    cell: ({ row }) => {
+      const x = row.original;
+      return <Link href={"/CMS/Partner/" + x?.id}>{x?.name}</Link>;
+    },
+  },
+  {
+    accessorKey: "link",
+    header: "Link",
+    cell: ({ row }) => {
+      const x = row.original;
+      if (x?.link)
+        return (
+          <div className="max-h-10 w-60">
+            <p className="overflow-hidden text-ellipsis">
+              <Tooltip>
+                <TooltipTrigger>
+                  <a href={x?.link} target="_blank" rel="noopener noreferrer">
+                    {x?.link}
+                  </a>
+                </TooltipTrigger>
+                <TooltipContent side="top" align="start" className="max-w-md">
+                  {x?.link}
+                </TooltipContent>
+              </Tooltip>
+            </p>
+          </div>
+        );
+      else return "-";
+    },
+  },
+  {
+    accessorKey: "image",
+    header: "Bild",
+    cell: ({ row }) => {
+      const x = row.original;
+      if (x?.image)
+        return (
+          <Tooltip>
+            <TooltipTrigger>{x?.image}</TooltipTrigger>
+            <TooltipContent side="left" align="start" className="max-w-md">
+              <img
+                src={"https://bilder.computer-extra.de/data/Partner/" + x.image}
+                alt={x.image}
+                className="h-auto max-w-md"
+              />
+            </TooltipContent>
+          </Tooltip>
+        );
+      else return "-";
+    },
+  },
+];
+
+export const ReferenzColumns: ColumnDef<Referenz>[] = [
+  { accessorKey: "Name" },
+  {
+    accessorKey: "Webseite",
+    cell: ({ row }) => {
+      const x = row.original;
+      if (x?.Webseite)
+        return (
+          <div className="max-h-10 w-60">
+            <p className="overflow-hidden text-ellipsis">
+              <Tooltip>
+                <TooltipTrigger>
+                  <a
+                    href={x?.Webseite}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {x?.Webseite}
+                  </a>
+                </TooltipTrigger>
+                <TooltipContent side="top" align="start" className="max-w-md">
+                  {x?.Webseite}
+                </TooltipContent>
+              </Tooltip>
+            </p>
+          </div>
+        );
+      else return "-";
+    },
+  },
+  {
+    accessorKey: "Bild",
+    cell: ({ row }) => {
+      const x = row.original;
+      if (x?.Bild)
+        return (
+          <Tooltip>
+            <TooltipTrigger>{x?.Bild}</TooltipTrigger>
+            <TooltipContent side="left" align="start" className="max-w-md">
+              <img src={x.Bild} alt={x.Bild} className="h-auto max-w-md" />
+            </TooltipContent>
+          </Tooltip>
+        );
+      else return "-";
+    },
+  },
+  {
+    accessorKey: "Online",
+    cell: ({ row }) => {
+      const x = row.original;
+      if (x?.Online) return <CheckCircle className="size-4 text-green-500" />;
+      else return <CrossIcon className="size-4 rotate-45 text-red-500" />;
     },
   },
 ];

@@ -1,6 +1,8 @@
 import { api, HydrateClient } from "@/trpc/server";
 import AnsprechpartnerCard from "../_components/ansprechpartner-card";
 
+export const dynamic = "force-dynamic";
+
 export default async function Page({
   params,
 }: {

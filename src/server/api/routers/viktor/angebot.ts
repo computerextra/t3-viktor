@@ -1,17 +1,17 @@
 import z from "zod";
 import { createTRPCRouter, publicProcedure } from "../../trpc";
 
-export const abteilungsRouter = createTRPCRouter({
+export const angebotsRouter = createTRPCRouter({
   getAll: publicProcedure.query(async ({ ctx }) => {
-    const abteilungen = await ctx.viktor.abteilung.findMany({
-      orderBy: { name: "asc" },
+    const abteilungen = await ctx.viktor.angebot.findMany({
+      orderBy: { title: "asc" },
     });
     return abteilungen ?? null;
   }),
   get: publicProcedure
     .input(z.object({ id: z.string() }))
     .query(async ({ ctx, input }) => {
-      const abteilung = await ctx.viktor.abteilung.findUnique({
+      const abteilung = await ctx.viktor.angebot.findUnique({
         where: { id: input.id },
       });
       return abteilung ?? null;
@@ -20,24 +20,29 @@ export const abteilungsRouter = createTRPCRouter({
     .input(
       z.object({
         id: z.string().nullable(),
-        name: z.string(),
-        idx: z.number().int(),
+        title: z.string(),
+        subtitle: z.string().nullable(),
+        date_start: z.date(),
+        date_stop: z.date(),
+        link: z.string(),
+        image: z.string(),
+        anzeigen: z.boolean(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
       if (input.id)
-        await ctx.viktor.abteilung.update({
+        await ctx.viktor.angebot.update({
           where: { id: input.id },
           data: { ...input, id: input.id },
         });
       else
-        await ctx.viktor.abteilung.create({
+        await ctx.viktor.angebot.create({
           data: { ...input, id: undefined },
         });
     }),
   delete: publicProcedure
     .input(z.object({ id: z.string() }))
     .mutation(async ({ ctx, input }) => {
-      await ctx.viktor.abteilung.delete({ where: { id: input.id } });
+      await ctx.viktor.angebot.delete({ where: { id: input.id } });
     }),
 });

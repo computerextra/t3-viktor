@@ -8,6 +8,10 @@ import { intrexxNbRouter } from "./routers/intrexx/neubau";
 import { abteilungsRouter } from "./routers/viktor/abteilung";
 import { lieferantenRouter } from "./routers/viktor/lieferanten";
 import { ansprechpartnerRouter } from "./routers/viktor/ansprechpartner";
+import { angebotsRouter } from "./routers/viktor/angebot";
+import { jobRouter } from "./routers/viktor/job";
+import { partnerRouter } from "./routers/viktor/partner";
+import { referenzRouter } from "./routers/viktor/referenz";
 
 /**
  * This is the primary router for your server.
@@ -16,11 +20,15 @@ import { ansprechpartnerRouter } from "./routers/viktor/ansprechpartner";
  */
 export const appRouter = createTRPCRouter({
   // Viktor Calls
-  einkauf: einkaufRouter,
-  mitarbeiter: mitarbeiterRouter,
   abteilung: abteilungsRouter,
-  lieferant: lieferantenRouter,
+  angebot: angebotsRouter,
   ansprechpartner: ansprechpartnerRouter,
+  einkauf: einkaufRouter,
+  job: jobRouter,
+  lieferant: lieferantenRouter,
+  mitarbeiter: mitarbeiterRouter,
+  partner: partnerRouter,
+  referenz: referenzRouter,
 
   // SAGE Calls
 

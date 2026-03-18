@@ -54,7 +54,7 @@ const MAIN_NAV = [
       { title: "Abteilungen", url: "/CMS/Abteilung" },
       { title: "Angebote", url: "/CMS/Angebot" },
       { title: "Jobs", url: "/CMS/Job" },
-      { title: "Mitarbeiter", url: "/CMS/Mitarbeiter" },
+      { title: "Mitarbeiter", url: "/Mitarbeiter" },
       { title: "Partner", url: "/CMS/Partner" },
       { title: "Referenzen", url: "/CMS/Referenz" },
     ],
