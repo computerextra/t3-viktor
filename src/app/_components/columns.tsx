@@ -379,7 +379,13 @@ export const PartnerColumns: ColumnDef<Partner>[] = [
 ];
 
 export const ReferenzColumns: ColumnDef<Referenz>[] = [
-  { accessorKey: "Name" },
+  {
+    accessorKey: "Name",
+    cell: ({ row }) => {
+      const x = row.original;
+      return <Link href={"/CMS/Referenz/" + x?.id}>{x?.Name}</Link>;
+    },
+  },
   {
     accessorKey: "Webseite",
     cell: ({ row }) => {

@@ -22,10 +22,10 @@ export const jobRouter = createTRPCRouter({
         id: z.string().nullable(),
         name: z.string(),
         online: z.boolean(),
-        Aufgabe: z.string().nullable(),
+        Aufgaben: z.string().nullable(),
         Beschreibung: z.string().nullable(),
         Profil: z.string().nullable(),
-        isAusbildung: z.boolean(),
+        isAusbilung: z.boolean(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
