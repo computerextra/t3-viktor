@@ -1,5 +1,6 @@
 "use client";
 
+import { PaginatedDataTable } from "@/components/data-table";
 import type { AppRouter } from "@/server/api/root";
 import type { ColumnDef } from "@tanstack/react-table";
 import type { inferRouterOutputs } from "@trpc/server";
@@ -8,6 +9,106 @@ import Link from "next/link";
 
 type RouterOutput = inferRouterOutputs<AppRouter>;
 type Mitarbeiter = RouterOutput["mitarbeiter"]["getAll"];
+type Lieferant = RouterOutput["lieferant"]["getAllWithAp"];
+type Ansprechpartner = RouterOutput["ansprechpartner"]["getAll"];
+
+const ansprechpartnerColumns: ColumnDef<Ansprechpartner[0]>[] = [
+  {
+    accessorKey: "name",
+    header: "Name",
+    cell: ({ row }) => {
+      const x = row.original;
+      return (
+        <Link href={"/Lieferanten/" + x.lieferantId + "/" + x.id}>
+          {x.name}
+        </Link>
+      );
+    },
+  },
+  {
+    accessorKey: "telefon",
+    header: "Telefon",
+    cell: ({ row }) => {
+      const x = row.original;
+      if (x.telefon)
+        return (
+          <a href={"tel:" + x.telefon} className="underline">
+            {x.telefon}
+          </a>
+        );
+      else return "-";
+    },
+  },
+  {
+    accessorKey: "mobil",
+    header: "Mobil",
+    cell: ({ row }) => {
+      const x = row.original;
+      if (x.mobil)
+        return (
+          <a href={"tel:" + x.mobil} className="underline">
+            {x.mobil}
+          </a>
+        );
+      else return "-";
+    },
+  },
+  {
+    accessorKey: "mail",
+    header: "Mail",
+    cell: ({ row }) => {
+      const x = row.original;
+      if (x.mail)
+        return (
+          <a href={"mailto:" + x.mail} className="underline">
+            {x.mail}
+          </a>
+        );
+      else return "-";
+    },
+  },
+];
+
+export const lieferantenColumns: ColumnDef<Lieferant[0]>[] = [
+  {
+    accessorKey: "Firma",
+    cell: ({ row }) => {
+      const x = row.original;
+      return <Link href={"/Lieferanten/" + x.id}>{x.Firma}</Link>;
+    },
+  },
+  { accessorKey: "Kundennummer" },
+  {
+    accessorKey: "Webseite",
+    cell: ({ row }) => {
+      const x = row.original;
+      if (x.Webseite)
+        return (
+          <a
+            href={x.Webseite}
+            className="underline"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {x.Webseite}
+          </a>
+        );
+      else return "-";
+    },
+  },
+  {
+    accessorKey: "Ansprechpartner",
+    cell: ({ row }) => {
+      const x = row.original;
+      return (
+        <PaginatedDataTable
+          data={x.Ansprechpartner}
+          columns={ansprechpartnerColumns}
+        />
+      );
+    },
+  },
+];
 
 export const mitarbeiterColumns: ColumnDef<Mitarbeiter[0]>[] = [
   {
@@ -18,7 +119,7 @@ export const mitarbeiterColumns: ColumnDef<Mitarbeiter[0]>[] = [
       return (
         <div className="flex">
           {x.Azubi && <SchoolIcon className="size-4" />}
-          {x.mail && x.sex && x.short && <GlobeIcon className="size-4" />}
+          {x.online && <GlobeIcon className="size-4" />}
         </div>
       );
     },

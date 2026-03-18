@@ -22,6 +22,7 @@ const MitarbeiterProps = z.object({
   Telefon_Intern_2: z.string().nullable(),
   Telefon_Privat: z.string().nullable(),
   Bild: z.string().nullable(),
+  online: z.boolean().default(false),
 });
 
 export const mitarbeiterRouter = createTRPCRouter({

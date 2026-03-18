@@ -32,6 +32,7 @@ const MitarbeiterProps = z.object({
   Telefon_Intern_2: z.string().optional(),
   Telefon_Privat: z.string().optional(),
   Bild: z.string().optional(),
+  online: z.boolean(),
 });
 type SchemaValues = z.input<typeof MitarbeiterProps>;
 
@@ -77,6 +78,7 @@ export default function MitarbeiterForm({
     Telefon_Privat: mitarbeiter?.Telefon_Privat ?? undefined,
     Bild: mitarbeiter?.Bild ?? undefined,
     sex: mitarbeiter?.sex ?? undefined,
+    online: mitarbeiter?.online ?? false,
   };
 
   const form = useAppForm({
@@ -108,6 +110,7 @@ export default function MitarbeiterForm({
         Telefon_Intern_2: value.Telefon_Intern_2 ?? null,
         Azubi: value.Azubi,
         Telefon_Privat: value.Telefon_Privat ?? null,
+        online: value.online,
         image: value.image,
       });
     },
@@ -271,6 +274,15 @@ export default function MitarbeiterForm({
             name="Azubi"
             children={(field) => (
               <field.FormSwitch label="Azubi?" loading={mutate.isPending} />
+            )}
+          />
+          <form.AppField
+            name="online"
+            children={(field) => (
+              <field.FormSwitch
+                label="Auf Website anzeigen?"
+                loading={mutate.isPending}
+              />
             )}
           />
         </div>

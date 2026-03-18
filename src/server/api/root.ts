@@ -6,6 +6,8 @@ import { intrexxWaRouter } from "./routers/intrexx/werkstattauftrag";
 import { intrexxGeräteRouter } from "./routers/intrexx/geräte";
 import { intrexxNbRouter } from "./routers/intrexx/neubau";
 import { abteilungsRouter } from "./routers/viktor/abteilung";
+import { lieferantenRouter } from "./routers/viktor/lieferanten";
+import { ansprechpartnerRouter } from "./routers/viktor/ansprechpartner";
 
 /**
  * This is the primary router for your server.
@@ -17,6 +19,8 @@ export const appRouter = createTRPCRouter({
   einkauf: einkaufRouter,
   mitarbeiter: mitarbeiterRouter,
   abteilung: abteilungsRouter,
+  lieferant: lieferantenRouter,
+  ansprechpartner: ansprechpartnerRouter,
 
   // SAGE Calls
 

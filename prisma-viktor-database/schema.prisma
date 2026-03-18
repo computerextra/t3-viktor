@@ -99,6 +99,7 @@ model Mitarbeiter {
   Telefon_Intern_2 String?
   Telefon_Privat   String?
   Bild             String?
+  online           Boolean?
   Abteilung        Abteilung? @relation(fields: [abteilungId], references: [id])
   Einkauf          Einkauf?   @relation(fields: [einkaufId], references: [id], onDelete: Cascade)
 
