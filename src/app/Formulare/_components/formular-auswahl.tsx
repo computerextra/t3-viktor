@@ -22,44 +22,52 @@ import KundendatenSuche from "./kundendaten-suche";
 import type { AppRouter } from "@/server/api/root";
 import type { inferRouterOutputs } from "@trpc/server";
 import FormularAnsicht from "./formular-ansicht";
+import z from "zod";
+import {
+  aomeiFormData,
+  appleFormData,
+  gdataFormData,
+  googleFormData,
+  mailDeFormData,
+  microsoftFormData,
+  telekomFormData,
+} from "@/types";
 
 // TODO: Formular Druck erstellen!
 
-// TODO: FormData type erstellen
 export type Formular = {
   label: string;
-  formData: {};
+  formData: z.ZodObject;
 };
 
-// TODO: FormData erstellen!
 const Formulare: Formular[] = [
   {
     label: "AOMEI",
-    formData: {},
+    formData: aomeiFormData,
   },
   {
     label: "Apple",
-    formData: {},
+    formData: appleFormData,
   },
   {
     label: "GData",
-    formData: {},
+    formData: gdataFormData,
   },
   {
     label: "Google",
-    formData: {},
+    formData: googleFormData,
   },
   {
     label: "Microsoft",
-    formData: {},
+    formData: microsoftFormData,
   },
   {
     label: "Telekom",
-    formData: {},
+    formData: telekomFormData,
   },
   {
     label: "Mail.de",
-    formData: {},
+    formData: mailDeFormData,
   },
 ];
 
@@ -71,8 +79,8 @@ export default function FormularAuswahl() {
   const [kunde, setKunde] = useState<null | Kunde>(null);
 
   return (
-    <Card className="mt-5">
-      <CardHeader>
+    <Card className="mt-5 print:mt-0 print:border-0 print:shadow-none">
+      <CardHeader className="print:hidden">
         <CardTitle>Formular Generator</CardTitle>
         <CardDescription>
           <ol className="my-6 ml-6 list-decimal [&>li]:mt-2">
@@ -85,39 +93,45 @@ export default function FormularAuswahl() {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <Select
-          onValueChange={(e) => {
-            const x = Formulare.find((x) => x.label == e);
-            setAuswahl(x);
-          }}
-          defaultValue={auswahl?.label}
-        >
-          <SelectTrigger className="w-full max-w-60">
-            <SelectValue placeholder="Formular wählen" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectLabel>Formulare</SelectLabel>
-              {Formulare.sort((a, b) => (a.label < b.label ? -1 : 1)).map(
-                (x) => (
-                  <SelectItem key={x.label} value={x.label}>
-                    {x.label}
-                  </SelectItem>
-                ),
-              )}
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-        {auswahl != null && <Separator className="my-8" />}
+        <div className="print:hidden">
+          <Select
+            onValueChange={(e) => {
+              const x = Formulare.find((x) => x.label == e);
+              setAuswahl(x);
+            }}
+            defaultValue={auswahl?.label}
+          >
+            <SelectTrigger className="w-full max-w-60">
+              <SelectValue placeholder="Formular wählen" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Formulare</SelectLabel>
+                {Formulare.sort((a, b) => (a.label < b.label ? -1 : 1)).map(
+                  (x) => (
+                    <SelectItem key={x.label} value={x.label}>
+                      {x.label}
+                    </SelectItem>
+                  ),
+                )}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
+        {auswahl != null && (
+          <Separator className="my-8 print:my-0 print:hidden" />
+        )}
         {auswahl != null && <KundendatenSuche setKunde={setKunde} />}
         {kunde != null && (
-          <p className="mt-2">
+          <p className="mt-2 print:mt-0 print:hidden">
             Gefundener Kunde: {kunde.Name}, {kunde.Vorname}
           </p>
         )}
-        {kunde != null && <Separator className="mt-4 mb-8" />}
+        {kunde != null && (
+          <Separator className="mt-4 mb-8 print:mt-0 print:mb-0 print:hidden" />
+        )}
         {kunde != null && auswahl != null && (
-          <FormularAnsicht auswahl={auswahl} />
+          <FormularAnsicht auswahl={auswahl} kunde={kunde} />
         )}
       </CardContent>
     </Card>

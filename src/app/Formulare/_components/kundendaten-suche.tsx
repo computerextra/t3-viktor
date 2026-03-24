@@ -27,7 +27,7 @@ export default function KundendatenSuche({
   });
 
   return (
-    <InputGroup className="w-full max-w-60">
+    <InputGroup className="w-full max-w-60 print:hidden">
       <InputGroupInput
         defaultValue={kundennummer}
         onChange={(e) => setKundennummer(e.target.value)}

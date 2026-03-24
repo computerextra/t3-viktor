@@ -51,3 +51,79 @@ export const EinkaufPropsClient = z.object({
   bild2: BildClientValidator.nullable(),
   bild3: BildClientValidator.nullable(),
 });
+
+export const GDataAnwendungen: readonly string[] = [
+  "Anti-Virus",
+  "MES",
+  "Internet Security",
+  "Internet Security Attached",
+  "Mobile Internet Security",
+  "Mobile Security",
+  "Total Security",
+];
+
+export const TelekomFragen: readonly string[] = [
+  "Wie lautet der Beruf Ihres Großvaters?",
+  "Wo haben Sie Ihren Partner kennengelernt?",
+  "Wie lautet der Name Ihrer Grundschule?",
+  "Wie lautet Ihre Lieblingsfigur aus der Geschichte?",
+  "Wie lautet der Name Ihrer Grundschule?",
+  "Was ist Ihr Lieblingshobby?",
+  "Wie lautet der Geburtsname Ihrer Mutter?",
+  "Welche ist Ihre Lieblingsmannschaft?",
+  "Was war Ihr erstes Auto?",
+  "Wie hieß der beste Freund aus Ihrer Kindheit?",
+  "Wie heißt oder hieß Ihr erstes Haustier?",
+  "Wie ist der Name Ihres Lieblingslehrers?",
+  "Wie hieß der Titel Ihres ersten Musik-Albums?",
+  "Was war Ihr erstes Faschingskostüm?",
+  "Wie hieß Ihr erstes Buch?",
+  "Wie hieß Ihr erstes Plüschtier?",
+  "Wo waren Sie bei Ihrem ersten Kuss?",
+  "Was war Ihr schönstes Weihnachtsgeschenk?",
+  "Wie heißt die Antwort auf die Frage aller Fragen?",
+];
+
+export const aomeiFormData = z.object({
+  Lizenz: z.string(),
+  Gerätenummer: z.string(),
+});
+
+export const appleFormData = z.object({
+  Benutzername: z.string(),
+  Passwort: z.string(),
+});
+
+export const gdataFormData = z.object({
+  Benutzername: z.string(),
+  Passwort: z.string(),
+  AnzahlBenutzer: z.number().int(),
+  Software: z.enum(GDataAnwendungen),
+  Lizenz: z.string(),
+});
+
+export const googleFormData = z.object({
+  Benutzername: z.string(),
+  Passwort: z.string(),
+});
+
+export const microsoftFormData = z.object({
+  Benutzername: z.string(),
+  Passwort: z.string(),
+  EMail: z.email(),
+  Mobil: z.string(),
+});
+
+export const telekomFormData = z.object({
+  Benutzername: z.string(),
+  Passwort: z.string(),
+  Mobil: z.string(),
+  Geburtstag: z.date(),
+  Sicherheitsfrage: z.enum(TelekomFragen),
+  Antwort: z.string(),
+});
+
+export const mailDeFormData = z.object({
+  Benutzername: z.string(),
+  Passwort: z.string(),
+});
