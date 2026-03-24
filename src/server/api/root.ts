@@ -12,6 +12,7 @@ import { angebotsRouter } from "./routers/viktor/angebot";
 import { jobRouter } from "./routers/viktor/job";
 import { partnerRouter } from "./routers/viktor/partner";
 import { referenzRouter } from "./routers/viktor/referenz";
+import { sageKundenRouter } from "./routers/sage/kunde";
 
 /**
  * This is the primary router for your server.
@@ -31,6 +32,7 @@ export const appRouter = createTRPCRouter({
   referenz: referenzRouter,
 
   // SAGE Calls
+  sage_kunden: sageKundenRouter,
 
   // INTREXX Calls
   intrexx_kunden: intrexxKundenRouter,
