@@ -14,6 +14,7 @@ import { partnerRouter } from "./routers/viktor/partner";
 import { referenzRouter } from "./routers/viktor/referenz";
 import { sageKundenRouter } from "./routers/sage/kunde";
 import { formularRouter } from "./routers/formulare";
+import { archivRouter } from "./routers/viktor/archiv";
 
 /**
  * This is the primary router for your server.
@@ -33,6 +34,7 @@ export const appRouter = createTRPCRouter({
   mitarbeiter: mitarbeiterRouter,
   partner: partnerRouter,
   referenz: referenzRouter,
+  archiv: archivRouter,
 
   // SAGE Calls
   sage_kunden: sageKundenRouter,
