@@ -44,9 +44,10 @@ export default function FormularAnsicht({
 }
 
 function Aomei({ kunde }: { kunde: Kunde }) {
+  type formSchema = z.input<typeof aomeiFormData>;
   const [loading, setLoading] = useState(false);
-
-  const defaultValues: z.input<typeof aomeiFormData> = {
+  const [data, setData] = useState<null | formSchema>(null);
+  const defaultValues: formSchema = {
     Gerätenummer: "",
     Lizenz: "",
   };
@@ -56,6 +57,7 @@ function Aomei({ kunde }: { kunde: Kunde }) {
     defaultValues: defaultValues,
     onSubmit: ({ value }) => {
       setLoading(true);
+      setData(value);
       window.setTimeout(window.print, 1000);
       setLoading(false);
     },
@@ -114,14 +116,14 @@ function Aomei({ kunde }: { kunde: Kunde }) {
             Lizenzschlüssel:
           </p>
           <p className="text-center text-sm leading-none font-medium">
-            {form.getFieldValue("Lizenz")}
+            {data?.Lizenz}
           </p>
 
           <p className="text-center leading-7 font-bold not-first:mt-6">
             Installiert auf Gerät:
           </p>
           <p className="text-center text-sm leading-none font-medium">
-            {form.getFieldValue("Gerätenummer")}
+            {data?.Gerätenummer}
           </p>
 
           <p className="mt-12 text-center text-sm leading-none font-medium">
@@ -224,8 +226,10 @@ function Apple({ kunde }: { kunde: Kunde }) {
 }
 
 function Gdata({ kunde }: { kunde: Kunde }) {
+  type formSchema = z.input<typeof gdataFormData>;
   const [loading, setLoading] = useState(false);
-  const defaultValues: z.input<typeof gdataFormData> = {
+  const [data, setData] = useState<null | formSchema>(null);
+  const defaultValues: formSchema = {
     AnzahlBenutzer: 0,
     Benutzername: "",
     Lizenz: "",
@@ -237,16 +241,16 @@ function Gdata({ kunde }: { kunde: Kunde }) {
     validators: { onSubmit: gdataFormData },
     defaultValues: defaultValues,
     onSubmit: ({ value }) => {
-      // TODO: Druck logic
       setLoading(true);
-      console.log(value);
+      setData(value);
+      window.setTimeout(window.print, 1000);
       setLoading(false);
     },
   });
 
-  const data: { label: string; value: string }[] = [];
+  const gData: { label: string; value: string }[] = [];
   GDataAnwendungen.forEach((x) => {
-    data.push({
+    gData.push({
       label: x,
       value: x,
     });
@@ -260,7 +264,7 @@ function Gdata({ kunde }: { kunde: Kunde }) {
         form.handleSubmit();
       }}
     >
-      <FieldGroup>
+      <FieldGroup className="print:hidden">
         <form.AppField
           name="Benutzername"
           children={(field) => (
@@ -276,13 +280,16 @@ function Gdata({ kunde }: { kunde: Kunde }) {
         <form.AppField
           name="AnzahlBenutzer"
           children={(field) => (
-            <field.FormInput label="Anzahl der Benutzer" loading={loading} />
+            <field.FormNumberInput
+              label="Anzahl der Benutzer"
+              loading={loading}
+            />
           )}
         />
         <form.AppField
           name="Software"
           children={(field) => (
-            <field.FormSelect data={data} label="Software" loading={loading} />
+            <field.FormSelect data={gData} label="Software" loading={loading} />
           )}
         />
         <form.AppField
@@ -295,13 +302,63 @@ function Gdata({ kunde }: { kunde: Kunde }) {
           <Button type="submit">Drucken</Button>
         </div>
       </FieldGroup>
+      <div className="hidden text-black print:block">
+        <div className="container flex flex-col justify-center">
+          <h1 className="scroll-m-20 text-center text-4xl font-extrabold tracking-tight text-balance">
+            G Data Zugangsdaten
+          </h1>
+          <img
+            src="https://bilder.computer-extra.de/data/forms/gdata.png"
+            alt="Apple Logo"
+            className="mx-auto h-auto w-[80%] max-w-xl"
+          />
+          <p className="text-center leading-7 font-bold not-first:mt-6">
+            Kundennummer:
+          </p>
+          <p className="text-center text-sm leading-none font-medium">
+            {kunde?.KundNr}
+          </p>
+
+          <p className="text-center leading-7 font-bold not-first:mt-6">
+            Name:
+          </p>
+          <p className="text-center text-sm leading-none font-medium">
+            {kunde?.Vorname} {kunde?.Name}
+          </p>
+
+          <p className="text-center leading-7 font-bold not-first:mt-6">
+            {data?.Software} für {data?.AnzahlBenutzer} Benutzer
+          </p>
+
+          <p className="text-center leading-7 font-bold not-first:mt-6">
+            Benutzername:
+          </p>
+          <p className="text-center text-sm leading-none font-medium">
+            {data?.Benutzername}
+          </p>
+
+          <p className="text-center leading-7 font-bold not-first:mt-6">
+            Passwort:
+          </p>
+          <p className="text-center text-sm leading-none font-medium">
+            {data?.Passwort}
+          </p>
+
+          <p className="mt-12 text-center text-sm leading-none font-medium">
+            Bitte heben Sie diese Zugangsdaten sorgfältig auf, sie werden
+            benötigt, wenn Sie erneut in G Data anmelden möchten.
+          </p>
+        </div>
+      </div>
     </form>
   );
 }
 
 function Google({ kunde }: { kunde: Kunde }) {
+  type formSchema = z.input<typeof googleFormData>;
   const [loading, setLoading] = useState(false);
-  const defaultValues: z.input<typeof googleFormData> = {
+  const [data, setData] = useState<null | formSchema>(null);
+  const defaultValues: formSchema = {
     Benutzername: "",
     Passwort: "",
   };
@@ -310,9 +367,9 @@ function Google({ kunde }: { kunde: Kunde }) {
     validators: { onSubmit: googleFormData },
     defaultValues: defaultValues,
     onSubmit: ({ value }) => {
-      // TODO: Druck logic
       setLoading(true);
-      console.log(value);
+      setData(value);
+      window.setTimeout(window.print, 1000);
       setLoading(false);
     },
   });
@@ -324,7 +381,7 @@ function Google({ kunde }: { kunde: Kunde }) {
         form.handleSubmit();
       }}
     >
-      <FieldGroup>
+      <FieldGroup className="print:hidden">
         <form.AppField
           name="Benutzername"
           children={(field) => (
@@ -341,13 +398,61 @@ function Google({ kunde }: { kunde: Kunde }) {
           <Button type="submit">Drucken</Button>
         </div>
       </FieldGroup>
+      <div className="hidden text-black print:block">
+        <div className="container flex flex-col justify-center">
+          <h1 className="scroll-m-20 text-center text-4xl font-extrabold tracking-tight text-balance">
+            Google Zugangsdaten
+          </h1>
+          <img
+            src="https://bilder.computer-extra.de/data/forms/google.png"
+            alt="Apple Logo"
+            className="mx-auto h-auto w-[80%] max-w-xl"
+          />
+          <p className="text-center leading-7 font-bold not-first:mt-6">
+            Kundennummer:
+          </p>
+          <p className="text-center text-sm leading-none font-medium">
+            {kunde?.KundNr}
+          </p>
+
+          <p className="text-center leading-7 font-bold not-first:mt-6">
+            Name:
+          </p>
+          <p className="text-center text-sm leading-none font-medium">
+            {kunde?.Vorname} {kunde?.Name}
+          </p>
+
+          <p className="text-center leading-7 font-bold not-first:mt-6">
+            Benutzername:
+          </p>
+          <p className="text-center text-sm leading-none font-medium">
+            {data?.Benutzername}
+          </p>
+
+          <p className="text-center leading-7 font-bold not-first:mt-6">
+            Passwort:
+          </p>
+          <p className="text-center text-sm leading-none font-medium">
+            {data?.Passwort}
+          </p>
+
+          <p className="mt-12 text-center text-sm leading-none font-medium">
+            Bitte heben Sie diese Zugangsdaten sorgfältig auf, sie werden
+            benötigt, wenn Sie erneut bei Google anmelden möchten.
+          </p>
+        </div>
+      </div>
     </form>
   );
 }
 
 function Microsoft({ kunde }: { kunde: Kunde }) {
+  type formSchema = z.input<typeof microsoftFormData>;
+
   const [loading, setLoading] = useState(false);
-  const defaultValues: z.input<typeof microsoftFormData> = {
+  const [data, setData] = useState<null | formSchema>(null);
+
+  const defaultValues: formSchema = {
     Benutzername: "",
     EMail: "",
     Mobil: "",
@@ -358,9 +463,14 @@ function Microsoft({ kunde }: { kunde: Kunde }) {
     validators: { onSubmit: microsoftFormData },
     defaultValues: defaultValues,
     onSubmit: ({ value }) => {
-      // TODO: Druck logic
       setLoading(true);
-      console.log(value);
+      setData({
+        Benutzername: value.Benutzername,
+        EMail: value.EMail,
+        Mobil: value.Mobil,
+        Passwort: value.Passwort,
+      });
+      window.setTimeout(window.print, 1000);
       setLoading(false);
     },
   });
@@ -372,7 +482,7 @@ function Microsoft({ kunde }: { kunde: Kunde }) {
         form.handleSubmit();
       }}
     >
-      <FieldGroup>
+      <FieldGroup className="print:hidden">
         <form.AppField
           name="Benutzername"
           children={(field) => (
@@ -401,13 +511,73 @@ function Microsoft({ kunde }: { kunde: Kunde }) {
           <Button type="submit">Drucken</Button>
         </div>
       </FieldGroup>
+      <div className="hidden text-black print:block">
+        <div className="container flex flex-col justify-center">
+          <h1 className="scroll-m-20 text-center text-4xl font-extrabold tracking-tight text-balance">
+            Microsoft Zugangsdaten
+          </h1>
+          <img
+            src="https://bilder.computer-extra.de/data/forms/microsoft.jpg"
+            alt="Apple Logo"
+            className="mx-auto h-auto w-[80%] max-w-xl"
+          />
+          <p className="text-center leading-7 font-bold not-first:mt-6">
+            Kundennummer:
+          </p>
+          <p className="text-center text-sm leading-none font-medium">
+            {kunde?.KundNr}
+          </p>
+
+          <p className="text-center leading-7 font-bold not-first:mt-6">
+            Name:
+          </p>
+          <p className="text-center text-sm leading-none font-medium">
+            {kunde?.Vorname} {kunde?.Name}
+          </p>
+
+          <p className="text-center leading-7 font-bold not-first:mt-6">
+            Benutzername:
+          </p>
+          <p className="text-center text-sm leading-none font-medium">
+            {data?.Benutzername}
+          </p>
+
+          <p className="text-center leading-7 font-bold not-first:mt-6">
+            Passwort:
+          </p>
+          <p className="text-center text-sm leading-none font-medium">
+            {data?.Passwort}
+          </p>
+
+          <p className="text-center leading-7 font-bold not-first:mt-6">
+            Alternative E-Mail Adresse:
+          </p>
+          <p className="text-center text-sm leading-none font-medium">
+            {data?.EMail}
+          </p>
+
+          <p className="text-center leading-7 font-bold not-first:mt-6">
+            Mobilfunk:
+          </p>
+          <p className="text-center text-sm leading-none font-medium">
+            {data?.Mobil}
+          </p>
+
+          <p className="mt-12 text-center text-sm leading-none font-medium">
+            Bitte heben Sie diese Zugangsdaten sorgfältig auf, sie werden
+            benötigt, wenn Sie erneut bei Microsoft anmelden möchten.
+          </p>
+        </div>
+      </div>
     </form>
   );
 }
 
 function Telekom({ kunde }: { kunde: Kunde }) {
+  type formSchema = z.input<typeof telekomFormData>;
   const [loading, setLoading] = useState(false);
-  const defaultValues: z.input<typeof telekomFormData> = {
+  const [data, setData] = useState<null | formSchema>(null);
+  const defaultValues: formSchema = {
     Antwort: "",
     Benutzername: "",
     Geburtstag: new Date(),
@@ -420,16 +590,16 @@ function Telekom({ kunde }: { kunde: Kunde }) {
     validators: { onSubmit: telekomFormData },
     defaultValues: defaultValues,
     onSubmit: ({ value }) => {
-      // TODO: Druck logic
       setLoading(true);
-      console.log(value);
+      setData(value);
+      window.setTimeout(window.print, 1000);
       setLoading(false);
     },
   });
 
-  const data: { label: string; value: string }[] = [];
+  const tData: { label: string; value: string }[] = [];
   TelekomFragen.forEach((x) => {
-    data.push({
+    tData.push({
       label: x,
       value: x,
     });
@@ -443,7 +613,7 @@ function Telekom({ kunde }: { kunde: Kunde }) {
         form.handleSubmit();
       }}
     >
-      <FieldGroup>
+      <FieldGroup className="print:hidden">
         <form.AppField
           name="Benutzername"
           children={(field) => (
@@ -472,7 +642,7 @@ function Telekom({ kunde }: { kunde: Kunde }) {
           name="Sicherheitsfrage"
           children={(field) => (
             <field.FormSelect
-              data={data}
+              data={tData}
               label="Sicherheitsfrage"
               loading={loading}
             />
@@ -489,13 +659,79 @@ function Telekom({ kunde }: { kunde: Kunde }) {
           <Button type="submit">Drucken</Button>
         </div>
       </FieldGroup>
+      <div className="hidden text-black print:block">
+        <div className="container flex flex-col justify-center">
+          <h1 className="scroll-m-20 text-center text-4xl font-extrabold tracking-tight text-balance">
+            Telekom E-Mail Zugangsdaten
+          </h1>
+          <img
+            src="https://bilder.computer-extra.de/data/forms/telekom.jpg"
+            alt="Apple Logo"
+            className="mx-auto h-auto w-[80%] max-w-xl"
+          />
+          <p className="text-center leading-7 font-bold not-first:mt-6">Für:</p>
+          <p className="text-center text-sm leading-none font-medium">
+            {kunde?.KundNr} - {kunde?.Vorname} {kunde?.Name}
+          </p>
+
+          <p className="text-center leading-7 font-bold not-first:mt-6">
+            Benutzername:
+          </p>
+          <p className="text-center text-sm leading-none font-medium">
+            {data?.Benutzername}
+          </p>
+
+          <p className="text-center leading-7 font-bold not-first:mt-6">
+            Passwort:
+          </p>
+          <p className="text-center text-sm leading-none font-medium">
+            {data?.Passwort}
+          </p>
+
+          <p className="text-center leading-7 font-bold not-first:mt-6">
+            Mobilfunk:
+          </p>
+          <p className="text-center text-sm leading-none font-medium">
+            {data?.Mobil}
+          </p>
+
+          <p className="text-center leading-7 font-bold not-first:mt-6">
+            Geburtstag:
+          </p>
+          <p className="text-center text-sm leading-none font-medium">
+            {data?.Geburtstag.toLocaleDateString("de-de", {
+              day: "2-digit",
+              month: "2-digit",
+              year: "numeric",
+            })}
+          </p>
+
+          <p className="text-center leading-7 font-bold not-first:mt-6">
+            Sicherheitsfrage:
+          </p>
+          <p className="text-center text-sm leading-none font-medium">
+            {data?.Sicherheitsfrage}
+          </p>
+          <p className="text-center text-sm leading-none font-medium">
+            <span className="font-bold">Anwort:</span> {data?.Antwort}
+          </p>
+
+          <p className="mt-12 text-center text-sm leading-none font-medium">
+            Bitte heben Sie diese Zugangsdaten sorgfältig auf, sie werden
+            benötigt, wenn Sie erneut bei der Telekom anmelden möchten.
+          </p>
+        </div>
+      </div>
     </form>
   );
 }
 
 function MailDe({ kunde }: { kunde: Kunde }) {
+  type formSchema = z.input<typeof mailDeFormData>;
   const [loading, setLoading] = useState(false);
-  const defaultValues: z.input<typeof mailDeFormData> = {
+  const [data, setData] = useState<null | formSchema>(null);
+
+  const defaultValues: formSchema = {
     Benutzername: "",
     Passwort: "",
   };
@@ -504,9 +740,9 @@ function MailDe({ kunde }: { kunde: Kunde }) {
     validators: { onSubmit: mailDeFormData },
     defaultValues: defaultValues,
     onSubmit: ({ value }) => {
-      // TODO: Druck logic
       setLoading(true);
-      console.log(value);
+      setData(value);
+      window.setTimeout(window.print, 1000);
       setLoading(false);
     },
   });
@@ -518,7 +754,7 @@ function MailDe({ kunde }: { kunde: Kunde }) {
         form.handleSubmit();
       }}
     >
-      <FieldGroup>
+      <FieldGroup className="print:hidden">
         <form.AppField
           name="Benutzername"
           children={(field) => (
@@ -535,6 +771,50 @@ function MailDe({ kunde }: { kunde: Kunde }) {
           <Button type="submit">Drucken</Button>
         </div>
       </FieldGroup>
+      <div className="hidden text-black print:block">
+        <div className="container flex flex-col justify-center">
+          <h1 className="scroll-m-20 text-center text-4xl font-extrabold tracking-tight text-balance">
+            Mail.de E-Mail Zugangsdaten
+          </h1>
+          <img
+            src="https://bilder.computer-extra.de/data/forms/telekom.jpg"
+            alt="Apple Logo"
+            className="mx-auto h-auto w-[80%] max-w-xl"
+          />
+          <p className="text-center leading-7 font-bold not-first:mt-6">
+            Kundennummer:
+          </p>
+          <p className="text-center text-sm leading-none font-medium">
+            {kunde?.KundNr}
+          </p>
+
+          <p className="text-center leading-7 font-bold not-first:mt-6">
+            Name:
+          </p>
+          <p className="text-center text-sm leading-none font-medium">
+            {kunde?.Vorname} {kunde?.Name}
+          </p>
+
+          <p className="text-center leading-7 font-bold not-first:mt-6">
+            Benutzername:
+          </p>
+          <p className="text-center text-sm leading-none font-medium">
+            {data?.Benutzername}
+          </p>
+
+          <p className="text-center leading-7 font-bold not-first:mt-6">
+            Passwort:
+          </p>
+          <p className="text-center text-sm leading-none font-medium">
+            {data?.Passwort}
+          </p>
+
+          <p className="mt-12 text-center text-sm leading-none font-medium">
+            Bitte heben Sie diese Zugangsdaten sorgfältig auf, sie werden
+            benötigt, wenn Sie erneut bei Mail.de anmelden möchten.
+          </p>
+        </div>
+      </div>
     </form>
   );
 }

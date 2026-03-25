@@ -51,6 +51,36 @@ const FormInput = ({
   );
 };
 
+const FormNumberInput = ({
+  className,
+  label,
+  loading,
+}: {
+  className?: string;
+  label: string;
+  loading: boolean;
+}) => {
+  const field = useFieldContext<number>();
+  const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
+  return (
+    <Field>
+      <FieldLabel htmlFor={field.name}>{label}</FieldLabel>
+      <Input
+        className={cn(className)}
+        disabled={loading}
+        id={field.name}
+        name={field.name}
+        // value={field.state.value}
+        defaultValue={field.state.value}
+        onBlur={field.handleBlur}
+        onChange={(e) => field.handleChange(parseInt(e.target.value))}
+        aria-invalid={isInvalid}
+      />
+      {isInvalid && <FieldError errors={field.state.meta.errors} />}
+    </Field>
+  );
+};
+
 const FormSwitch = ({
   label,
   loading,
@@ -136,8 +166,8 @@ const FormSelect = ({
           <SelectValue placeholder="Bitte wählen..." />
         </SelectTrigger>
         <SelectContent position="item-aligned">
-          {data.map((x) => (
-            <SelectItem key={x.value} value={x.value}>
+          {data.map((x, idx) => (
+            <SelectItem key={idx} value={x.value}>
               {x.label}
             </SelectItem>
           ))}
@@ -198,6 +228,7 @@ const FormDateInput = ({
 export const { useAppForm, withForm, withFieldGroup } = createFormHook({
   fieldComponents: {
     FormInput,
+    FormNumberInput,
     FormSwitch,
     FormTextarea,
     FormSelect,
