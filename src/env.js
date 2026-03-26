@@ -24,6 +24,7 @@ export const env = createEnv({
     FTP_PASSWORD: z.string(),
     FTP_BASE_PATH: z.string(),
     IMAGE_URL: z.url(),
+    ARCHIVE_PATH: z.string(),
     NODE_ENV: z
       .enum(["development", "production", "test"])
       .default("development"),
@@ -54,6 +55,7 @@ export const env = createEnv({
     FTP_PASSWORD: process.env.FTP_PASSWORD,
     FTP_BASE_PATH: process.env.FTP_BASE_PATH,
     IMAGE_URL: process.env.IMAGE_URL,
+    ARCHIVE_PATH: process.env.ARCHIVE_PATH,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
   },
   skipValidation: !!process.env.SKIP_ENV_VALIDATION,

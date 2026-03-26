@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/input-group";
 import { Separator } from "@/components/ui/separator";
 import { Spinner } from "@/components/ui/spinner";
+import { cn } from "@/lib/utils";
 import type { AppRouter } from "@/server/api/root";
 import { api } from "@/trpc/react";
 import { ColumnDef } from "@tanstack/react-table";
@@ -39,8 +40,22 @@ export default function ArchivSuche() {
 
   const download = api.archiv.get.useMutation({
     onSuccess: (res) => {
-      // TODO: öffne neuen tab für download der Datei
-      setData(res);
+      if (res == null) {
+        alert("Download konnte nicht gestartet werden!");
+        return;
+      }
+      const byteChars = atob(res);
+      const byteNumbers = new Array(byteChars.length);
+      for (let i = 0; i < byteChars.length; i++)
+        byteNumbers[i] = byteChars.charCodeAt(i);
+      const byteArray = new Uint8Array(byteNumbers);
+
+      const blob = new Blob([byteArray], { type: "application/pdf" });
+      const link = document.createElement("a");
+      link.href = window.URL.createObjectURL(blob);
+      const fileName = "download.pdf";
+      link.download = fileName;
+      link.click();
     },
   });
 
@@ -52,7 +67,9 @@ export default function ArchivSuche() {
         const x = row.original;
         return (
           <div
-            className="cursor-pointer"
+            className={cn(
+              download.isPending ? "line-through" : "cursor-pointer",
+            )}
             onClick={async () => download.mutateAsync({ id: x.id })}
           >
             {x.title}
@@ -79,11 +96,11 @@ export default function ArchivSuche() {
               defaultValue={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Suchbegriff..."
-              disabled={suche.isPending}
+              disabled={suche.isPending || download.isPending}
             />
             <InputGroupAddon align="inline-end">
               <InputGroupButton
-                disabled={search == null}
+                disabled={search == null || download.isPending}
                 onClick={async () => suche.mutateAsync({ search: search! })}
                 variant="secondary"
                 type="submit"
