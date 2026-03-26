@@ -44,7 +44,7 @@ const MAIN_NAV = [
   { title: "Mitarbeiter", url: "/Mitarbeiter" },
   { title: "Lieferanten", url: "/Lieferanten" },
   { title: "Formulare", url: "/Formulare" },
-  { title: "CE Archiv (NYI)", url: "/Archiv" },
+  { title: "CE Archiv", url: "/Archiv" },
   { title: "Kunden (NYI)", url: "/Kunden, " },
   { title: "Warenlieferung (NYI)", url: "/Warenlieferung" },
   {
