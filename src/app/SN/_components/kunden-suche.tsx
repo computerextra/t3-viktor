@@ -10,9 +10,6 @@ import {
 } from "@/components/ui/card";
 import { api } from "@/trpc/react";
 import { useState } from "react";
-import { ColumnDef } from "@tanstack/react-table";
-import { DataTable } from "@/components/data-table";
-import Link from "next/link";
 import {
   InputGroup,
   InputGroupAddon,
@@ -21,59 +18,47 @@ import {
 } from "@/components/ui/input-group";
 import { SearchIcon } from "lucide-react";
 import { Spinner } from "@/components/ui/spinner";
+import { inferRouterOutputs } from "@trpc/server";
+import { AppRouter } from "@/server/api/root";
+import { toast } from "sonner";
 
-type Ergebnis = {
-  LID: number;
-  STR_KUNDENNUMMER_D45D177B: string | null;
-  STR_NAME_5FE19153: string | null;
-  STR_NAME2_CECE8E30: string | null;
-  STR_STRASSE_1FE60006: string | null;
-  L_INTREXXNR_5F3E58AF: number | null;
-};
+type RouterOutput = inferRouterOutputs<AppRouter>;
+export type Artikel = RouterOutput["sage_artikel"]["search"];
 
-const columns: ColumnDef<Ergebnis>[] = [
-  {
-    accessorKey: "STR_KUNDENNUMMER_D45D177B",
-    header: "Kundennummer",
-    cell: ({ row }) => {
-      const x = row.original;
-      return (
-        <Link href={"/Intrexx/Kunde/" + x.L_INTREXXNR_5F3E58AF}>
-          {x.STR_KUNDENNUMMER_D45D177B}
-        </Link>
-      );
-    },
-  },
-  {
-    accessorKey: "STR_NAME_5FE19153",
-    header: "Name",
-    cell: ({ row }) => {
-      const x = row.original;
-      return (
-        <Link href={"/Intrexx/Kunde/" + x.L_INTREXXNR_5F3E58AF}>
-          {x.STR_NAME_5FE19153}
-        </Link>
-      );
-    },
-  },
-  {
-    accessorKey: "STR_NAME2_CECE8E30",
-    header: "Vorname",
-  },
-  {
-    accessorKey: "STR_STRASSE_1FE60006",
-    header: "Straße",
-  },
-];
-
-export default function KundenSuche() {
+export default function ArtikelSuche() {
   const [suche, setSuche] = useState<string | null>(null);
-  const [Ergebnisse, setErgebnisse] = useState<null | Ergebnis[]>(null);
+  const [gesucht, setGesucht] = useState(false);
+  const [Ergebnisse, setErgebnisse] = useState<null | Artikel>(null);
 
-  const kundensuche = api.intrexx_kunden.suche.useMutation({
+  const kundensuche = api.sage_artikel.search.useMutation({
     onSuccess: (data) => {
-      if (data.length > 0) setErgebnisse(data);
-      else setErgebnisse(null);
+      setGesucht(true);
+      setErgebnisse(data);
+
+      if (data == null) {
+        toast.error("Kein Artikel gefunden", {
+          description: "Scheinbar war deine Eingabe falsch.",
+          action: {
+            label: "Reset",
+            onClick: () => setSuche(""),
+          },
+        });
+      } else {
+        const type = "text/plain";
+        const clipboardItemData = {
+          [type]: data,
+        };
+        const clipboardItem = new ClipboardItem(clipboardItemData);
+
+        navigator.clipboard.write([clipboardItem]);
+        toast(data, {
+          description: "Die Daten wurden in die Zwischenablage kopiert.",
+          action: {
+            label: "Erneut Kopieren",
+            onClick: () => navigator.clipboard.write([clipboardItem]),
+          },
+        });
+      }
     },
   });
 
@@ -86,20 +71,22 @@ export default function KundenSuche() {
   return (
     <Card className="mx-auto mt-12 max-w-4xl">
       <CardHeader>
-        <CardTitle>Kundensuche</CardTitle>
+        <CardTitle>Artikelsuche</CardTitle>
         <CardDescription>
-          Suche nach Nachnamen, Firma, Kundennummer, E-Mail oder G Data Login
-          möglich.
+          Artikelnummer eingeben rest geht von allein
         </CardDescription>
       </CardHeader>
       <CardContent>
         <form onSubmit={(e) => e.preventDefault()}>
           <InputGroup>
             <InputGroupInput
-              defaultValue={suche ?? undefined}
-              onChange={(e) => setSuche(e.target.value)}
+              value={suche ?? undefined}
+              onChange={(e) => {
+                setGesucht(false);
+                setSuche(e.target.value);
+              }}
               type="text"
-              placeholder="Suchbegriff"
+              placeholder="Artikelnummer"
               disabled={kundensuche.isPending}
             />
             <InputGroupAddon>
@@ -110,6 +97,7 @@ export default function KundenSuche() {
                 variant={"secondary"}
                 onClick={handleSearch}
                 disabled={kundensuche.isPending}
+                type="submit"
               >
                 {kundensuche.isPending ? (
                   <>
@@ -125,12 +113,14 @@ export default function KundenSuche() {
         </form>
       </CardContent>
       <CardFooter className={"justify-center"}>
-        {Ergebnisse == null ? (
+        {gesucht && Ergebnisse == null ? (
           <span className="text-center text-sm font-light lowercase">
             - Keine Ergebnisse -
           </span>
+        ) : gesucht ? (
+          Ergebnisse
         ) : (
-          <DataTable columns={columns} data={Ergebnisse} />
+          ""
         )}
       </CardFooter>
     </Card>

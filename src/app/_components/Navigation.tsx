@@ -45,7 +45,7 @@ const MAIN_NAV = [
   { title: "Lieferanten", url: "/Lieferanten" },
   { title: "Formulare", url: "/Formulare" },
   { title: "CE Archiv", url: "/Archiv" },
-  { title: "Kunden (NYI)", url: "/Kunden, " },
+  { title: "Kunden", url: "/Kunden" },
   { title: "Warenlieferung (NYI)", url: "/Warenlieferung" },
   {
     title: "CMS",
@@ -59,7 +59,7 @@ const MAIN_NAV = [
       { title: "Referenzen", url: "/CMS/Referenz" },
     ],
   },
-  { title: "SN (NYI)", url: "/SN" },
+  { title: "SN", url: "/SN" },
   { title: "Info (NYI)", url: "/Info" },
   { title: "Label (NYI)", url: "/Label" },
   { title: "Aussteller (NYI)", url: "/Aussteller" },
