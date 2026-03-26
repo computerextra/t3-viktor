@@ -110,6 +110,7 @@ export default function KundenSuche() {
                 variant={"secondary"}
                 onClick={handleSearch}
                 disabled={kundensuche.isPending}
+                type="submit"
               >
                 {kundensuche.isPending ? (
                   <>
