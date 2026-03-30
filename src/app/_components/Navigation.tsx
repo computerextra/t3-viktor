@@ -46,7 +46,6 @@ const MAIN_NAV = [
   { title: "Formulare", url: "/Formulare" },
   { title: "CE Archiv", url: "/Archiv" },
   { title: "Kunden", url: "/Kunden" },
-  { title: "Warenlieferung (NYI)", url: "/Warenlieferung" },
   {
     title: "CMS",
     url: "/CMS",
@@ -63,7 +62,6 @@ const MAIN_NAV = [
   { title: "Info", url: "/Info" },
   { title: "Label (NYI)", url: "/Label" },
   { title: "Aussteller (NYI)", url: "/Aussteller" },
-  { title: "Versand (NYI)", url: "/Versand" },
   {
     title: "Intrexx (Nur Lesen)",
     url: "/Intrexx",
