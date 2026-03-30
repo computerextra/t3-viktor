@@ -13,9 +13,9 @@ import { jobRouter } from "./routers/viktor/job";
 import { partnerRouter } from "./routers/viktor/partner";
 import { referenzRouter } from "./routers/viktor/referenz";
 import { sageKundenRouter } from "./routers/sage/kunde";
-import { formularRouter } from "./routers/formulare";
 import { archivRouter } from "./routers/viktor/archiv";
 import { sageArtikelRouter } from "./routers/sage/artikel";
+import { mailRouter } from "./routers/mail";
 
 /**
  * This is the primary router for your server.
@@ -23,7 +23,7 @@ import { sageArtikelRouter } from "./routers/sage/artikel";
  * All routers added in /api/routers should be manually added here.
  */
 export const appRouter = createTRPCRouter({
-  formular: formularRouter,
+  mail: mailRouter,
 
   // Viktor Calls
   abteilung: abteilungsRouter,

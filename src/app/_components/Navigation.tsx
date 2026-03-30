@@ -60,7 +60,7 @@ const MAIN_NAV = [
     ],
   },
   { title: "SN", url: "/SN" },
-  { title: "Info (NYI)", url: "/Info" },
+  { title: "Info", url: "/Info" },
   { title: "Label (NYI)", url: "/Label" },
   { title: "Aussteller (NYI)", url: "/Aussteller" },
   { title: "Versand (NYI)", url: "/Versand" },
