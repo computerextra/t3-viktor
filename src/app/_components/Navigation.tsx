@@ -60,8 +60,7 @@ const MAIN_NAV = [
   },
   { title: "SN", url: "/SN" },
   { title: "Info", url: "/Info" },
-  { title: "Label (NYI)", url: "/Label" },
-  { title: "Aussteller (NYI)", url: "/Aussteller" },
+  { title: "Aussteller", url: "/Aussteller" },
   {
     title: "Intrexx (Nur Lesen)",
     url: "/Intrexx",

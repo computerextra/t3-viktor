@@ -17,9 +17,37 @@ import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Button } from "./ui/button";
 import { Calendar } from "./ui/calendar";
 import { useState } from "react";
+import { ACCEPTED_IMAGE_TYPES } from "@/types";
 
 const { fieldContext, useFieldContext, formContext, useFormContext } =
   createFormHookContexts();
+
+const FormFileInput = ({
+  loading,
+  label,
+}: {
+  loading: boolean;
+  label: string;
+}) => {
+  const field = useFieldContext<File | null>();
+  const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
+  return (
+    <Field data-invalid={isInvalid}>
+      <FieldLabel htmlFor={field.name}>{label}</FieldLabel>
+      <Input
+        disabled={loading}
+        id={field.name}
+        accept={ACCEPTED_IMAGE_TYPES.join(",")}
+        name={field.name}
+        type="file"
+        onBlur={field.handleBlur}
+        onChange={(e) => field.handleChange(e.target.files?.[0] ?? null)}
+        aria-invalid={isInvalid}
+      />
+      {isInvalid && <FieldError errors={field.state.meta.errors} />}
+    </Field>
+  );
+};
 
 const FormInput = ({
   className,
@@ -233,6 +261,7 @@ export const { useAppForm, withForm, withFieldGroup } = createFormHook({
     FormTextarea,
     FormSelect,
     FormDateInput,
+    FormFileInput,
   },
   formComponents: {},
   fieldContext,

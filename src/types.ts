@@ -9,14 +9,14 @@ export const ACCEPTED_IMAGE_TYPES = [
 ];
 
 // validator used on the client to ensure a File object meets our size/type limits
-const BildClientValidator = z
+export const BildClientValidator = z
   .instanceof(File)
   .refine((file) => {
     return file?.size <= MAX_FILE_SIZE_MB * 1024 * 1024;
   }, `Datei muss kleiner als ${MAX_FILE_SIZE_MB}MB sein.`)
   .refine((file) => ACCEPTED_IMAGE_TYPES.includes(file?.type));
 
-const BildServerValidator = z.object({
+export const BildServerValidator = z.object({
   data: z.string(),
   type: z.string(),
 });

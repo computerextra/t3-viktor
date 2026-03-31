@@ -16,6 +16,7 @@ import { sageKundenRouter } from "./routers/sage/kunde";
 import { archivRouter } from "./routers/viktor/archiv";
 import { sageArtikelRouter } from "./routers/sage/artikel";
 import { mailRouter } from "./routers/mail";
+import { ausstellerRouter } from "./routers/aussteller";
 
 /**
  * This is the primary router for your server.
@@ -24,6 +25,7 @@ import { mailRouter } from "./routers/mail";
  */
 export const appRouter = createTRPCRouter({
   mail: mailRouter,
+  aussteller: ausstellerRouter,
 
   // Viktor Calls
   abteilung: abteilungsRouter,
