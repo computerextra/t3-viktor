@@ -30,7 +30,6 @@ export const ausstellerRouter = createTRPCRouter({
     upsertQuery +=
       "ON DUPLICATE KEY UPDATE Artikelnummer = VALUES(Artikelnummer), Artikelname = VALUES(Artikelname), Specs = VALUES(Specs), Preis = VALUES(Preis);";
 
-    // Upsert into DB
     await ctx.viktor.$executeRawUnsafe(upsertQuery);
 
     return true;

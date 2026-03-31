@@ -2,6 +2,8 @@ import { HydrateClient } from "@/trpc/server";
 import TestBtn from "./_components/sync-btn";
 import BildForm from "./_components/bild-form";
 
+export const dynamic = "force-dynamic";
+
 export default async function Page() {
   return (
     <HydrateClient>
