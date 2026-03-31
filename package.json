@@ -4,9 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "next dev --turbo",
-    "build": "next build",
-    "start": "next start",
+    "dev": "bun --bun next dev --turbo",
+    "build": "bun --bun next build",
+    "start": "bun --bun next start",
     "lint": "eslint",
     "db:generate": "prisma generate --schema prisma-intrexx-database/schema.prisma && prisma generate --schema prisma-pcvisit-database/schema.prisma && prisma generate --schema prisma-sage-database/schema.prisma && prisma generate --schema prisma-viktor-database/schema.prisma",
     "db:migrate": "prisma migrate deploy",
