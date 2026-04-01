@@ -11,7 +11,7 @@ services:
       - "8888:3000"
     networks:
       - viktor-network
-    command: ["bun run build && bun run start"]
+    command: ["npm run build && npm run start"]
 
 volumes:
   viktor-data:
