@@ -1,5 +1,5 @@
 import { HydrateClient } from "@/trpc/server";
-import KundenAnsicht from "./_components/kunden-ansicht";
+import DokuAnsicht from "./_components/doku-ansicht";
 export const dynamic = "force-dynamic";
 export default async function Page({
   params,
@@ -10,7 +10,7 @@ export default async function Page({
 
   return (
     <HydrateClient>
-      <KundenAnsicht id={parseInt(id)} />
+      <DokuAnsicht id={parseInt(id)} />
     </HydrateClient>
   );
 }

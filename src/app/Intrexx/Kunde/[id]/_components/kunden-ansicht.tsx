@@ -69,11 +69,11 @@ export default function KundenAnsicht({ id }: { id: number }) {
               </Card>
             </div>
             <div>
-              {res.data?.Kunde?.B_KUNDEISTINCEDOKUANG_F42FE149 ? (
+              {res.data?.HasDoku ? (
                 <Button asChild>
                   <Link
                     href={
-                      "/Intrexx/Doku/" + res.data.Kunde.L_INTREXXNR_5F3E58AF
+                      "/Intrexx/Doku/" + res.data.Kunde?.L_INTREXXNR_5F3E58AF
                     }
                   >
                     DOKU

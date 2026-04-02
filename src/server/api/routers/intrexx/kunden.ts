@@ -99,8 +99,20 @@ export const intrexxKundenRouter = createTRPCRouter({
         orderBy: { DTINSERT: "desc" },
       });
 
+      4867;
+
+      const checkDoku = await ctx.intrexx.xTABLEFE663382.findFirst({
+        where: { L_INTREXXNR_F67AE19A: Kunde?.L_INTREXXNR_5F3E58AF },
+      });
+
+      let hasDoku = false;
+      if (checkDoku != null) {
+        hasDoku = true;
+      }
+
       const response = {
         Kunde: Kunde,
+        HasDoku: hasDoku,
         Geräte: geräte,
         WA: werkstattaufträge,
         RMA: rma,

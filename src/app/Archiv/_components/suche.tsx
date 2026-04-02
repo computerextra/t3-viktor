@@ -25,12 +25,10 @@ import { useState } from "react";
 
 type RouterOutput = inferRouterOutputs<AppRouter>;
 type ArchivSuche = RouterOutput["archiv"]["search"];
-type ArchivDownload = RouterOutput["archiv"]["get"];
 
 export default function ArchivSuche() {
   const [search, setSearch] = useState<string | undefined>(undefined);
   const [results, setResults] = useState<ArchivSuche | null>(null);
-  const [data, setData] = useState<ArchivDownload | null>(null);
 
   const suche = api.archiv.search.useMutation({
     onSuccess: (res) => {

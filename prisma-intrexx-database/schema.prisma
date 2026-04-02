@@ -1509,6 +1509,7 @@ model XCALRULE {
   XDATAGROUP42FFC361 XDATAGROUP42FFC361[]
 }
 
+// CE Doku -> SerientermineWartungen
 model XCALRULE1 {
   STRID              String               @id(map: "PK__XCALRULE__FEBD9964A2CB2061") @db.NVarChar(255)
   LUSERID            Int?
@@ -1519,6 +1520,7 @@ model XCALRULE1 {
   XDATAGROUPBD2B40C7 XDATAGROUPBD2B40C7[]
 }
 
+// CE Doku -> SerientermineWartungTK
 model XCALRULE2 {
   STRID              String               @id(map: "PK__XCALRULE__FEBD9964D5081677") @db.NVarChar(255)
   LUSERID            Int?
@@ -1621,6 +1623,7 @@ model XDATAGROUP0D82DCEA {
   STR_SPRACHE_31C0C83E     String?   @db.NVarChar(255)
 }
 
+// CE Doku -> Kunden -> Drucker
 model XDATAGROUP11B089C2 {
   LID                       Int       @id(map: "PK__XDATAGRO__C65557212CC56257")
   FKLID                     Int?
@@ -1660,6 +1663,7 @@ model XDATAGROUP146056EB {
   TXT_BESCHREIBUNG_B91F9E11     String?   @db.NVarChar(Max)
 }
 
+// CE Zentral -> Kunden -> Kundendaten
 model XDATAGROUP15CA4AB5 {
   LID                  Int       @id(map: "PK__XDATAGRO__C6555721E91F09E8")
   FKLID                Int?
@@ -1717,6 +1721,7 @@ model XDATAGROUP1926FD9D {
   XFILEDATAGROUPC3BCC345 XFILEDATAGROUPC3BCC345[]
 }
 
+// CE Doku -> Kunden -> WartungenTK
 model XDATAGROUP19DF1D8D {
   LID                            Int               @id(map: "PK__XDATAGRO__C65557213960E9D1")
   FKLID                          Int?
@@ -1767,6 +1772,7 @@ model XDATAGROUP19DF1D8D {
   @@index([REF_88526A62], map: "IX_XDATAGCBDABC5_2")
 }
 
+// CE Zentral -> Neubauten -> NB Dokumente
 model XDATAGROUP1CF7CB5F {
   FKLID              Int?
   LID                Int                 @id(map: "PK__XDATAGRO__C655572115384EF3")
@@ -2211,6 +2217,7 @@ model XDATAGROUP5217680B1 {
   @@index([FKLID], map: "IX_XDATAG55864A7_1")
 }
 
+// CE Doku -> Kunden -> Zugangsdaten
 model XDATAGROUP52176A1A {
   LID                      Int       @id(map: "PK__XDATAGRO__C65557213DA0FEE7")
   FKLID                    Int?
@@ -2329,6 +2336,7 @@ model XDATAGROUP5D4C7428 {
   L_ANZAHL_66C043BD          Int?
 }
 
+// CE Doku -> Kunden -> Kontaktdaten
 model XDATAGROUP5FAC0D60 {
   FKLID                 Int?
   LID                   Int       @id(map: "PK__XDATAGRO__C6555721476FC701")
@@ -2370,7 +2378,7 @@ model XDATAGROUP6BEF53B5 {
   STR_TIMESTAMP_B46E31A4   String?   @db.NVarChar(255)
 }
 
-// CE Doku -> Dienstleistungen
+// CE Doku -> Kunden -> Dienstleistungen
 model XDATAGROUP6CBD4214 {
   LID                       Int       @id(map: "PK__XDATAGRO__C6555721A9F1F419")
   FKLID                     Int?
@@ -2428,6 +2436,7 @@ model XDATAGROUP6E1145BC {
   B_VOTERSTELLEN_C623CC76        Boolean?
 }
 
+// CE Doku -> Kunden -> Workstations
 model XDATAGROUP6FCE42B4 {
   LID                           Int       @id(map: "PK__XDATAGRO__C6555721D884D76F")
   FKLID                         Int?
@@ -2450,6 +2459,7 @@ model XDATAGROUP6FCE42B4 {
   @@index([FKLID], map: "IX_XDATAG901438C_1")
 }
 
+// CE Zentral -> Termine -> Termin Dokumente
 model XDATAGROUP701FBF56 {
   DTEDIT             DateTime?
   LID                Int                 @id(map: "PK__XDATAGRO__C6555721EEB68B7F")
@@ -2561,6 +2571,7 @@ model XDATAGROUP7E5D5EB5 {
   DT_REPORTDATUM        DateTime?
 }
 
+// CE Zentral -> Termine -> Termin Einträge
 model XDATAGROUP864B0B1C {
   LID                            Int       @id(map: "PK__XDATAGRO__C6555721D5C686CD")
   FKLID                          Int?
@@ -2617,6 +2628,7 @@ model XDATAGROUP868FB0E7 {
   @@index([FKLID], map: "IX_XDATAGC38D2CC_1")
 }
 
+// CE Doku -> Kunden -> E-Mail
 model XDATAGROUP86DE8D9E {
   LID                            Int       @id(map: "PK__XDATAGRO__C6555721E2CF1F89")
   FKLID                          Int?
@@ -2637,6 +2649,7 @@ model XDATAGROUP86DE8D9E {
   @@index([FKLID], map: "IX_XDATAG4298A3A_1")
 }
 
+// CE Zentral -> Werkstattaufträge -> WA Dokumente
 model XDATAGROUP88339415 {
   FKLID              Int?
   LID                Int                 @id(map: "PK__XDATAGRO__C6555721D40D6BE2")
@@ -2652,6 +2665,7 @@ model XDATAGROUP88339415 {
   @@index([FKLID], map: "IX_XDATAG2F8E028_1")
 }
 
+// CE Doku -> Kunden -> Netzwerkgeräte
 model XDATAGROUP8EA70C90 {
   FKLID                       Int?
   LID                         Int       @id(map: "PK__XDATAGRO__C65557210FBDF34E")
@@ -2690,6 +2704,7 @@ model XDATAGROUP92E7F42F {
   L_ELTERNID_A9449520      Int?
 }
 
+// CE Doku -> Kunden -> Sonstiges
 model XDATAGROUP97AA886C {
   LID                       Int       @id(map: "PK__XDATAGRO__C65557214DE3C782")
   FKLID                     Int?
@@ -2890,6 +2905,7 @@ model XDATAGROUPAEB04AA21 {
   B_MAILEN_CAF277AC             Boolean?
 }
 
+// CE Doku -> Kunden -> Konten
 model XDATAGROUPB318AC55 {
   LID                            Int       @id(map: "PK__XDATAGRO__C6555721A82ED2BD")
   FKLID                          Int?
@@ -2910,6 +2926,7 @@ model XDATAGROUPB318AC55 {
   @@index([FKLID], map: "IX_XDATAG53FD9C3_1")
 }
 
+// CE Doku -> Kunden -> Software
 model XDATAGROUPB4995030 {
   LID                        Int       @id(map: "PK__XDATAGRO__C655572119B1AC69")
   FKLID                      Int?
@@ -2954,6 +2971,7 @@ model XDATAGROUPB76723CF {
   STR_KATEGORIE_6D894D0A String?   @db.NVarChar(255)
 }
 
+// CE Doku -> Kunden -> Server
 model XDATAGROUPB947D46D {
   LID                           Int       @id(map: "PK__XDATAGRO__C6555721D89785AD")
   FKLID                         Int?
@@ -2978,6 +2996,7 @@ model XDATAGROUPB947D46D {
   @@index([FKLID], map: "IX_XDATAGBE98C08_1")
 }
 
+// CE Doku -> Kunden -> Wartungen
 model XDATAGROUPBD2B40C7 {
   LID                           Int               @id(map: "PK__XDATAGRO__C655572136A90B39")
   FKLID                         Int?
@@ -3315,6 +3334,7 @@ model XDATAGROUPD52FB0D2 {
   @@index([FKLID], map: "IX_XDATAGD6E6761_1")
 }
 
+// CE Doku -> Kunden -> Standorte
 model XDATAGROUPD565F7E8 {
   LID                       Int       @id(map: "PK__XDATAGRO__C65557210BECD2A7")
   FKLID                     Int?
@@ -3329,6 +3349,7 @@ model XDATAGROUPD565F7E8 {
   @@index([FKLID], map: "IX_XDATAGDBB8EE0_1")
 }
 
+// CE Zentral -> Werkstattaufträge -> WA Einträge
 model XDATAGROUPD72B26EA {
   LID                            Int       @id(map: "PK__XDATAGRO__C6555721B52EDC2A")
   FKLID                          Int?
@@ -3412,6 +3433,7 @@ model XDATAGROUPDBCE5D00 {
   @@index([FKLID], map: "IX_XDATAG7B7A9F6_1")
 }
 
+// CE Doku -> Kunden -> Dokumente
 model XDATAGROUPDE5A5C79 {
   LID                      Int                      @id(map: "PK__XDATAGRO__C6555721F31803AC")
   FKLID                    Int?
@@ -3711,6 +3733,7 @@ model XDATAGROUPE3A35CC7 {
   XCAL154E113E                 XCAL154E113E[]
 }
 
+// CE Zentral -> Neubauten -> NB Eintröge
 model XDATAGROUPE5617B92 {
   LID                            Int       @id(map: "PK__XDATAGRO__C65557212678EC37")
   FKLID                          Int?
@@ -3742,6 +3765,7 @@ model XDATAGROUPE62BBE1B {
   STR_VERTRAGSARTOPTION_405C89B6 String?   @db.NVarChar(255)
 }
 
+// CE Zentral -> RMA -> RMA Einträge
 model XDATAGROUPEA4072E4 {
   LID                           Int       @id(map: "PK__XDATAGRO__C6555721CEBEF18B")
   FKLID                         Int?
@@ -3787,6 +3811,7 @@ model XDATAGROUPFF6D60AF {
   @@index([FKLID], map: "IX_XDATAG1C0DEF4_1")
 }
 
+// CE Zentral -> Kunden -> Datenübermittlungsformulare
 model XDATAGROUPFFC21EED {
   DTEDIT            DateTime?
   LUSERID           Int?
@@ -4681,6 +4706,7 @@ model XTABLEE6513E92 {
   STR_RELSNUMMER_27CCCCCD   String?   @db.NVarChar(255)
 }
 
+// CE Doku -> Kunden
 model XTABLEFE663382 {
   LID                            Int                  @id(map: "PK__XTABLEFE__C6555721979AF102")
   LUSERID                        Int?

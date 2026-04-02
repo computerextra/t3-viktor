@@ -17,6 +17,7 @@ import { archivRouter } from "./routers/viktor/archiv";
 import { sageArtikelRouter } from "./routers/sage/artikel";
 import { mailRouter } from "./routers/mail";
 import { ausstellerRouter } from "./routers/aussteller";
+import { intrexxDokuRouter } from "./routers/intrexx/doku";
 
 /**
  * This is the primary router for your server.
@@ -48,6 +49,7 @@ export const appRouter = createTRPCRouter({
   intrexx_wa: intrexxWaRouter,
   intrexx_nb: intrexxNbRouter,
   intrexx_geräte: intrexxGeräteRouter,
+  intrexx_doku: intrexxDokuRouter,
 
   // PC Visit Calls
 });
