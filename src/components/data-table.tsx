@@ -79,7 +79,7 @@ export function PaginatedDataTable<TData, TValue>({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No results.
+                  Keine Daten
                 </TableCell>
               </TableRow>
             )}

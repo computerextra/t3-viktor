@@ -8,10 +8,6 @@ type DokuWorkstations = RouterOutput["intrexx_doku"]["workstations"];
 type DokuKonten = RouterOutput["intrexx_doku"]["konten"];
 type DokuSoftware = RouterOutput["intrexx_doku"]["software"];
 type DokuEmails = RouterOutput["intrexx_doku"]["email"];
-type DokuDrucker = RouterOutput["intrexx_doku"]["drucker"];
-type DokuNetzwerkgeräte = RouterOutput["intrexx_doku"]["netzwerkgeräte"];
-type DokuZugangsdaten = RouterOutput["intrexx_doku"]["zugangsdaten"];
-type DokuSonstiges = RouterOutput["intrexx_doku"]["sonstiges"];
 
 export const ServerColumns: ColumnDef<DokuServer[0]>[] = [
   { accessorKey: "STR_NAME_8F4484EF", header: "Name" },
@@ -49,32 +45,5 @@ export const EmailColumns: ColumnDef<DokuEmails[0]>[] = [
   { accessorKey: "STR_EMAILADRESSE_1EA5B191", header: "E-Mail" },
   { accessorKey: "STR_ANMELDENAME_7B82FEE6", header: "Anmeldename" },
   { accessorKey: "STR_KENNWORT_B9B3C27F", header: "Kennwort" },
-  //   TODO: Pop Up mit mehr Infos
-];
-
-export const DruckerColumns: ColumnDef<DokuDrucker[0]>[] = [
-  { accessorKey: "STR_MODELL_67B0B40E", header: "Modell" },
-  { accessorKey: "STR_ANSCHLUSSART_F75AD7D2", header: "Anschluss" },
-  { accessorKey: "STR_IPADRESSE_BCEA9C26", header: "IP" },
-  { accessorKey: "STR_STANDORT_917A167A", header: "Standort" },
-  //   TODO: Pop Up mit mehr Infos
-];
-
-export const NetzwerkgeräteColumns: ColumnDef<DokuNetzwerkgeräte[0]>[] = [
-  { accessorKey: "STR_BEZEICHNUNG_EA6D28B2", header: "Bezeichnung" },
-  { accessorKey: "STR_IPADRESSE_C56DEAB6", header: "IP" },
-  { accessorKey: "STR_STANDORT_45CC8D89", header: "Standort" },
-  //   TODO: Pop Up mit mehr Infos
-];
-
-export const ZugangsdatenColumns: ColumnDef<DokuZugangsdaten[0]>[] = [
-  { accessorKey: "STR_BEZEICHNUNG_2863B413", header: "Bezeichnung" },
-  { accessorKey: "TXT_BEMERKUNG_E8B73E6B", header: "Bemerkung" },
-  //   TODO: Pop Up mit mehr Infos
-];
-
-export const SonstigesColumns: ColumnDef<DokuSonstiges[0]>[] = [
-  { accessorKey: "STR_BESCHREIBUNG_CE8A52EF", header: "Beschreibung" },
-  { accessorKey: "TXT_BEMERKUNG_15AFD3BC", header: "Bemerkung" },
   //   TODO: Pop Up mit mehr Infos
 ];
