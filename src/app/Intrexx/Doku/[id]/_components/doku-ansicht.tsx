@@ -7,6 +7,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { api } from "@/trpc/react";
 import Link from "next/link";
 import Seite1 from "./seite1";
+import Seite2 from "./seite2";
+import Seite3 from "./seite3";
+import Seite4 from "./seite4";
+import Seite5 from "./seite5";
 
 export default function DokuAnsicht({ id }: { id: number }) {
   const data = api.intrexx_doku.get.useQuery({ id });
@@ -106,10 +110,18 @@ export default function DokuAnsicht({ id }: { id: number }) {
           <TabsContent value="Seite1">
             <Seite1 id={id} />
           </TabsContent>
-          <TabsContent value="Seite2">2</TabsContent>
-          <TabsContent value="Seite3">3</TabsContent>
-          <TabsContent value="Seite4">4</TabsContent>
-          <TabsContent value="Seite5">5</TabsContent>
+          <TabsContent value="Seite2">
+            <Seite2 id={id} />
+          </TabsContent>
+          <TabsContent value="Seite3">
+            <Seite3 id={id} />
+          </TabsContent>
+          <TabsContent value="Seite4">
+            <Seite4 id={id} />
+          </TabsContent>
+          <TabsContent value="Seite5">
+            <Seite5 id={id} />
+          </TabsContent>
         </Tabs>
       </CardContent>
     </Card>
