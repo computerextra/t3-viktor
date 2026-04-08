@@ -6,8 +6,6 @@ type RouterOutput = inferRouterOutputs<AppRouter>;
 type DokuServer = RouterOutput["intrexx_doku"]["getServer"];
 type DokuWorkstations = RouterOutput["intrexx_doku"]["workstations"];
 type DokuKonten = RouterOutput["intrexx_doku"]["konten"];
-type DokuSoftware = RouterOutput["intrexx_doku"]["software"];
-type DokuEmails = RouterOutput["intrexx_doku"]["email"];
 
 export const ServerColumns: ColumnDef<DokuServer[0]>[] = [
   { accessorKey: "STR_NAME_8F4484EF", header: "Name" },
@@ -31,19 +29,5 @@ export const KontenColumns: ColumnDef<DokuKonten[0]>[] = [
   { accessorKey: "STR_KONTOART_25F5C306", header: "Kontoart" },
   { accessorKey: "STR_BENUTZERNAME_2B169E30", header: "Benutzername" },
   { accessorKey: "STR_KENNWORT_E5B5481B", header: "Kennwort" },
-  //   TODO: Pop Up mit mehr Infos
-];
-
-export const SoftwareColumns: ColumnDef<DokuSoftware[0]>[] = [
-  { accessorKey: "STR_BEZEICHNUNG_CDC647B9", header: "Bezeichnung" },
-  { accessorKey: "TXT_SERVER_BF0068DC", header: "Server" },
-  { accessorKey: "TXT_WORKSTATIONS_0D05B97D", header: "Wokstations" },
-  //   TODO: Pop Up mit mehr Infos
-];
-
-export const EmailColumns: ColumnDef<DokuEmails[0]>[] = [
-  { accessorKey: "STR_EMAILADRESSE_1EA5B191", header: "E-Mail" },
-  { accessorKey: "STR_ANMELDENAME_7B82FEE6", header: "Anmeldename" },
-  { accessorKey: "STR_KENNWORT_B9B3C27F", header: "Kennwort" },
   //   TODO: Pop Up mit mehr Infos
 ];
