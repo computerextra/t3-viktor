@@ -7,7 +7,6 @@ import {
 import LoadingSkeleton from "@/components/loading-skeleton";
 import { Card, CardContent } from "@/components/ui/card";
 import { api } from "@/trpc/react";
-import { KontenColumns, ServerColumns, WorkstationColumns } from "./columns";
 import type { AppRouter } from "@/server/api/root";
 import { ColumnDef } from "@tanstack/react-table";
 import type { inferRouterOutputs } from "@trpc/server";
@@ -36,62 +35,31 @@ import {
   ContextMenuItem,
   ContextMenuTrigger,
 } from "@/components/ui/context-menu";
-import { Context } from "radix-ui/internal";
 import { toast } from "sonner";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 type RouterOutput = inferRouterOutputs<AppRouter>;
 
 export default function Seite1({ id }: { id: number }) {
-  const server = api.intrexx_doku.getServer.useQuery({ id });
-  const workstations = api.intrexx_doku.workstations.useQuery({ id });
-  const konten = api.intrexx_doku.konten.useQuery({ id });
-
   return (
     <Card>
       <CardContent>
         <div className="grid grid-cols-3 gap-8">
-          {/* TODO: In Eigene Funktion mit Modal */}
-          <div>
-            <h3 className="text-center">Server</h3>
-            {server.isLoading ? (
-              <LoadingSkeleton desc="Server laden..." />
-            ) : (
-              <PaginatedDataTable
-                columns={ServerColumns}
-                data={server.data ?? []}
-              />
-            )}
-          </div>
-          {/* TODO: In Eigene Funktion mit Modal */}
-          <div>
-            <h3 className="text-center">Worstations</h3>
-            {workstations.isLoading ? (
-              <LoadingSkeleton desc="Workstations laden..." />
-            ) : (
-              <PaginatedDataTable
-                columns={WorkstationColumns}
-                data={workstations.data ?? []}
-              />
-            )}
-          </div>
-          {/* TODO: In Eigene Funktion mit Modal */}
-          <div>
-            <h3 className="text-center">Konten</h3>
-            {konten.isLoading ? (
-              <LoadingSkeleton desc="Konten laden..." />
-            ) : (
-              <PaginatedDataTable
-                columns={KontenColumns}
-                data={konten.data ?? []}
-              />
-            )}
-          </div>
-
+          <Server id={id} />
+          <Workstation id={id} />
+          <Konten id={id} />
           <Software id={id} />
           <Email id={id} />
           <Drucker id={id} />
@@ -101,6 +69,522 @@ export default function Seite1({ id }: { id: number }) {
         </div>
       </CardContent>
     </Card>
+  );
+}
+
+type DokuServer = RouterOutput["intrexx_doku"]["getServer"];
+function Server({ id }: { id: number }) {
+  const server = api.intrexx_doku.getServer.useQuery({ id });
+
+  const ServerColumns: ColumnDef<DokuServer[0]>[] = [
+    {
+      accessorKey: "LID",
+      header: "",
+      cell: ({ row }) => {
+        const x = row.original;
+        return (
+          <Dialog>
+            <form onSubmit={(e) => e.preventDefault()}>
+              <DialogTrigger asChild>
+                <Button size={"icon"} variant={"ghost"}>
+                  <Search className="size-4" />
+                </Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Server bearbeiten</DialogTitle>
+                </DialogHeader>
+                <FieldGroup>
+                  <div className="grid grid-cols-3 gap-8">
+                    <Field>
+                      <Label htmlFor="Gerätenummer">Gerätenummer</Label>
+                      <Input
+                        id="Gerätenummer"
+                        name="Gerätenummer"
+                        defaultValue={x.L_GERTENR_A53AB163 ?? ""}
+                      />
+                    </Field>
+                    <Field className="col-span-2">
+                      <Label htmlFor="Bezeichnung">Bezeichnung</Label>
+                      <Input
+                        id="Bezeichnung"
+                        name="Bezeichnung"
+                        defaultValue={x.STR_GERTEBEZEICHNUNG_9940CA49 ?? ""}
+                      />
+                    </Field>
+                  </div>
+                  <Field>
+                    <Label htmlFor="Konfiguration">Konfiguration</Label>
+                    <Input
+                      id="Konfiguration"
+                      name="Konfiguration"
+                      defaultValue={x.STR_KONFIGURATION ?? ""}
+                    />
+                  </Field>
+
+                  <div className="grid grid-cols-3 gap-4">
+                    <Field>
+                      <Label htmlFor="IP">IP</Label>
+                      <Input
+                        id="IP"
+                        name="IP"
+                        defaultValue={x.STR_IPADRESSE_83446DE5 ?? ""}
+                      />
+                    </Field>
+                    <Field>
+                      <Label htmlFor="Name">Name</Label>
+                      <Input
+                        id="Name"
+                        name="Name"
+                        defaultValue={x.STR_NAME_8F4484EF ?? ""}
+                      />
+                    </Field>
+                    <Field>
+                      <Label htmlFor="Domäne">Domäne</Label>
+                      <Input
+                        id="Domäne"
+                        name="Domäne"
+                        defaultValue={x.STR_DOMNE_75045D56 ?? ""}
+                      />
+                    </Field>
+
+                    <Field>
+                      <Label htmlFor="Betriebssystem">Betriebssystem</Label>
+                      <Input
+                        id="Betriebssystem"
+                        name="Betriebssystem"
+                        defaultValue={x.STR_BETRIEBSSYSTEM_DE92C4FB ?? ""}
+                      />
+                    </Field>
+                    <Field>
+                      <Label htmlFor="CAL">CAL</Label>
+                      <Input
+                        id="CAL"
+                        name="CAL"
+                        defaultValue={x.STR_ANZAHLCALS_31CEE58C ?? ""}
+                      />
+                    </Field>
+                    <Field>
+                      <Label htmlFor="Standort">Standort</Label>
+                      <Input
+                        id="Standort"
+                        name="Standort"
+                        defaultValue={x.STR_STANDORT_1261E8C0 ?? ""}
+                      />
+                    </Field>
+                  </div>
+
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Installierte Services</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {x.TXT_SERVERDIENSTE_30C71333?.split("|").map(
+                        (x, idx) => (
+                          <TableRow key={idx}>
+                            <TableCell>{x}</TableCell>
+                          </TableRow>
+                        ),
+                      )}
+                    </TableBody>
+                  </Table>
+
+                  <Field>
+                    <Label htmlFor="Bemerkung">Bemerkung</Label>
+                    <Textarea
+                      id="Bemerkung"
+                      name="Bemerkung"
+                      defaultValue={x.TXT_BEMERKUNG_D8B77BB7 ?? ""}
+                    />
+                  </Field>
+                </FieldGroup>
+                <DialogFooter>
+                  <DialogClose asChild>
+                    <Button variant="outline">Abbrechen</Button>
+                  </DialogClose>
+                  <Button type="submit">Speichern</Button>
+                </DialogFooter>
+              </DialogContent>
+            </form>
+          </Dialog>
+        );
+      },
+    },
+    {
+      accessorKey: "STR_NAME_8F4484EF",
+      header: "Name",
+      cell: ({ row }) => {
+        const x = row.original;
+        return (
+          <div className="max-w-40">
+            <p className="line-clamp-4 text-pretty">{x.STR_NAME_8F4484EF}</p>
+          </div>
+        );
+      },
+    },
+    {
+      accessorKey: "STR_DOMNE_75045D56",
+      header: "Domäne",
+      cell: ({ row }) => {
+        const x = row.original;
+        return (
+          <div className="max-w-40">
+            <p className="line-clamp-4 text-pretty">{x.STR_DOMNE_75045D56}</p>
+          </div>
+        );
+      },
+    },
+    {
+      accessorKey: "STR_IPADRESSE_83446DE5",
+      header: "IP",
+      cell: ({ row }) => {
+        const x = row.original;
+        return (
+          <div className="max-w-40">
+            <p className="line-clamp-4 text-pretty">
+              {x.STR_IPADRESSE_83446DE5}
+            </p>
+          </div>
+        );
+      },
+    },
+    {
+      accessorKey: "TXT_SERVERDIENSTE_30C71333",
+      header: "Dienste",
+      cell: ({ row }) => {
+        const x = row.original;
+        return (
+          <div className="max-w-40">
+            <p className="line-clamp-4 text-pretty">
+              {x.TXT_SERVERDIENSTE_30C71333?.split("|").map((x, idx) => (
+                <span className="block" key={idx}>
+                  {x}
+                </span>
+              ))}
+            </p>
+          </div>
+        );
+      },
+    },
+    {
+      accessorKey: "L_GERTENR_A53AB163",
+      header: "Gerätenummer",
+      cell: ({ row }) => {
+        const x = row.original;
+        return (
+          <div className="max-w-40">
+            <p className="line-clamp-4 text-pretty">{x.L_GERTENR_A53AB163}</p>
+          </div>
+        );
+      },
+    },
+  ];
+
+  return (
+    <div>
+      <h3 className="text-center">Server</h3>
+      {server.isLoading ? (
+        <LoadingSkeleton desc="Server laden..." />
+      ) : (
+        <PaginatedSearchDataTable
+          filter="STR_NAME_8F4484EF"
+          label="Name"
+          columns={ServerColumns}
+          data={server.data ?? []}
+        />
+      )}
+    </div>
+  );
+}
+
+type DokuWorkstations = RouterOutput["intrexx_doku"]["workstations"];
+function Workstation({ id }: { id: number }) {
+  const workstations = api.intrexx_doku.workstations.useQuery({ id });
+
+  const WorkstationColumns: ColumnDef<DokuWorkstations[0]>[] = [
+    {
+      accessorKey: "LID",
+      header: "",
+      cell: ({ row }) => {
+        const x = row.original;
+        return (
+          <Dialog>
+            <form onSubmit={(e) => e.preventDefault()}>
+              <DialogTrigger asChild>
+                <Button size={"icon"} variant={"ghost"}>
+                  <Search className="size-4" />
+                </Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Workstation bearbeiten</DialogTitle>
+                </DialogHeader>
+                <FieldGroup>
+                  <div className="grid grid-cols-3 gap-8">
+                    <Field>
+                      <Label htmlFor="Gerätenummer">Gerätenummer</Label>
+                      <Input
+                        id="Gerätenummer"
+                        name="Gerätenummer"
+                        defaultValue={x.L_GERTENR_4F85C699 ?? ""}
+                      />
+                    </Field>
+                    <Field className="col-span-2">
+                      <Label htmlFor="Bezeichnung">Bezeichnung</Label>
+                      <Input
+                        id="Bezeichnung"
+                        name="Bezeichnung"
+                        defaultValue={x.STR_GERTEBEZEICHNUNG_76183CA9 ?? ""}
+                      />
+                    </Field>
+                  </div>
+                  <Field>
+                    <Label htmlFor="Konfiguration">Konfiguration</Label>
+                    <Input
+                      id="Konfiguration"
+                      name="Konfiguration"
+                      defaultValue={x.STR_KONFIGURATION ?? ""}
+                    />
+                  </Field>
+
+                  <Field>
+                    <Label htmlFor="Name">Name</Label>
+                    <Input
+                      id="Name"
+                      name="Name"
+                      defaultValue={x.STR_NAME_DEDB1FC4 ?? ""}
+                    />
+                  </Field>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <Field>
+                      <Label htmlFor="IP">IP</Label>
+                      <Input
+                        id="IP"
+                        name="IP"
+                        defaultValue={x.STR_IPADRESSE_C112A916 ?? ""}
+                      />
+                    </Field>
+                    <Field>
+                      <Label htmlFor="Betriebssystem">Betriebssystem</Label>
+                      <Input
+                        id="Betriebssystem"
+                        name="Betriebssystem"
+                        defaultValue={x.STR_BETRIEBSSYSTEM_FF41BD81 ?? ""}
+                      />
+                    </Field>
+                  </div>
+                  <Field>
+                    <Label htmlFor="Standort">Standort</Label>
+                    <Input
+                      id="Standort"
+                      name="Standort"
+                      defaultValue={x.STR_STANDORT_B2C18F25 ?? ""}
+                    />
+                  </Field>
+                  <Field>
+                    <Label htmlFor="Bemerkung">Bemerkung</Label>
+                    <Textarea
+                      id="Bemerkung"
+                      name="Bemerkung"
+                      defaultValue={x.TXT_BEMERKUNG_57D24342 ?? ""}
+                    />
+                  </Field>
+                </FieldGroup>
+                <DialogFooter>
+                  <DialogClose asChild>
+                    <Button variant="outline">Abbrechen</Button>
+                  </DialogClose>
+                  <Button type="submit">Speichern</Button>
+                </DialogFooter>
+              </DialogContent>
+            </form>
+          </Dialog>
+        );
+      },
+    },
+    {
+      accessorKey: "STR_NAME_DEDB1FC4",
+      header: "Name",
+      cell: ({ row }) => {
+        const x = row.original;
+        return (
+          <div className="max-w-40">
+            <p className="line-clamp-4 text-pretty">{x.STR_NAME_DEDB1FC4}</p>
+          </div>
+        );
+      },
+    },
+    {
+      accessorKey: "STR_STANDARDNUTZER_AD2E367F",
+      header: "Standardnutzer",
+      cell: ({ row }) => {
+        const x = row.original;
+        return (
+          <div className="max-w-40">
+            <p className="line-clamp-4 text-pretty">
+              {x.STR_STANDARDNUTZER_AD2E367F}
+            </p>
+          </div>
+        );
+      },
+    },
+    {
+      accessorKey: "STR_IPADRESSE_C112A916",
+      header: "IP",
+      cell: ({ row }) => {
+        const x = row.original;
+        return (
+          <div className="max-w-40">
+            <p className="line-clamp-4 text-pretty">
+              {x.STR_IPADRESSE_C112A916}
+            </p>
+          </div>
+        );
+      },
+    },
+    {
+      accessorKey: "L_GERTENR_4F85C699",
+      header: "Gerätenummer",
+      cell: ({ row }) => {
+        const x = row.original;
+        return (
+          <div className="max-w-40">
+            <p className="line-clamp-4 text-pretty">{x.L_GERTENR_4F85C699}</p>
+          </div>
+        );
+      },
+    },
+  ];
+
+  return (
+    <div>
+      <h3 className="text-center">Worstations</h3>
+      {workstations.isLoading ? (
+        <LoadingSkeleton desc="Workstations laden..." />
+      ) : (
+        <PaginatedSearchDataTable
+          filter="STR_NAME_DEDB1FC4"
+          label="Name"
+          columns={WorkstationColumns}
+          data={workstations.data ?? []}
+        />
+      )}
+    </div>
+  );
+}
+
+type DokuKonten = RouterOutput["intrexx_doku"]["konten"];
+function Konten({ id }: { id: number }) {
+  const konten = api.intrexx_doku.konten.useQuery({ id });
+
+  const KontenColumns: ColumnDef<DokuKonten[0]>[] = [
+    {
+      accessorKey: "LID",
+      header: "",
+      cell: ({ row }) => {
+        const x = row.original;
+        return (
+          <Dialog>
+            <form onSubmit={(e) => e.preventDefault()}>
+              <DialogTrigger asChild>
+                <Button size={"icon"} variant={"ghost"}>
+                  <Search className="size-4" />
+                </Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Konto bearbeiten</DialogTitle>
+                </DialogHeader>
+                <FieldGroup>
+                  <Field>
+                    <Label htmlFor="Name">Name</Label>
+                    <Input
+                      id="Name"
+                      name="Name"
+                      defaultValue={x.STR_NAME_FFF21E31 ?? ""}
+                    />
+                  </Field>
+
+                  <Field>
+                    <Label htmlFor="Benutzername">Benutzername</Label>
+                    <Input
+                      id="Benutzername"
+                      name="Benutzername"
+                      defaultValue={x.STR_BENUTZERNAME_2B169E30 ?? ""}
+                    />
+                  </Field>
+
+                  <div className="grid grid-cols-3 gap-4">
+                    <Field>
+                      <Label htmlFor="Kennwort">Kennwort</Label>
+                      <Input
+                        id="Kennwort"
+                        name="Kennwort"
+                        defaultValue={x.STR_KENNWORT_E5B5481B ?? ""}
+                      />
+                    </Field>
+                    <Field>
+                      <Label htmlFor="Rechte">Rechte</Label>
+                      <Input
+                        id="Rechte"
+                        name="Rechte"
+                        defaultValue={x.STR_RECHTE_A1CCA7E7 ?? ""}
+                      />
+                    </Field>
+                    <Field>
+                      <Label htmlFor="Standardrechner">Standardrechner</Label>
+                      <Input
+                        id="Standardrechner"
+                        name="Standardrechner"
+                        defaultValue={x.STR_STANDARDRECHNER_F1847594 ?? ""}
+                      />
+                    </Field>
+                  </div>
+
+                  <Field>
+                    <Label htmlFor="Bemerkung">Bemerkung</Label>
+                    <Textarea
+                      id="Bemerkung"
+                      name="Bemerkung"
+                      defaultValue={x.TXT_BEMERKUNG_E3DE0DA3 ?? ""}
+                    />
+                  </Field>
+                </FieldGroup>
+                <DialogFooter>
+                  <DialogClose asChild>
+                    <Button variant="outline">Abbrechen</Button>
+                  </DialogClose>
+                  <Button type="submit">Speichern</Button>
+                </DialogFooter>
+              </DialogContent>
+            </form>
+          </Dialog>
+        );
+      },
+    },
+    { accessorKey: "STR_NAME_FFF21E31", header: "Name" },
+    { accessorKey: "STR_KONTOART_25F5C306", header: "Kontoart" },
+    { accessorKey: "STR_BENUTZERNAME_2B169E30", header: "Benutzername" },
+    { accessorKey: "STR_KENNWORT_E5B5481B", header: "Kennwort" },
+  ];
+
+  return (
+    <div>
+      <h3 className="text-center">Konten</h3>
+      {konten.isLoading ? (
+        <LoadingSkeleton desc="Konten laden..." />
+      ) : (
+        <PaginatedSearchDataTable
+          filter="STR_NAME_FFF21E31"
+          label="Name"
+          columns={KontenColumns}
+          data={konten.data ?? []}
+        />
+      )}
+    </div>
   );
 }
 
