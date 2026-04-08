@@ -565,10 +565,76 @@ function Konten({ id }: { id: number }) {
         );
       },
     },
-    { accessorKey: "STR_NAME_FFF21E31", header: "Name" },
-    { accessorKey: "STR_KONTOART_25F5C306", header: "Kontoart" },
-    { accessorKey: "STR_BENUTZERNAME_2B169E30", header: "Benutzername" },
-    { accessorKey: "STR_KENNWORT_E5B5481B", header: "Kennwort" },
+    {
+      accessorKey: "STR_NAME_FFF21E31",
+      header: "Name",
+      cell: ({ row }) => {
+        const x = row.original;
+        return (
+          <div className="max-w-40">
+            <p className="line-clamp-4 text-pretty">{x.STR_NAME_FFF21E31}</p>
+          </div>
+        );
+      },
+    },
+    {
+      accessorKey: "STR_KONTOART_25F5C306",
+      header: "Kontoart",
+      cell: ({ row }) => {
+        const x = row.original;
+        return (
+          <div className="max-w-40">
+            <p className="line-clamp-4 text-pretty">
+              {x.STR_KONTOART_25F5C306}
+            </p>
+          </div>
+        );
+      },
+    },
+    {
+      accessorKey: "STR_BENUTZERNAME_2B169E30",
+      header: "Benutzername",
+      cell: ({ row }) => {
+        const x = row.original;
+        return (
+          <div className="max-w-40">
+            <p className="line-clamp-4 text-pretty">
+              {x.STR_BENUTZERNAME_2B169E30}
+            </p>
+          </div>
+        );
+      },
+    },
+    {
+      accessorKey: "STR_KENNWORT_E5B5481B",
+      header: "Kennwort",
+      cell: ({ row }) => {
+        const x = row.original;
+        return (
+          <Tooltip delayDuration={1000}>
+            <TooltipTrigger>
+              <ContextMenu>
+                <ContextMenuTrigger>*****</ContextMenuTrigger>
+                <ContextMenuContent>
+                  <ContextMenuItem
+                    onClick={() => {
+                      if (x.STR_KENNWORT_E5B5481B == null) return;
+                      navigator.clipboard.writeText(x.STR_KENNWORT_E5B5481B);
+                      toast.success("Passwort in Zwischenablage kopiert.");
+                    }}
+                  >
+                    {x.STR_KENNWORT_E5B5481B}
+                  </ContextMenuItem>
+                </ContextMenuContent>
+              </ContextMenu>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Rechtsklick zum anzeigen und kopieren</p>
+            </TooltipContent>
+          </Tooltip>
+        );
+      },
+    },
   ];
 
   return (
