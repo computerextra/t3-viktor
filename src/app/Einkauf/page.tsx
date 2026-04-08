@@ -10,7 +10,7 @@ export const dynamic = "force-dynamic";
 export default async function Home() {
   return (
     <HydrateClient>
-      <div className="container mx-auto">
+      <div className="container mx-auto print:w-screen print:min-w-screen">
         <h1 className="mt-12 scroll-m-20 text-center text-4xl font-extrabold tracking-tight text-balance print:hidden">
           Einkaufsliste
         </h1>

@@ -38,7 +38,9 @@ export default function EinkaufCard() {
                   {x.Paypal ? "Zahlung mit Paypal" : "Zahlung in Bar"}
                 </ItemDescription>
                 <div className="grid grid-cols-3 print:grid-cols-1">
-                  <pre className="col-span-2 font-sans">{x.Dinge.trim()}</pre>
+                  <pre className="col-span-2 font-sans text-pretty">
+                    {x.Dinge.trim()}
+                  </pre>
                   <div className="grid grid-cols-3 gap-8">
                     {x.Bild1 && x.Bild1.length > 1 && (
                       <EinkaufBild src={x.Bild1} />
