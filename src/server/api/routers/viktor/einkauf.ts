@@ -91,14 +91,27 @@ export const einkaufRouter = createTRPCRouter({
         where: { id: input.mitarbeiterId },
       });
 
+      const today = new Date();
+      const yesterday = new Date(
+        today.getFullYear(),
+        today.getMonth(),
+        today.getDate() - 1,
+        0,
+        0,
+        0,
+        0,
+      );
+
       if (ma?.einkaufId) {
         await ctx.viktor.einkauf.update({
           where: { id: ma.einkaufId },
           data: {
-            Abgeschickt: undefined,
+            Abgeschickt: yesterday,
             Abonniert: false,
           },
         });
+      } else {
+        console.warn("Kein Einkauf gefunden");
       }
     }),
   updateEinkauf: publicProcedure
