@@ -58,6 +58,9 @@ export default function ArtikelSuche() {
             onClick: () => navigator.clipboard.write([clipboardItem]),
           },
         });
+        setTimeout(() => {
+          document.location.reload();
+        }, 1000);
       }
     },
   });
