@@ -55,6 +55,52 @@ export const einkaufRouter = createTRPCRouter({
     });
     return liste ?? null;
   }),
+  skip: publicProcedure
+    .input(z.object({ mitarbeiterId: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const ma = await ctx.viktor.mitarbeiter.findUnique({
+        where: {
+          id: input.mitarbeiterId,
+        },
+      });
+
+      const today = new Date();
+      const tommorow = new Date(
+        today.getFullYear(),
+        today.getMonth(),
+        today.getDate() + 1,
+        0,
+        0,
+        0,
+        0,
+      );
+
+      if (ma?.einkaufId) {
+        await ctx.viktor.einkauf.update({
+          where: { id: ma.einkaufId },
+          data: {
+            Abgeschickt: tommorow,
+          },
+        });
+      }
+    }),
+  delete: publicProcedure
+    .input(z.object({ mitarbeiterId: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const ma = await ctx.viktor.mitarbeiter.findUnique({
+        where: { id: input.mitarbeiterId },
+      });
+
+      if (ma?.einkaufId) {
+        await ctx.viktor.einkauf.update({
+          where: { id: ma.einkaufId },
+          data: {
+            Abgeschickt: undefined,
+            Abonniert: false,
+          },
+        });
+      }
+    }),
   updateEinkauf: publicProcedure
     .input(EinkaufPropsServer)
     .mutation(async ({ ctx, input }) => {

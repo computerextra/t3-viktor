@@ -10,6 +10,7 @@ import LoadingSkeleton from "@/components/loading-skeleton";
 import { useAppForm } from "@/components/Form";
 
 import { ACCEPTED_IMAGE_TYPES, BildServer, EinkaufPropsClient } from "@/types";
+import { Separator } from "@/components/ui/separator";
 
 const fileToBase64 = (file: File): Promise<string> => {
   return new Promise((resolve, reject) => {
@@ -32,6 +33,20 @@ export default function EinkaufForm({ id }: { id: string }) {
 
   const utils = api.useUtils();
   const upsertEinkauf = api.einkauf.updateEinkauf.useMutation({
+    onSuccess: async () => {
+      await utils.einkauf.einkaufsliste.invalidate();
+      router.push("/Einkauf");
+    },
+  });
+
+  const skipEinkauf = api.einkauf.skip.useMutation({
+    onSuccess: async () => {
+      await utils.einkauf.einkaufsliste.invalidate();
+      router.push("/Einkauf");
+    },
+  });
+
+  const deleteEinkauf = api.einkauf.delete.useMutation({
     onSuccess: async () => {
       await utils.einkauf.einkaufsliste.invalidate();
       router.push("/Einkauf");
@@ -236,6 +251,28 @@ export default function EinkaufForm({ id }: { id: string }) {
           )}
         </Button>
       </FieldGroup>
+
+      <Separator className="mt-10 mb-20" />
+      <div className="grid grid-cols-2 gap-8">
+        <Button
+          type="button"
+          onClick={async () =>
+            await skipEinkauf.mutateAsync({ mitarbeiterId: id })
+          }
+          variant={"secondary"}
+        >
+          Einkauf überspringen
+        </Button>
+        <Button
+          type="button"
+          onClick={async () =>
+            await deleteEinkauf.mutateAsync({ mitarbeiterId: id })
+          }
+          variant={"destructive"}
+        >
+          Einkauf Löschen
+        </Button>
+      </div>
     </form>
   );
 }
