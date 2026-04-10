@@ -20,29 +20,40 @@ export const einkaufRouter = createTRPCRouter({
       return einkauf?.Einkauf ?? null;
     }),
   einkaufsliste: publicProcedure.query(async ({ ctx }) => {
+    const today = new Date(
+      new Date().getFullYear(),
+      new Date().getMonth(),
+      new Date().getDate(),
+      0,
+      0,
+      0,
+      0,
+    );
+    const yesterday = new Date(
+      new Date().getFullYear(),
+      new Date().getMonth(),
+      new Date().getDate() - 1,
+      0,
+      0,
+      0,
+      0,
+    );
+
     const liste = await ctx.viktor.einkauf.findMany({
       where: {
         OR: [
           {
             AND: [
-              { Abgeschickt: { lte: new Date() } },
+              { Abgeschickt: { lte: today } },
               {
                 Abgeschickt: {
-                  gt: new Date(
-                    new Date().getFullYear(),
-                    new Date().getMonth(),
-                    new Date().getDate() - 1,
-                    0,
-                    0,
-                    0,
-                    0,
-                  ),
+                  gt: yesterday,
                 },
               },
             ],
           },
           {
-            AND: [{ Abonniert: true }, { Abgeschickt: { lte: new Date() } }],
+            AND: [{ Abonniert: true }, { Abgeschickt: { lte: today } }],
           },
         ],
       },
@@ -136,37 +147,52 @@ export const einkaufRouter = createTRPCRouter({
       if (input.bild3)
         image3 = await uploadImageToFTP(input.bild3, input.mitarbeiterId, 3);
 
-      await ctx.viktor.einkauf.upsert({
-        where: {
-          id: ma?.Einkauf?.id,
-        },
-        create: {
-          Abgeschickt: new Date(),
-          Dinge: input.dinge,
-          Abonniert: input.abo,
-          Bild1: image1,
-          Bild2: image2,
-          Bild3: image3,
-          Geld: input.geld.length > 0 ? input.geld : null,
-          Paypal: input.paypal,
-          Pfand: input.pfand.length > 0 ? input.pfand : null,
-          Mitarbeiter: {
-            connect: {
-              id: input.mitarbeiterId,
+      const today = new Date(
+        new Date().getFullYear(),
+        new Date().getMonth(),
+        new Date().getDate(),
+        0,
+        0,
+        0,
+        0,
+      );
+
+      if (ma && ma.einkaufId) {
+        await ctx.viktor.einkauf.update({
+          where: {
+            id: ma.einkaufId,
+          },
+          data: {
+            Abgeschickt: today,
+            Dinge: input.dinge,
+            Abonniert: input.abo,
+            Bild1: image1,
+            Bild2: image2,
+            Bild3: image3,
+            Geld: input.geld.length > 0 ? input.geld : null,
+            Paypal: input.paypal,
+            Pfand: input.pfand.length > 0 ? input.pfand : null,
+          },
+        });
+      } else {
+        await ctx.viktor.einkauf.create({
+          data: {
+            Abgeschickt: today,
+            Dinge: input.dinge,
+            Abonniert: input.abo,
+            Bild1: image1,
+            Bild2: image2,
+            Bild3: image3,
+            Geld: input.geld.length > 0 ? input.geld : null,
+            Paypal: input.paypal,
+            Pfand: input.pfand.length > 0 ? input.pfand : null,
+            Mitarbeiter: {
+              connect: {
+                id: input.mitarbeiterId,
+              },
             },
           },
-        },
-        update: {
-          Abgeschickt: new Date(),
-          Dinge: input.dinge,
-          Abonniert: input.abo,
-          Bild1: image1,
-          Bild2: image2,
-          Bild3: image3,
-          Geld: input.geld.length > 0 ? input.geld : null,
-          Paypal: input.paypal,
-          Pfand: input.pfand.length > 0 ? input.pfand : null,
-        },
-      });
+        });
+      }
     }),
 });
