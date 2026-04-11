@@ -10,9 +10,8 @@ import {
 } from "@/components/ui/card";
 import { api } from "@/trpc/react";
 import { useState } from "react";
-import { ColumnDef } from "@tanstack/react-table";
+import { type ColumnDef } from "@tanstack/react-table";
 import { DataTable } from "@/components/data-table";
-import Link from "next/link";
 import {
   InputGroup,
   InputGroupAddon,

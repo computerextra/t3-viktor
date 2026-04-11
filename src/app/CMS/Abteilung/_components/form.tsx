@@ -56,7 +56,7 @@ export default function AbteilungForm({
       id="abteilung-form"
       onSubmit={(e) => {
         e.preventDefault();
-        form.handleSubmit();
+        void form.handleSubmit();
       }}
     >
       <FieldGroup>

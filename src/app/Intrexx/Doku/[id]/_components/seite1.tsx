@@ -1,14 +1,13 @@
 "use client";
 
 import {
-  PaginatedDataTable,
   PaginatedSearchDataTable,
 } from "@/components/data-table";
 import LoadingSkeleton from "@/components/loading-skeleton";
 import { Card, CardContent } from "@/components/ui/card";
 import { api } from "@/trpc/react";
 import type { AppRouter } from "@/server/api/root";
-import { ColumnDef } from "@tanstack/react-table";
+import { type ColumnDef } from "@tanstack/react-table";
 import type { inferRouterOutputs } from "@trpc/server";
 import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
@@ -617,9 +616,9 @@ function Konten({ id }: { id: number }) {
                 <ContextMenuTrigger>*****</ContextMenuTrigger>
                 <ContextMenuContent>
                   <ContextMenuItem
-                    onClick={() => {
+                    onClick={async () => {
                       if (x.STR_KENNWORT_E5B5481B == null) return;
-                      navigator.clipboard.writeText(x.STR_KENNWORT_E5B5481B);
+                      await navigator.clipboard.writeText(x.STR_KENNWORT_E5B5481B);
                       toast.success("Passwort in Zwischenablage kopiert.");
                     }}
                   >
@@ -955,9 +954,9 @@ function Email({ id }: { id: number }) {
                 <ContextMenuTrigger>*****</ContextMenuTrigger>
                 <ContextMenuContent>
                   <ContextMenuItem
-                    onClick={() => {
+                    onClick={async () => {
                       if (x.STR_KENNWORT_B9B3C27F == null) return;
-                      navigator.clipboard.writeText(x.STR_KENNWORT_B9B3C27F);
+                      await navigator.clipboard.writeText(x.STR_KENNWORT_B9B3C27F);
                       toast.success("Passwort in Zwischenablage kopiert.");
                     }}
                   >

@@ -1,11 +1,9 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
-import type { Formular, Kunde } from "./formular-auswahl";
-import z from "zod";
-import { FieldGroup } from "@/components/ui/field";
 import { useAppForm } from "@/components/Form";
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { FieldGroup } from "@/components/ui/field";
 import {
   aomeiFormData,
   appleFormData,
@@ -17,6 +15,9 @@ import {
   telekomFormData,
   TelekomFragen,
 } from "@/types";
+import { useState } from "react";
+import type z from "zod";
+import type { Formular, Kunde } from "./formular-auswahl";
 
 export default function FormularAnsicht({
   auswahl,
@@ -67,7 +68,7 @@ function Aomei({ kunde }: { kunde: Kunde }) {
       id="aomei-form"
       onSubmit={(e) => {
         e.preventDefault();
-        form.handleSubmit();
+        void form.handleSubmit();
       }}
     >
       <FieldGroup className="print:hidden">
@@ -146,7 +147,7 @@ function Apple({ kunde }: { kunde: Kunde }) {
   const form = useAppForm({
     validators: { onSubmit: appleFormData },
     defaultValues: defaultValues,
-    onSubmit: ({ value }) => {
+    onSubmit: ({}) => {
       setLoading(true);
       window.setTimeout(window.print, 1000);
       setLoading(false);
@@ -157,7 +158,7 @@ function Apple({ kunde }: { kunde: Kunde }) {
       id="apple-form"
       onSubmit={(e) => {
         e.preventDefault();
-        form.handleSubmit();
+        void form.handleSubmit();
       }}
     >
       <FieldGroup className="print:hidden">
@@ -261,7 +262,7 @@ function Gdata({ kunde }: { kunde: Kunde }) {
       id="gdata-form"
       onSubmit={(e) => {
         e.preventDefault();
-        form.handleSubmit();
+        void form.handleSubmit();
       }}
     >
       <FieldGroup className="print:hidden">
@@ -378,7 +379,7 @@ function Google({ kunde }: { kunde: Kunde }) {
       id="google-form"
       onSubmit={(e) => {
         e.preventDefault();
-        form.handleSubmit();
+        void form.handleSubmit();
       }}
     >
       <FieldGroup className="print:hidden">
@@ -479,7 +480,7 @@ function Microsoft({ kunde }: { kunde: Kunde }) {
       id="microsoft-form"
       onSubmit={(e) => {
         e.preventDefault();
-        form.handleSubmit();
+        void form.handleSubmit();
       }}
     >
       <FieldGroup className="print:hidden">
@@ -610,7 +611,7 @@ function Telekom({ kunde }: { kunde: Kunde }) {
       id="telekom-form"
       onSubmit={(e) => {
         e.preventDefault();
-        form.handleSubmit();
+        void form.handleSubmit();
       }}
     >
       <FieldGroup className="print:hidden">
@@ -751,7 +752,7 @@ function MailDe({ kunde }: { kunde: Kunde }) {
       id="mailde-form"
       onSubmit={(e) => {
         e.preventDefault();
-        form.handleSubmit();
+        void form.handleSubmit();
       }}
     >
       <FieldGroup className="print:hidden">

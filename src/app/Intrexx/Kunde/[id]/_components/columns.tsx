@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/tooltip";
 import { CheckCircleIcon, CrossIcon } from "lucide-react";
 import Link from "next/link";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import GeräteDialog from "./geräte-dialog";
 
 type RouterOutput = inferRouterOutputs<AppRouter>;

@@ -22,7 +22,7 @@ import KundendatenSuche from "./kundendaten-suche";
 import type { AppRouter } from "@/server/api/root";
 import type { inferRouterOutputs } from "@trpc/server";
 import FormularAnsicht from "./formular-ansicht";
-import z from "zod";
+import type z from "zod";
 import {
   aomeiFormData,
   appleFormData,

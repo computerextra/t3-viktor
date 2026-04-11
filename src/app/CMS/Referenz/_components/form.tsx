@@ -59,7 +59,7 @@ export default function ReferenzForm({
       id="referenz-form"
       onSubmit={(e) => {
         e.preventDefault();
-        form.handleSubmit();
+        void form.handleSubmit();
       }}
     >
       <FieldGroup>

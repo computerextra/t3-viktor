@@ -67,6 +67,7 @@ export default function EinkaufCard() {
 
 function EinkaufBild({ src }: { src: string }) {
   return (
+    // eslint-disable-next-line @next/next/no-img-element
     <img src={src} alt={src} className="h-auto max-h-45 w-auto max-w-45" />
   );
 }

@@ -4,7 +4,7 @@ import { useAppForm } from "@/components/Form";
 import { Button } from "@/components/ui/button";
 import { FieldGroup } from "@/components/ui/field";
 import { api } from "@/trpc/react";
-import { BildServer, BildClientValidator } from "@/types";
+import { type BildServer, BildClientValidator } from "@/types";
 import { z } from "zod";
 
 const AusstellerProp = z.object({
@@ -22,6 +22,7 @@ const fileToBase64 = (file: File): Promise<string> => {
       const base64 = result.split(",")[1];
       resolve(base64 || "");
     };
+    // eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors
     reader.onerror = (error) => reject(error);
   });
 };
@@ -60,7 +61,7 @@ export default function BildForm() {
       encType="multipart/form-data"
       onSubmit={(e) => {
         e.preventDefault();
-        form.handleSubmit();
+        void form.handleSubmit();
       }}
     >
       <FieldGroup>

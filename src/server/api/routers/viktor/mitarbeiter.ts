@@ -35,6 +35,7 @@ export const mitarbeiterRouter = createTRPCRouter({
   upsert: publicProcedure
     .input(MitarbeiterProps)
     .mutation(async ({ ctx, input }) => {
+      // eslint-disable-next-line prefer-const
       let image: string | null = null;
       // TODO: Upload für Mitarbeiter Bilder bauen!
       // if(input.Bild) image = await uploadImageToFTP(input.Bild)

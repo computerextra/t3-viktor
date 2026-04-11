@@ -1,6 +1,7 @@
 import SFTPClient from "ssh2-sftp-client";
 import { env } from "@/env";
-import { BildServer } from "@/types";
+import type { BildServer } from "@/types";
+import * as path from "path";
 
 function uuidv4() {
   return crypto.randomUUID();
@@ -22,11 +23,8 @@ export async function uploadToFtp(
         password: env.FTP_PASSWORD,
       });
       return;
-    } catch (err: any) {
-      console.warn(
-        `connection attempt to port ${port} failed:`,
-        err.message || err,
-      );
+    } catch (err) {
+      console.warn(`connection attempt to port ${port} failed:`, err);
       throw err;
     }
   };
@@ -52,14 +50,16 @@ export async function uploadToFtp(
     const remotePath = `${base.endsWith("/") ? base : base + "/"}${filename}`;
 
     // make sure directory is present (ssh2-sftp-client mkdir is recursive)
-    const path = require("path");
     const remoteDir = path.posix.dirname(remotePath);
     try {
       await sftp.mkdir(remoteDir, true);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (mkdirErr: any) {
       // mkdir may throw if directory already exists; ignore
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       if (mkdirErr.code !== 4) {
-        console.warn("mkdir warning", mkdirErr.message || mkdirErr);
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        console.warn("mkdir warning", mkdirErr.message ?? mkdirErr);
       }
     }
 
@@ -103,10 +103,12 @@ export async function uploadImageToFTP(
         password: env.FTP_PASSWORD,
       });
       return;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       console.warn(
         `connection attempt to port ${port} failed:`,
-        err.message || err,
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        err.message ?? err,
       );
       throw err;
     }
@@ -133,14 +135,16 @@ export async function uploadImageToFTP(
     const remotePath = `${base.endsWith("/") ? base : base + "/"}${filename}`;
 
     // make sure directory is present (ssh2-sftp-client mkdir is recursive)
-    const path = require("path");
     const remoteDir = path.posix.dirname(remotePath);
     try {
       await sftp.mkdir(remoteDir, true);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (mkdirErr: any) {
       // mkdir may throw if directory already exists; ignore
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       if (mkdirErr.code !== 4) {
-        console.warn("mkdir warning", mkdirErr.message || mkdirErr);
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        console.warn("mkdir warning", mkdirErr.message ?? mkdirErr);
       }
     }
 

@@ -13,10 +13,10 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { AppRouter } from "@/server/api/root";
+import { type AppRouter } from "@/server/api/root";
 import { api } from "@/trpc/react";
-import { ColumnDef } from "@tanstack/react-table";
-import { inferRouterOutputs } from "@trpc/server";
+import { type ColumnDef } from "@tanstack/react-table";
+import { type inferRouterOutputs } from "@trpc/server";
 import { CheckCircleIcon, CrossIcon } from "lucide-react";
 import Link from "next/link";
 

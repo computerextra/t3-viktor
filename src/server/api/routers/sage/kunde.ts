@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
-import { sg_adressen } from "../../../../../generated/sage/client";
+import { type sg_adressen } from "../../../../../generated/sage/client";
 
 export const sageKundenRouter = createTRPCRouter({
   search: publicProcedure

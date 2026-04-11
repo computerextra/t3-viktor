@@ -157,7 +157,7 @@ export const einkaufRouter = createTRPCRouter({
         0,
       );
 
-      if (ma && ma.einkaufId) {
+      if (ma?.einkaufId) {
         await ctx.viktor.einkauf.update({
           where: {
             id: ma.einkaufId,

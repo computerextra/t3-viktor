@@ -10,7 +10,7 @@ export default async function Page({
 }) {
   const { id } = await params;
 
-  api.angebot.get.prefetch({ id });
+  await api.angebot.get.prefetch({ id });
 
   return (
     <HydrateClient>

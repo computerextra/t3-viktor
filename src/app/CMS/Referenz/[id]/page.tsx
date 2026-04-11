@@ -1,5 +1,4 @@
 import { api, HydrateClient } from "@/trpc/server";
-import PartnerCard from "../_components/card";
 import ReferenzCard from "../_components/card";
 
 export const dynamic = "force-dynamic";
@@ -11,12 +10,12 @@ export default async function Page({
 }) {
   const { id } = await params;
 
-  api.referenz.get.prefetch({ id });
+  await api.referenz.get.prefetch({ id });
 
   return (
     <HydrateClient>
       <div className="container mx-auto">
-        <ReferenzCard id={id} />
+        await <ReferenzCard id={id} />
       </div>
     </HydrateClient>
   );

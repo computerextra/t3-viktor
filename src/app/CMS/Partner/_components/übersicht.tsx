@@ -1,6 +1,6 @@
 "use client";
 
-import { abteilungenColumns, PartnerColumns } from "@/app/_components/columns";
+import { PartnerColumns } from "@/app/_components/columns";
 import { DataTable } from "@/components/data-table";
 import LoadingSkeleton from "@/components/loading-skeleton";
 import {

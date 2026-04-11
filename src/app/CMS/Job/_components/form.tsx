@@ -62,7 +62,7 @@ export default function JobForm({ job }: { job: Job | undefined }) {
       id="angebot-form"
       onSubmit={(e) => {
         e.preventDefault();
-        form.handleSubmit();
+        void form.handleSubmit();
       }}
     >
       <FieldGroup>

@@ -18,8 +18,8 @@ import {
 } from "@/components/ui/input-group";
 import { SearchIcon } from "lucide-react";
 import { Spinner } from "@/components/ui/spinner";
-import { inferRouterOutputs } from "@trpc/server";
-import { AppRouter } from "@/server/api/root";
+import { type inferRouterOutputs } from "@trpc/server";
+import { type AppRouter } from "@/server/api/root";
 import { toast } from "sonner";
 
 type RouterOutput = inferRouterOutputs<AppRouter>;
@@ -31,7 +31,7 @@ export default function ArtikelSuche() {
   const [Ergebnisse, setErgebnisse] = useState<null | Artikel>(null);
 
   const kundensuche = api.sage_artikel.search.useMutation({
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
       setGesucht(true);
       setErgebnisse(data);
 
@@ -50,12 +50,12 @@ export default function ArtikelSuche() {
         };
         const clipboardItem = new ClipboardItem(clipboardItemData);
 
-        navigator.clipboard.write([clipboardItem]);
+        await navigator.clipboard.write([clipboardItem]);
         toast(data, {
           description: "Die Daten wurden in die Zwischenablage kopiert.",
           action: {
             label: "Erneut Kopieren",
-            onClick: () => navigator.clipboard.write([clipboardItem]),
+            onClick:  () => void navigator.clipboard.write([clipboardItem]),
           },
         });
         setTimeout(() => {

@@ -1,16 +1,20 @@
 "use client";
 
+import { useAppForm } from "@/components/Form";
+import LoadingSkeleton from "@/components/loading-skeleton";
+import { Button } from "@/components/ui/button";
+import { Field, FieldError, FieldGroup } from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+import { Spinner } from "@/components/ui/spinner";
 import { api } from "@/trpc/react";
 import { useRouter } from "next/navigation";
-import { Input } from "@/components/ui/input";
-import { Field, FieldError, FieldGroup } from "@/components/ui/field";
-import { Button } from "@/components/ui/button";
-import { Spinner } from "@/components/ui/spinner";
-import LoadingSkeleton from "@/components/loading-skeleton";
-import { useAppForm } from "@/components/Form";
 
-import { ACCEPTED_IMAGE_TYPES, BildServer, EinkaufPropsClient } from "@/types";
 import { Separator } from "@/components/ui/separator";
+import {
+  ACCEPTED_IMAGE_TYPES,
+  type BildServer,
+  EinkaufPropsClient,
+} from "@/types";
 
 const fileToBase64 = (file: File): Promise<string> => {
   return new Promise((resolve, reject) => {
@@ -22,6 +26,7 @@ const fileToBase64 = (file: File): Promise<string> => {
       const base64 = result.split(",")[1];
       resolve(base64 || "");
     };
+    // eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors
     reader.onerror = (error) => reject(error);
   });
 };
@@ -59,11 +64,11 @@ export default function EinkaufForm({ id }: { id: string }) {
     },
     defaultValues: {
       mitarbeiterId: id,
-      geld: data?.Geld != null ? data.Geld : "",
-      pfand: data?.Pfand != null ? data.Pfand : "",
-      dinge: data?.Dinge != null ? data.Dinge : "",
-      paypal: data?.Paypal != null ? data.Paypal : false,
-      abo: data?.Abonniert != null ? data.Abonniert : false,
+      geld: data?.Geld ?? "",
+      pfand: data?.Pfand ?? "",
+      dinge: data?.Dinge ?? "",
+      paypal: data?.Paypal ?? false,
+      abo: data?.Abonniert ?? false,
       bild1: null as File | null,
       bild2: null as File | null,
       bild3: null as File | null,
@@ -114,7 +119,7 @@ export default function EinkaufForm({ id }: { id: string }) {
       encType="multipart/form-data"
       onSubmit={(e) => {
         e.preventDefault();
-        form.handleSubmit();
+        void form.handleSubmit();
       }}
     >
       <FieldGroup>

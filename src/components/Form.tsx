@@ -19,6 +19,7 @@ import { Calendar } from "./ui/calendar";
 import { useState } from "react";
 import { ACCEPTED_IMAGE_TYPES } from "@/types";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const { fieldContext, useFieldContext, formContext, useFormContext } =
   createFormHookContexts();
 
@@ -206,6 +207,7 @@ const FormSelect = ({
 };
 
 const FormDateInput = ({
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   className,
   label,
   loading,

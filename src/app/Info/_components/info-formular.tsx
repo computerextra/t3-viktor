@@ -1,5 +1,7 @@
 "use client";
 
+import { useAppForm } from "@/components/Form";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -7,12 +9,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { api } from "@/trpc/react";
-import { useAppForm } from "@/components/Form";
-import z from "zod";
-import { toast } from "sonner";
 import { FieldGroup } from "@/components/ui/field";
-import { Button } from "@/components/ui/button";
+import { api } from "@/trpc/react";
+import { toast } from "sonner";
+import z from "zod";
 
 const formSchema = z.object({
   Kundennummer: z.string(),
@@ -56,7 +56,7 @@ export default function InfoForm() {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            form.handleSubmit();
+            void form.handleSubmit();
           }}
         >
           <FieldGroup>

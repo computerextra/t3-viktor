@@ -66,7 +66,7 @@ export default function AngebotForm({
       id="angebot-form"
       onSubmit={(e) => {
         e.preventDefault();
-        form.handleSubmit();
+        void form.handleSubmit();
       }}
     >
       <FieldGroup>

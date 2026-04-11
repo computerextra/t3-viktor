@@ -6,7 +6,7 @@ export default function Clock() {
   const [hour, setHour] = useState(0);
   const [minute, setMinute] = useState(0);
   const [second, setSecond] = useState(0);
-  const timer = useRef<any | null>(null);
+  const timer = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const t = new Date();
@@ -14,14 +14,16 @@ export default function Clock() {
     setMinute(t.getMinutes());
     setSecond(t.getSeconds());
 
-    timer.current = setInterval(() => {
+    const i = setInterval(() => {
       setHour(new Date().getHours());
       setMinute(new Date().getMinutes());
       setSecond(new Date().getSeconds());
     }, 1000);
 
+    timer.current = i;
+
     return () => {
-      clearInterval(timer.current);
+      clearInterval(i);
     };
   }, []);
   return (
