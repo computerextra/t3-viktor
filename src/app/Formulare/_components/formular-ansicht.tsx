@@ -522,42 +522,42 @@ function Microsoft({ kunde }: { kunde: Kunde }) {
             alt="Apple Logo"
             className="mx-auto h-auto w-[80%] max-w-xl"
           />
-          <p className="text-center leading-7 font-bold not-first:mt-6">
+          <p className="text-center leading-7 font-bold not-first:mt-4">
             Kundennummer:
           </p>
           <p className="text-center text-sm leading-none font-medium">
             {kunde?.KundNr}
           </p>
 
-          <p className="text-center leading-7 font-bold not-first:mt-6">
+          <p className="text-center leading-7 font-bold not-first:mt-4">
             Name:
           </p>
           <p className="text-center text-sm leading-none font-medium">
             {kunde?.Vorname} {kunde?.Name}
           </p>
 
-          <p className="text-center leading-7 font-bold not-first:mt-6">
+          <p className="text-center leading-7 font-bold not-first:mt-4">
             Benutzername:
           </p>
           <p className="text-center text-sm leading-none font-medium">
             {data?.Benutzername}
           </p>
 
-          <p className="text-center leading-7 font-bold not-first:mt-6">
+          <p className="text-center leading-7 font-bold not-first:mt-4">
             Passwort:
           </p>
           <p className="text-center text-sm leading-none font-medium">
             {data?.Passwort}
           </p>
 
-          <p className="text-center leading-7 font-bold not-first:mt-6">
+          <p className="text-center leading-7 font-bold not-first:mt-4">
             Alternative E-Mail Adresse:
           </p>
           <p className="text-center text-sm leading-none font-medium">
             {data?.EMail}
           </p>
 
-          <p className="text-center leading-7 font-bold not-first:mt-6">
+          <p className="text-center leading-7 font-bold not-first:mt-4">
             Mobilfunk:
           </p>
           <p className="text-center text-sm leading-none font-medium">
