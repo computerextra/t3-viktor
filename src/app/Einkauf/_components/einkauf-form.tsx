@@ -241,42 +241,49 @@ export default function EinkaufForm({ id }: { id: string }) {
             }}
           />
         </div>
-        <Button
-          type="submit"
-          className="self-end"
-          disabled={upsertEinkauf.isPending}
-        >
-          {upsertEinkauf.isPending ? (
-            <>
-              <Spinner data-icon="inline-start" />
-              Bitte warten...
-            </>
-          ) : (
-            "Speichern"
-          )}
-        </Button>
+        <div>
+          <Button
+            type="submit"
+            className="self-end"
+            size={"lg"}
+            disabled={upsertEinkauf.isPending}
+          >
+            {upsertEinkauf.isPending ? (
+              <>
+                <Spinner data-icon="inline-start" />
+                Bitte warten...
+              </>
+            ) : (
+              "Speichern"
+            )}
+          </Button>
+        </div>
       </FieldGroup>
 
-      <Separator className="mt-10 mb-20" />
-      <div className="grid grid-cols-2 gap-8">
-        <Button
-          type="button"
-          onClick={async () =>
-            await skipEinkauf.mutateAsync({ mitarbeiterId: id })
-          }
-          variant={"secondary"}
-        >
-          Einkauf überspringen
-        </Button>
-        <Button
-          type="button"
-          onClick={async () =>
-            await deleteEinkauf.mutateAsync({ mitarbeiterId: id })
-          }
-          variant={"destructive"}
-        >
-          Einkauf Löschen
-        </Button>
+      <Separator className="mt-20 mb-20" />
+      <div className="flex justify-between">
+        <div>
+          <Button
+            type="button"
+            onClick={async () =>
+              await skipEinkauf.mutateAsync({ mitarbeiterId: id })
+            }
+            variant={"secondary"}
+          >
+            Einkauf überspringen
+          </Button>
+        </div>
+        <div>
+          <Button
+            type="button"
+            onClick={async () =>
+              await deleteEinkauf.mutateAsync({ mitarbeiterId: id })
+            }
+            variant={"destructive"}
+          >
+            Einkauf Löschen
+          </Button>
+        </div>
       </div>
     </form>
   );
