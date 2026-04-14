@@ -151,7 +151,18 @@ export const intrexxDokuRouter = createTRPCRouter({
     .query(async ({ ctx, input }) => {
       const dokumente = await ctx.intrexx.xDATAGROUPDE5A5C79.findMany({
         where: { L_INTREXXNR_B8FC0FD5: input.id },
+        include: {
+          XFILEDATAGROUP4CC65BF4: true,
+        },
       });
       return dokumente;
+    }),
+  ansprechpartner: publicProcedure
+    .input(z.object({ id: z.number().int() }))
+    .query(async ({ ctx, input }) => {
+      const ansprechpartner = await ctx.intrexx.xDATAGROUP5FAC0D60.findMany({
+        where: { L_INTREXXNR_CFA455C3: input.id },
+      });
+      return ansprechpartner;
     }),
 });

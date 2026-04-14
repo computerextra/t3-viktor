@@ -2336,7 +2336,7 @@ model XDATAGROUP5D4C7428 {
   L_ANZAHL_66C043BD          Int?
 }
 
-// CE Doku -> Kunden -> Kontaktdaten
+// CE Doku -> Kunden -> Kontaktdaten (Ansprechpartner Doku Seite 2)
 model XDATAGROUP5FAC0D60 {
   FKLID                 Int?
   LID                   Int       @id(map: "PK__XDATAGRO__C6555721476FC701")
