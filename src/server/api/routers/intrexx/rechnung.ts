@@ -15,6 +15,7 @@ export const intrexxRechnungRouter = createTRPCRouter({
     .query(async ({ ctx, input }) => {
       const verträge = await ctx.intrexx.xTABLEB525C1C4.findMany({
         where: { L_INTREXXNR_CF6972BB: input.id },
+        orderBy: { DT_ABLAUFDATUM_D2DCDDA9: "desc" },
       });
       return verträge;
     }),
