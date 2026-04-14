@@ -1,5 +1,6 @@
 "use client";
 
+import { DataTable } from "@/components/data-table";
 import {
   Card,
   CardContent,
@@ -8,20 +9,19 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { api } from "@/trpc/react";
-import { useState } from "react";
-import { type ColumnDef } from "@tanstack/react-table";
-import { DataTable } from "@/components/data-table";
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupButton,
   InputGroupInput,
 } from "@/components/ui/input-group";
-import { SearchIcon } from "lucide-react";
 import { Spinner } from "@/components/ui/spinner";
-import type { inferRouterOutputs } from "@trpc/server";
 import type { AppRouter } from "@/server/api/root";
+import { api } from "@/trpc/react";
+import { type ColumnDef } from "@tanstack/react-table";
+import type { inferRouterOutputs } from "@trpc/server";
+import { SearchIcon } from "lucide-react";
+import { useState } from "react";
 
 type RouterOutput = inferRouterOutputs<AppRouter>;
 export type Kunde = RouterOutput["sage_kunden"]["search"];

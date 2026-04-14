@@ -1,5 +1,6 @@
 "use client";
 
+import { DataTable } from "@/components/data-table";
 import {
   Card,
   CardContent,
@@ -8,19 +9,18 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { api } from "@/trpc/react";
-import { useState } from "react";
-import { type ColumnDef } from "@tanstack/react-table";
-import { DataTable } from "@/components/data-table";
-import Link from "next/link";
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupButton,
   InputGroupInput,
 } from "@/components/ui/input-group";
-import { SearchIcon } from "lucide-react";
 import { Spinner } from "@/components/ui/spinner";
+import { api } from "@/trpc/react";
+import { type ColumnDef } from "@tanstack/react-table";
+import { SearchIcon } from "lucide-react";
+import Link from "next/link";
+import { useState } from "react";
 
 type Ergebnis = {
   LID: number;

@@ -1,16 +1,5 @@
 "use client";
 
-import { api } from "@/trpc/react";
-import MitarbeiterForm from "../../_components/mitarbeiter-form";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { useHotkey } from "@tanstack/react-hotkeys";
-import { useState } from "react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -22,7 +11,18 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { api } from "@/trpc/react";
+import { useHotkey } from "@tanstack/react-hotkeys";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import MitarbeiterForm from "../../_components/mitarbeiter-form";
 
 export default function MitarbeiterCard({ id }: { id: string }) {
   const [data] = api.mitarbeiter.getWithAbteilung.useSuspenseQuery({ id });

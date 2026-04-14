@@ -1,7 +1,8 @@
 "use client";
 
-import { api } from "@/trpc/react";
 import { PaginatedDataTable as DataTable } from "@/components/data-table";
+import LoadingSkeleton from "@/components/loading-skeleton";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -9,8 +10,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import LoadingSkeleton from "@/components/loading-skeleton";
+import { api } from "@/trpc/react";
+import { CheckCircleIcon, CrossIcon } from "lucide-react";
+import Link from "next/link";
 import {
   columnGeräte,
   columnsDienstleistungen,
@@ -21,8 +23,6 @@ import {
   columnsTermine,
   columnWA,
 } from "./columns";
-import Link from "next/link";
-import { CheckCircleIcon, CrossIcon } from "lucide-react";
 
 function Green() {
   return <span className="size-4 rounded-2xl bg-green-500" />;

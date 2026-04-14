@@ -2,14 +2,15 @@
 
 import {
   type ColumnDef,
+  type ColumnFiltersState,
   flexRender,
   getCoreRowModel,
+  getFilteredRowModel,
   getPaginationRowModel,
   useReactTable,
-  type ColumnFiltersState,
-  getFilteredRowModel,
 } from "@tanstack/react-table";
 
+import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -18,9 +19,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Button } from "./ui/button";
-import { Input } from "@/components/ui/input";
+import {
+  ChevronLeft,
+  ChevronRight,
+  ChevronsLeft,
+  ChevronsRight,
+} from "lucide-react";
 import { useEffect, useEffectEvent, useState } from "react";
+import { Button } from "./ui/button";
 import {
   Select,
   SelectContent,
@@ -28,12 +34,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
-import {
-  ChevronLeft,
-  ChevronsLeft,
-  ChevronsRight,
-  ChevronRight,
-} from "lucide-react";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];

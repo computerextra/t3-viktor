@@ -1,9 +1,9 @@
 import { HydrateClient } from "@/trpc/server";
 
-import { Button } from "@/components/ui/button";
-import PrintBtn from "@/app/Einkauf/_components/print-btn";
-import MitarbeiterDialog from "@/app/Einkauf/_components/mitarbeiter-dialog";
 import EinkaufCard from "@/app/Einkauf/_components/einkauf-card";
+import MitarbeiterDialog from "@/app/Einkauf/_components/mitarbeiter-dialog";
+import PrintBtn from "@/app/Einkauf/_components/print-btn";
+import { Button } from "@/components/ui/button";
 
 export const dynamic = "force-dynamic";
 

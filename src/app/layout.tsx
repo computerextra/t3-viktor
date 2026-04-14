@@ -5,10 +5,10 @@ import { Geist } from "next/font/google";
 
 import { TRPCReactProvider } from "@/trpc/react";
 
-import { TooltipProvider } from "@/components/ui/tooltip";
 import MainSidebar from "@/app/_components/Navigation";
-import { ThemeProvider } from "./_components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { ThemeProvider } from "./_components/theme-provider";
 
 export const metadata: Metadata = {
   title: "Viktor",

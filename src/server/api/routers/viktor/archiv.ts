@@ -1,8 +1,8 @@
+import { env } from "@/env";
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
 import z from "zod";
 import { createTRPCRouter, publicProcedure } from "../../trpc";
-import { readFile } from "node:fs/promises";
-import { env } from "@/env";
-import { join } from "node:path";
 
 export const archivRouter = createTRPCRouter({
   get: publicProcedure

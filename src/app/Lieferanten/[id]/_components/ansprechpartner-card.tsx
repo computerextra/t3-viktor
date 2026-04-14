@@ -1,14 +1,5 @@
 "use client";
 
-import { api } from "@/trpc/react";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { useState } from "react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -20,8 +11,17 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { useRouter } from "next/navigation";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { api } from "@/trpc/react";
 import { useHotkey } from "@tanstack/react-hotkeys";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import AnsprechpartnerForm from "./ansprechpartner-form";
 
 export default function AnsprechpartnerCard({

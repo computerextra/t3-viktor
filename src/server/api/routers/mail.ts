@@ -1,7 +1,7 @@
-import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
-import z from "zod";
-import { createTransport } from "nodemailer";
 import { env } from "@/env";
+import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
+import { createTransport } from "nodemailer";
+import z from "zod";
 
 export const mailRouter = createTRPCRouter({
   send: publicProcedure

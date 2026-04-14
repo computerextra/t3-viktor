@@ -1,23 +1,23 @@
 import { createCallerFactory, createTRPCRouter } from "@/server/api/trpc";
-import { mitarbeiterRouter } from "./routers/viktor/mitarbeiter";
-import { einkaufRouter } from "./routers/viktor/einkauf";
-import { intrexxKundenRouter } from "./routers/intrexx/kunden";
-import { intrexxWaRouter } from "./routers/intrexx/werkstattauftrag";
-import { intrexxGeräteRouter } from "./routers/intrexx/geräte";
-import { intrexxNbRouter } from "./routers/intrexx/neubau";
-import { abteilungsRouter } from "./routers/viktor/abteilung";
-import { lieferantenRouter } from "./routers/viktor/lieferanten";
-import { ansprechpartnerRouter } from "./routers/viktor/ansprechpartner";
-import { angebotsRouter } from "./routers/viktor/angebot";
-import { jobRouter } from "./routers/viktor/job";
-import { partnerRouter } from "./routers/viktor/partner";
-import { referenzRouter } from "./routers/viktor/referenz";
-import { sageKundenRouter } from "./routers/sage/kunde";
-import { archivRouter } from "./routers/viktor/archiv";
-import { sageArtikelRouter } from "./routers/sage/artikel";
-import { mailRouter } from "./routers/mail";
 import { ausstellerRouter } from "./routers/aussteller";
 import { intrexxDokuRouter } from "./routers/intrexx/doku";
+import { intrexxGeräteRouter } from "./routers/intrexx/geräte";
+import { intrexxKundenRouter } from "./routers/intrexx/kunden";
+import { intrexxNbRouter } from "./routers/intrexx/neubau";
+import { intrexxWaRouter } from "./routers/intrexx/werkstattauftrag";
+import { mailRouter } from "./routers/mail";
+import { sageArtikelRouter } from "./routers/sage/artikel";
+import { sageKundenRouter } from "./routers/sage/kunde";
+import { abteilungsRouter } from "./routers/viktor/abteilung";
+import { angebotsRouter } from "./routers/viktor/angebot";
+import { ansprechpartnerRouter } from "./routers/viktor/ansprechpartner";
+import { archivRouter } from "./routers/viktor/archiv";
+import { einkaufRouter } from "./routers/viktor/einkauf";
+import { jobRouter } from "./routers/viktor/job";
+import { lieferantenRouter } from "./routers/viktor/lieferanten";
+import { mitarbeiterRouter } from "./routers/viktor/mitarbeiter";
+import { partnerRouter } from "./routers/viktor/partner";
+import { referenzRouter } from "./routers/viktor/referenz";
 
 /**
  * This is the primary router for your server.

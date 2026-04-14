@@ -1,7 +1,7 @@
-import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
-import { BildServerValidator } from "@/types";
 import { uploadToFtp } from "@/server/ftp-upload";
+import { BildServerValidator } from "@/types";
+import { z } from "zod";
 
 type SageRes = {
   SG_AUF_ARTIKEL_PK: number;

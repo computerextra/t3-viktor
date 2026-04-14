@@ -17,12 +17,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
-import { useState } from "react";
-import KundendatenSuche from "./kundendaten-suche";
 import type { AppRouter } from "@/server/api/root";
-import type { inferRouterOutputs } from "@trpc/server";
-import FormularAnsicht from "./formular-ansicht";
-import type z from "zod";
 import {
   aomeiFormData,
   appleFormData,
@@ -32,6 +27,11 @@ import {
   microsoftFormData,
   telekomFormData,
 } from "@/types";
+import type { inferRouterOutputs } from "@trpc/server";
+import { useState } from "react";
+import type z from "zod";
+import FormularAnsicht from "./formular-ansicht";
+import KundendatenSuche from "./kundendaten-suche";
 
 // TODO: Formular Druck erstellen!
 

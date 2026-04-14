@@ -1,14 +1,5 @@
 "use client";
 
-import { api } from "@/trpc/react";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { useState } from "react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -20,10 +11,19 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { useRouter } from "next/navigation";
-import LieferantForm from "../../_components/lieferanten-form";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Kbd } from "@/components/ui/kbd";
+import { api } from "@/trpc/react";
 import { formatForDisplay, useHotkey } from "@tanstack/react-hotkeys";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import LieferantForm from "../../_components/lieferanten-form";
 
 export default function LieferantCard({ id }: { id: string }) {
   const [data] = api.lieferant.get.useSuspenseQuery({ id });

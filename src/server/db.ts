@@ -1,10 +1,10 @@
 import { env } from "@/env";
-import { PrismaClient as Viktorclient } from "../../generated/viktor/client";
-import { PrismaClient as Sageclient } from "../../generated/sage/client";
-import { PrismaClient as Intrexxclient } from "../../generated/intrexx/client";
-import { PrismaClient as PcVisitClient } from "../../generated/pcvisit/client";
 import { PrismaMariaDb } from "@prisma/adapter-mariadb";
 import { PrismaMssql } from "@prisma/adapter-mssql";
+import { PrismaClient as Intrexxclient } from "../../generated/intrexx/client";
+import { PrismaClient as PcVisitClient } from "../../generated/pcvisit/client";
+import { PrismaClient as Sageclient } from "../../generated/sage/client";
+import { PrismaClient as Viktorclient } from "../../generated/viktor/client";
 
 const host = env.DATABASE_URL.split("@")[1].split("/")[0].split(":")[0];
 const port = parseInt(

@@ -1,7 +1,5 @@
 "use client";
 
-import { api } from "@/trpc/react";
-import { type Dispatch, type SetStateAction, useState } from "react";
 import {
   InputGroup,
   InputGroupAddon,
@@ -9,6 +7,8 @@ import {
   InputGroupInput,
 } from "@/components/ui/input-group";
 import { Spinner } from "@/components/ui/spinner";
+import { api } from "@/trpc/react";
+import { type Dispatch, type SetStateAction, useState } from "react";
 import type { Kunde } from "./formular-auswahl";
 
 export default function KundendatenSuche({

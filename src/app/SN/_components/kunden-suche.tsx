@@ -8,18 +8,18 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { api } from "@/trpc/react";
-import { useState } from "react";
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupButton,
   InputGroupInput,
 } from "@/components/ui/input-group";
-import { SearchIcon } from "lucide-react";
 import { Spinner } from "@/components/ui/spinner";
-import { type inferRouterOutputs } from "@trpc/server";
 import { type AppRouter } from "@/server/api/root";
+import { api } from "@/trpc/react";
+import { type inferRouterOutputs } from "@trpc/server";
+import { SearchIcon } from "lucide-react";
+import { useState } from "react";
 import { toast } from "sonner";
 
 type RouterOutput = inferRouterOutputs<AppRouter>;
@@ -55,7 +55,7 @@ export default function ArtikelSuche() {
           description: "Die Daten wurden in die Zwischenablage kopiert.",
           action: {
             label: "Erneut Kopieren",
-            onClick:  () => void navigator.clipboard.write([clipboardItem]),
+            onClick: () => void navigator.clipboard.write([clipboardItem]),
           },
         });
         setTimeout(() => {

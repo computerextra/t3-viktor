@@ -1,5 +1,4 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import React from "react";
 import AbteilungForm from "../_components/form";
 
 export default function Page() {

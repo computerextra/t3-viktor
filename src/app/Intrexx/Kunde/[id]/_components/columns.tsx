@@ -1,17 +1,17 @@
 "use client";
 
-import type { AppRouter } from "@/server/api/root";
-import type { ColumnDef } from "@tanstack/react-table";
-import type { inferRouterOutputs } from "@trpc/server";
-import type { XFILEDATAGROUP6 } from "../../../../../../generated/intrexx/client";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import type { AppRouter } from "@/server/api/root";
+import type { ColumnDef } from "@tanstack/react-table";
+import type { inferRouterOutputs } from "@trpc/server";
 import { CheckCircleIcon, CrossIcon } from "lucide-react";
 import Link from "next/link";
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import type { XFILEDATAGROUP6 } from "../../../../../../generated/intrexx/client";
 import GeräteDialog from "./geräte-dialog";
 
 type RouterOutput = inferRouterOutputs<AppRouter>;

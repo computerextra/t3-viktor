@@ -1,6 +1,6 @@
 import { HydrateClient } from "@/trpc/server";
-import TestBtn from "./_components/sync-btn";
 import BildForm from "./_components/bild-form";
+import TestBtn from "./_components/sync-btn";
 
 export const dynamic = "force-dynamic";
 
