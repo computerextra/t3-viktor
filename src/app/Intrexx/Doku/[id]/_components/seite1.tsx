@@ -1,16 +1,16 @@
 "use client";
 
-import {
-  PaginatedSearchDataTable,
-} from "@/components/data-table";
+import { PaginatedSearchDataTable } from "@/components/data-table";
 import LoadingSkeleton from "@/components/loading-skeleton";
-import { Card, CardContent } from "@/components/ui/card";
-import { api } from "@/trpc/react";
-import type { AppRouter } from "@/server/api/root";
-import { type ColumnDef } from "@tanstack/react-table";
-import type { inferRouterOutputs } from "@trpc/server";
 import { Button } from "@/components/ui/button";
-import { Search } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
+import {
+  ContextMenu,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuTrigger,
+} from "@/components/ui/context-menu";
 import {
   Dialog,
   DialogClose,
@@ -21,25 +21,10 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Field, FieldGroup } from "@/components/ui/field";
-import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import React from "react";
 import { Separator } from "@/components/ui/separator";
-import {
-  ContextMenu,
-  ContextMenuContent,
-  ContextMenuItem,
-  ContextMenuTrigger,
-} from "@/components/ui/context-menu";
-import { toast } from "sonner";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import {
   Table,
   TableBody,
@@ -48,6 +33,19 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import type { AppRouter } from "@/server/api/root";
+import { api } from "@/trpc/react";
+import { type ColumnDef } from "@tanstack/react-table";
+import type { inferRouterOutputs } from "@trpc/server";
+import { Search } from "lucide-react";
+import React from "react";
+import { toast } from "sonner";
 
 type RouterOutput = inferRouterOutputs<AppRouter>;
 
@@ -618,7 +616,9 @@ function Konten({ id }: { id: number }) {
                   <ContextMenuItem
                     onClick={async () => {
                       if (x.STR_KENNWORT_E5B5481B == null) return;
-                      await navigator.clipboard.writeText(x.STR_KENNWORT_E5B5481B);
+                      await navigator.clipboard.writeText(
+                        x.STR_KENNWORT_E5B5481B,
+                      );
                       toast.success("Passwort in Zwischenablage kopiert.");
                     }}
                   >
@@ -956,7 +956,9 @@ function Email({ id }: { id: number }) {
                   <ContextMenuItem
                     onClick={async () => {
                       if (x.STR_KENNWORT_B9B3C27F == null) return;
-                      await navigator.clipboard.writeText(x.STR_KENNWORT_B9B3C27F);
+                      await navigator.clipboard.writeText(
+                        x.STR_KENNWORT_B9B3C27F,
+                      );
                       toast.success("Passwort in Zwischenablage kopiert.");
                     }}
                   >

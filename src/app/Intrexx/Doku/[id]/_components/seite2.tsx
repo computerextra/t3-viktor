@@ -31,7 +31,9 @@ export default function Seite2({ id }: { id: number }) {
       <CardContent>
         <div className="grid grid-cols-3 gap-8">
           <Dokumente id={id} />
-          <Ansprechpartner id={id} />
+          <div className="col-span-2">
+            <Ansprechpartner id={id} />
+          </div>
           <Standorte id={id} />
         </div>
       </CardContent>
