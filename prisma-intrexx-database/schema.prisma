@@ -2553,6 +2553,7 @@ model XDATAGROUP7D3A6EB1 {
   STR_PAKETDIENST                String?   @db.NVarChar(255)
 }
 
+// CE Rechnungen -> MES Abrechnungen
 model XDATAGROUP7E5D5EB5 {
   LID                   Int       @id(map: "PK__XDATAGRO__C655572110F2453A")
   LUSERID               Int?
@@ -3268,6 +3269,7 @@ model XDATAGROUPC3F03E6E {
   L_REIHENFOLGE_EBBCA07D    Int?
 }
 
+// CE Rechnungen -> Vertragsarten
 model XDATAGROUPC5587B4D {
   LUSERID              Int?
   LUSERIDINSERT        Int?
@@ -4555,6 +4557,7 @@ model XTABLE92B9A759 {
   STR_BEZEICHNUNG_16BB717F String?   @db.NVarChar(255)
 }
 
+// CE Rechnungen -> Verträge
 model XTABLEB525C1C4 {
   LID                        Int       @id(map: "PK__XTABLEB5__C655572159CB68B5")
   LUSERID                    Int?
