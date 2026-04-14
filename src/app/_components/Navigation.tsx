@@ -66,7 +66,7 @@ const MAIN_NAV = [
     url: "/Intrexx",
     items: [
       { title: "Kundensuche", url: "/Intrexx" },
-      // { title: "Intrexx 2", url: "/Intrexx/2" },
+      { title: "Wiki", url: "/Intrexx/Wiki" },
     ],
   },
 ];

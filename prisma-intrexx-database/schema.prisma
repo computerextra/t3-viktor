@@ -2963,6 +2963,7 @@ model XDATAGROUPB4E23D04 {
   STR_EXCHANGEVERSION_2A218974 String?   @db.NVarChar(255)
 }
 
+// CE Wiki -> Kategorien
 model XDATAGROUPB76723CF {
   LID                    Int       @id(map: "PK__XDATAGRO__C65557214165AA6B")
   LUSERID                Int?
@@ -4752,6 +4753,7 @@ model XTABLEFE663382 {
   XDATAGROUPBD2B40C7             XDATAGROUPBD2B40C7[]
 }
 
+// CE Wiki -> Wiki
 model XWIKIF7BF7662 {
   LID                    Int                      @id(map: "PK__XWIKIF7B__C6555721D1B16EDA")
   LUSERID                Int?

@@ -6,6 +6,7 @@ import { intrexxKundenRouter } from "./routers/intrexx/kunden";
 import { intrexxNbRouter } from "./routers/intrexx/neubau";
 import { intrexxRechnungRouter } from "./routers/intrexx/rechnung";
 import { intrexxWaRouter } from "./routers/intrexx/werkstattauftrag";
+import { WikiRouter } from "./routers/intrexx/wiki";
 import { mailRouter } from "./routers/mail";
 import { sageArtikelRouter } from "./routers/sage/artikel";
 import { sageKundenRouter } from "./routers/sage/kunde";
@@ -52,6 +53,7 @@ export const appRouter = createTRPCRouter({
   intrexx_geräte: intrexxGeräteRouter,
   intrexx_doku: intrexxDokuRouter,
   intrexx_rechnungen: intrexxRechnungRouter,
+  intrexx_wiki: WikiRouter,
 
   // PC Visit Calls
 });
