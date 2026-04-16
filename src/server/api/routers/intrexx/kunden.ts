@@ -2,6 +2,26 @@ import z from "zod";
 import { createTRPCRouter, publicProcedure } from "../../trpc";
 
 export const intrexxKundenRouter = createTRPCRouter({
+  ohneKuNu: publicProcedure.query(async ({ ctx }) => {
+    const res = await ctx.intrexx.xTABLE898B92CE.findMany({
+      where: {
+        STR_KUNDENNUMMER_D45D177B: null,
+      },
+    });
+    return res;
+  }),
+  ohneDatenschutz: publicProcedure.query(async ({ ctx }) => {
+    const res = await ctx.intrexx.xTABLE898B92CE.findMany({
+      where: {
+        XDATAGROUPFFC21EED: undefined,
+      },
+      orderBy: {
+        STR_NAME_5FE19153: "asc",
+      },
+    });
+
+    return res;
+  }),
   suche: publicProcedure
     .input(z.object({ search: z.string() }))
     .mutation(async ({ ctx, input }) => {

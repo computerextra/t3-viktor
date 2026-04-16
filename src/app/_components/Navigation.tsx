@@ -67,6 +67,8 @@ const MAIN_NAV = [
     items: [
       { title: "Kundensuche", url: "/Intrexx" },
       { title: "Wiki", url: "/Intrexx/Wiki" },
+      { title: "Datenschutz", url: "/Intrexx/Datenschutz" },
+      { title: "Keine KuNu", url: "/Intrexx/KuNu" },
     ],
   },
 ];
