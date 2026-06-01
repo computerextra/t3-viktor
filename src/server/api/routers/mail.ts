@@ -842,7 +842,7 @@ mso-bidi-font-family:Aptos'><o:p>&nbsp;</o:p></span></p>
 mso-bidi-font-family:Aptos'>Unsere  Öffnungszeiten:<o:p></o:p></span></p>
 
 <p class=MsoNormal><span style='font-size:11.0pt;mso-bidi-font-size:12.0pt;
-mso-bidi-font-family:Aptos'>Montag - Freitag: 9:00 - 18:00<o:p></o:p></span></p>
+mso-bidi-font-family:Aptos'>Montag - Freitag: 9:00 - 13:00 und 14:00 - 18:00 Uhr<o:p></o:p></span></p>
 
 <p class=MsoNormal><a name="_MailAutoSig"><span style='mso-ascii-font-family:
 Aptos;mso-fareast-font-family:"Times New Roman";mso-fareast-theme-font:minor-fareast;
